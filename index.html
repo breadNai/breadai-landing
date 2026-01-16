@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bread & AI - Sales Intelligence</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <div class="logo-icon-wrapper">
+                    <!-- Clean User Provided Icon -->
+                    <img src="logo_icon.png" alt="Bread & AI Icon" class="logo-img-clean">
+                </div>
+                <span class="logo-text-html">Bread & AI</span>
+            </a>
+            <button id="openModalBtn" class="btn btn-primary">견적 문의</button>
+        </div>
+    </header>
+
+    <!-- Hero Section (V7) -->
+    <section class="hero">
+        <!-- Abstract Background Image -->
+        <img src="hero_bg_1768484560446.png" alt="Abstract Deep Tech Background" class="hero-bg-image">
+
+        <div class="container hero-content">
+            <!-- Impact Image Removed as per V7 Request -->
+
+            <h1 class="hero-title">
+                <!-- Keep this line together, Unbold Daily Bread -->
+                <span style="white-space: nowrap;">기업의 일상, 매출 <span style="font-weight: 400;">(Daily
+                        Bread)</span>을</span><br>
+                <span class="text-gradient" style="color:#d4af37">AI로 근원적으로 변화</span>시킵니다.
+            </h1>
+            <p class="hero-subtitle">
+                Sales Intelligence의 새로운 기준.<br>
+                가장 확률 높은 제안을 Bread & AI가 제시합니다.
+            </p>
+            <div class="hero-actions">
+                <button onclick="document.getElementById('services').scrollIntoView({behavior: 'smooth'})"
+                    class="btn btn-outline">더 알아보기</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Sales Intelligence</h2>
+                <p class="section-description">
+                    과거의 데이터에서 미래의 성공을 찾습니다.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <!-- Service 01 -->
+                <div class="feature-card" onclick="toggleCard(this)">
+                    <div class="icon-wrapper">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <h3>자동 제안서 생성 <span class="toggle-icon">▼</span></h3>
+                    <p>사업 소개서와 과거 제안 히스토리를 학습하여, 새로운 고객사에게 딱 맞는 제안서를 자동으로 완성합니다.</p>
+
+                    <div class="feature-details">
+                        <ul class="detail-list">
+                            <li><strong>Contextual Generation:</strong> 회사 소개서 및 기존 제안 데이터 완벽 학습</li>
+                            <li><strong>Custom-Fit:</strong> 타겟 기업의 산업군, 규모, 니즈 분석 후 맞춤형 제안 컨텐츠 생성</li>
+                            <li><strong>Time Efficiency:</strong> 제안서 작성 시간 90% 이상 단축</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Service 02 -->
+                <div class="feature-card" onclick="toggleCard(this)">
+                    <div class="icon-wrapper">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <h3>최적 Pricing 제안 <span class="toggle-icon">▼</span></h3>
+                    <p>축적된 과거 데이터를 분석하여 수주 확률이 가장 높은 최적의 Pricing Scheme을 제시합니다.</p>
+
+                    <div class="feature-details">
+                        <ul class="detail-list">
+                            <li><strong>Probabilistic Modeling:</strong> 과거 수주 성공/실패 데이터를 기반으로 한 확률 모델링</li>
+                            <li><strong>Win-Rate Optimization:</strong> 마진율과 수주 확률의 최적 접점(Sweet Spot) 도출</li>
+                            <li><strong>Market Insight:</strong> 경쟁 상황 및 시장 트렌드를 반영한 동적 가격 제안</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section (V7 Update) -->
+    <section class="impact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Sales Impact</h2>
+                <p class="section-description">AI 도입이 만드는 압도적인 성과를 확인하세요.</p>
+            </div>
+
+            <div class="impact-grid">
+                <!-- Case 1 -->
+                <div class="impact-card">
+                    <div class="impact-number">20% ↑</div>
+                    <div class="impact-label">미팅 전환율 증가</div>
+                    <p class="impact-desc">
+                        "제안서 작성에 쏟던 시간을 고객 분석에 투자했습니다.<br>
+                        AI가 초안을 5분 만에 잡아주니, 고객 미팅 횟수와 퀄리티가 동시에 올랐습니다."
+                    </p>
+                </div>
+
+                <!-- Case 2 -->
+                <div class="impact-card">
+                    <div class="impact-number">10% ↑</div>
+                    <div class="impact-label">마진율 개선</div>
+                    <p class="impact-desc">
+                        "감으로 정하던 가격을 AI 데이터 분석으로 최적화했습니다.<br>
+                        수주 확률은 지키면서도 프로젝트 마진율이 획기적으로 개선되었습니다."
+                    </p>
+                </div>
+            </div>
+
+            <div class="impact-cta">
+                <h3>AI로 완전히 달라진 Sales power를 경험하세요</h3>
+                <button onclick="document.getElementById('openModalBtn').click()" class="btn btn-primary"
+                    style="font-size: 1.2rem; padding: 1rem 3rem;">도입 문의</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <span class="logo-text">Bread & AI</span>
+                <p>AI로 여는 비즈니스의 새로운 지평</p>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <a href="mailto:ceo@breadai.co.kr" class="contact-link">ceo@breadai.co.kr</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Bread & AI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Modal Form -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>견적 문의</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-intro">상세 정보를 입력해주시면 빠르게 안내해 드리겠습니다.</p>
+                <form id="quoteForm">
+                    <div class="form-group">
+                        <label for="company">회사명</label>
+                        <input type="text" id="company" name="company" required placeholder="회사명을 입력하세요">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="department">부서</label>
+                            <input type="text" id="department" name="department" required placeholder="소속 부서">
+                        </div>
+                        <div class="form-group">
+                            <label for="position">직급</label>
+                            <input type="text" id="position" name="position" required placeholder="직급">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">이름</label>
+                        <input type="text" id="name" name="name" required placeholder="담당자 성함">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">이메일</label>
+                        <input type="email" id="email" name="email" required placeholder="example@company.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">연락처</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="010-0000-0000">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">문의 보내기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
