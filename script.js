@@ -31,20 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Form Submission Logic
+    // Form Submission Logic (Updated for Formspree)
     quoteForm.addEventListener('submit', (e) => {
         e.preventDefault();
-
-        // Collect Form Data
-        const formData = {
-            company: document.getElementById('company').value,
-            department: document.getElementById('department').value,
-            position: document.getElementById('position').value,
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
-            timestamp: new Date().toISOString()
-        };
 
         // Button Loading State
         const submitBtn = quoteForm.querySelector('button[type="submit"]');
@@ -52,31 +41,42 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.innerText = '전송 중...';
         submitBtn.disabled = true;
 
-        // Simulate API Call / Email Send
-        setTimeout(() => {
-            console.log('--- New Quote Inquiry ---');
-            console.log('To: ceo@breadai.co.kr');
-            console.table(formData);
+        // Collect Form Data
+        const formData = new FormData(quoteForm);
 
-            // Success Feedback
-            alert(`견적 문의가 성공적으로 접수되었습니다.\n\n[전송된 데이터]\n회사: ${formData.company}\n이름: ${formData.name}\n이메일: ${formData.email}\n\nceo@breadai.co.kr로 자동 전송되었습니다.`);
-
-            // Reset and Close
-            quoteForm.reset();
-            closeModal();
-
+        // Send to Formspree
+        fetch("https://formspree.io/f/mvzzgjrz", {
+            method: "POST",
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                // Success Feedback
+                alert("견적 문의가 성공적으로 접수되었습니다!\n빠른 시일 내에 연락드리겠습니다.");
+                quoteForm.reset();
+                closeModal();
+            } else {
+                // Error Feedback
+                response.json().then(data => {
+                    if (Object.hasOwn(data, 'errors')) {
+                        alert(data["errors"].map(error => error["message"]).join(", "));
+                    } else {
+                        alert("죄송합니다. 전송 중 오류가 발생했습니다. 다시 시도해주세요.");
+                    }
+                });
+            }
+        }).catch(error => {
+            alert("죄송합니다. 전송 중 네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+        }).finally(() => {
             submitBtn.innerText = originalText;
             submitBtn.disabled = false;
-        }, 1500);
+        });
     });
 });
 
 // Card Toggle Function (Global)
 function toggleCard(card) {
-    // Optional: Close others when one opens
-    // document.querySelectorAll('.feature-card').forEach(c => {
-    //     if (c !== card) c.classList.remove('expanded');
-    // });
-
     card.classList.toggle('expanded');
 }
