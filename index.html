@@ -231,6 +231,250 @@
     }
     .step-placeholder { text-align: center; color: var(--slate); font-size: 14px; display: flex; flex-direction: column; align-items: center; }
 
+    /* ===== STEP ANIMATIONS ===== */
+    .step-anim { width: 100%; max-width: 320px; }
+    .step-anim, .step-anim * { animation-play-state: paused !important; }
+    .step-anim.playing, .step-anim.playing * { animation-play-state: running !important; }
+
+    /* Step 1: PDF Upload Animation */
+    .anim-upload { position: relative; }
+    .anim-upload .pdf-icon {
+      width: 56px; height: 68px; background: #E53E3E; border-radius: 6px;
+      margin: 0 auto 20px; position: relative;
+      display: flex; align-items: center; justify-content: center;
+      animation: pdfDrop 2s ease forwards;
+      box-shadow: 0 4px 16px rgba(229,62,62,0.2);
+    }
+    .anim-upload .pdf-icon::after {
+      content: 'PDF'; color: white; font-size: 14px; font-weight: 800; letter-spacing: 1px;
+    }
+    .anim-upload .pdf-icon .corner {
+      position: absolute; top: 0; right: 0; width: 16px; height: 16px;
+      background: #C53030; border-radius: 0 6px 0 4px;
+    }
+    @keyframes pdfDrop {
+      0% { transform: translateY(-12px); opacity: 0.3; }
+      30% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    .anim-upload .progress-bar {
+      width: 100%; height: 6px; background: var(--border); border-radius: 3px;
+      overflow: hidden; margin-bottom: 16px;
+    }
+    .anim-upload .progress-fill {
+      height: 100%; background: linear-gradient(90deg, var(--orange), #F59E0B);
+      border-radius: 3px; animation: fillBar 2s ease forwards;
+    }
+    @keyframes fillBar {
+      0% { width: 0%; }
+      40% { width: 0%; }
+      80% { width: 100%; }
+      100% { width: 100%; }
+    }
+    .anim-upload .status-text {
+      font-size: 13px; font-weight: 600; color: var(--orange);
+      animation: statusFade 2s ease forwards;
+    }
+    @keyframes statusFade {
+      0%,50% { opacity: 0; }
+      80%,100% { opacity: 1; }
+    }
+    .anim-upload .tags {
+      display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 16px;
+    }
+    .anim-upload .tag {
+      font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 12px;
+      background: rgba(59,130,246,0.08); color: var(--electric-blue);
+      opacity: 0; animation: tagPop 2s ease forwards;
+    }
+    .anim-upload .tag:nth-child(1) { animation-delay: 1.0s; }
+    .anim-upload .tag:nth-child(2) { animation-delay: 1.15s; }
+    .anim-upload .tag:nth-child(3) { animation-delay: 1.3s; }
+    .anim-upload .tag:nth-child(4) { animation-delay: 1.45s; }
+    @keyframes tagPop {
+      0%,45% { opacity: 0; transform: scale(0.7); }
+      60% { opacity: 1; transform: scale(1.05); }
+      70%,100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Step 2: Form Input Animation */
+    .anim-research { position: relative; }
+    .anim-research .form-steps {
+      display: flex; gap: 0; margin-bottom: 16px; position: relative;
+    }
+    .anim-research .form-step {
+      flex: 1; text-align: center; font-size: 10px; font-weight: 600;
+      color: var(--slate); padding: 6px 0; position: relative;
+    }
+    .anim-research .form-step .step-dot {
+      width: 18px; height: 18px; border-radius: 50%; margin: 0 auto 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 700; border: 2px solid var(--border); background: white; color: var(--slate);
+    }
+    .anim-research .form-step.done .step-dot { background: #10B981; border-color: #10B981; color: white; }
+    .anim-research .form-step.active .step-dot { background: var(--orange); border-color: var(--orange); color: white; }
+    .anim-research .form-step.done::after,
+    .anim-research .form-step.active::after {
+      content: ''; position: absolute; top: 14px; left: calc(50% + 12px); width: calc(100% - 24px); height: 2px;
+      background: var(--border); z-index: 0;
+    }
+    .anim-research .form-step:last-child::after { display: none; }
+    .anim-research .form-step.done::after { background: #10B981; }
+
+    .anim-research .form-fields { display: flex; flex-direction: column; gap: 10px; }
+    .anim-research .form-field { position: relative; }
+    .anim-research .form-field label {
+      display: block; font-size: 11px; font-weight: 600; color: var(--charcoal); margin-bottom: 3px;
+    }
+    .anim-research .form-field label .required { color: #EF4444; }
+    .anim-research .form-field .field-input {
+      width: 100%; height: 32px; background: white; border: 1.5px solid var(--border);
+      border-radius: 6px; padding: 0 10px; font-size: 12px; color: var(--deep-navy);
+      display: flex; align-items: center; overflow: hidden;
+    }
+    .anim-research .form-field .field-input.typing {
+      border-color: var(--orange);
+    }
+    /* === Step 2: JS-driven typing === */
+    .anim-research .form-field .typed-value {
+      font-weight: 500; color: var(--deep-navy);
+    }
+    .anim-research .form-field .typed-value:empty::after {
+      content: ''; /* placeholder when empty */
+    }
+    /* Blinking caret on active field */
+    .anim-research .field-input.typing {
+      border-color: var(--orange);
+    }
+    .anim-research .field-input.typing::after {
+      content: ''; display: inline-block; width: 2px; height: 14px;
+      background: var(--orange); margin-left: 1px; vertical-align: middle;
+      animation: caretBlink 0.6s step-end infinite;
+    }
+    @keyframes caretBlink { 50% { opacity: 0; } }
+    /* Caret hidden when done */
+    .anim-research .field-input.done::after { display: none; }
+
+    /* Button + cursor wrapper */
+    .anim-research .btn-wrap {
+      position: relative; margin-top: 14px;
+    }
+    .anim-research .research-btn {
+      width: 100%; padding: 10px; border-radius: 8px;
+      background: var(--orange); color: white; font-size: 13px; font-weight: 700;
+      border: none; position: relative;
+      opacity: 0; transform: translateY(4px);
+      transition: opacity 0.4s ease, transform 0.4s ease, background 0.15s ease, box-shadow 0.15s ease;
+    }
+    .anim-research .research-btn.show {
+      opacity: 1; transform: translateY(0);
+    }
+    .anim-research .research-btn.pressed {
+      transform: scale(0.96); background: var(--orange-hover);
+      box-shadow: 0 0 0 4px rgba(217,119,6,0.15);
+    }
+    /* Click cursor */
+    .anim-research .click-cursor {
+      position: absolute;
+      top: 4px; right: 28px;
+      width: 18px; height: 18px; opacity: 0; z-index: 10;
+      pointer-events: none;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.18));
+      transition: opacity 0.3s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: translate(50px, 25px);
+    }
+    .anim-research .click-cursor.show {
+      opacity: 1; transform: translate(0, 0);
+    }
+    .anim-research .click-cursor.click {
+      transform: translate(0, 2px) scale(0.9);
+    }
+
+    /* Step 3: Completion Animation */
+    .anim-complete { position: relative; text-align: center; }
+    .anim-complete .form-steps {
+      display: flex; gap: 0; margin-bottom: 20px; position: relative;
+    }
+    .anim-complete .form-step {
+      flex: 1; text-align: center; font-size: 10px; font-weight: 600;
+      color: var(--slate); padding: 6px 0; position: relative;
+    }
+    .anim-complete .form-step .step-dot {
+      width: 18px; height: 18px; border-radius: 50%; margin: 0 auto 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 700;
+    }
+    .anim-complete .form-step.done .step-dot { background: #10B981; border: 2px solid #10B981; color: white; }
+    .anim-complete .form-step.active .step-dot { background: var(--orange); border: 2px solid var(--orange); color: white; }
+    .anim-complete .form-step.done::after,
+    .anim-complete .form-step.active::after {
+      content: ''; position: absolute; top: 14px; left: calc(50% + 12px); width: calc(100% - 24px); height: 2px;
+      background: #10B981; z-index: 0;
+    }
+    .anim-complete .form-step:last-child::after { display: none; }
+
+    .anim-complete .done-check {
+      width: 52px; height: 52px; border-radius: 50%; background: #10B981;
+      margin: 0 auto 12px; display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: scale(0.3);
+      animation: checkPop 0.5s ease forwards; animation-delay: 0.3s;
+    }
+    .anim-complete .done-check svg { width: 28px; height: 28px; stroke: white; fill: none; stroke-width: 2.5; }
+    @keyframes checkPop {
+      0% { opacity: 0; transform: scale(0.3); }
+      60% { opacity: 1; transform: scale(1.1); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .anim-complete .done-title {
+      font-size: 16px; font-weight: 800; color: var(--deep-navy);
+      opacity: 0; animation: fadeUp 0.4s ease forwards; animation-delay: 0.8s;
+    }
+    .anim-complete .done-sub {
+      font-size: 12px; color: var(--slate); margin-top: 4px; margin-bottom: 16px;
+      opacity: 0; animation: fadeUp 0.4s ease forwards; animation-delay: 0.8s;
+    }
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(6px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .anim-complete .file-cards { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+    .anim-complete .file-card {
+      display: flex; align-items: center; gap: 10px;
+      background: white; border: 1px solid var(--border); border-radius: 8px;
+      padding: 10px 12px; text-align: left;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+      opacity: 0; transform: translateX(-10px);
+    }
+    .anim-complete .file-card:nth-child(1) { animation: slideIn 0.4s ease forwards; animation-delay: 1.3s; }
+    .anim-complete .file-card:nth-child(2) { animation: slideIn 0.4s ease forwards; animation-delay: 1.6s; }
+    @keyframes slideIn {
+      0% { opacity: 0; transform: translateX(-10px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+    .file-card .file-icon {
+      width: 32px; height: 32px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .file-card .file-icon svg { width: 16px; height: 16px; }
+    .file-card .file-info { flex: 1; }
+    .file-card .file-name { font-size: 12px; font-weight: 600; color: var(--deep-navy); }
+    .file-card .file-size { font-size: 10px; color: var(--slate); }
+
+    .anim-complete .download-btn {
+      width: 100%; padding: 10px; border-radius: 8px;
+      background: var(--orange); color: white; font-size: 13px; font-weight: 700;
+      border: none; display: flex; align-items: center; justify-content: center; gap: 6px;
+      opacity: 0; animation: btnGlow2 3s ease forwards; animation-delay: 2.2s;
+    }
+    .anim-complete .download-btn svg { width: 14px; height: 14px; stroke: white; fill: none; stroke-width: 2.5; }
+    @keyframes btnGlow2 {
+      0% { opacity: 0; transform: scale(0.95); }
+      15% { opacity: 1; transform: scale(1); }
+      30% { box-shadow: 0 0 0 4px rgba(217,119,6,0.2); }
+      45% { box-shadow: 0 0 0 0px rgba(217,119,6,0); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
     /* ===== FINAL CTA ===== */
     .final-cta { padding: 120px 24px; background: var(--soft-white); text-align: center; }
     .final-cta .tagline {
@@ -680,9 +924,16 @@
           <p>귀사의 제품/서비스 소개서 PDF를 업로드하세요. AI가 핵심 내용, 디자인 스타일, 컬러 팔레트까지 자동으로 분석합니다.</p>
         </div>
         <div class="step-visual">
-          <div class="step-placeholder">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--slate)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.5;margin-bottom:12px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="m9 15 3-3 3 3"/></svg>
-            <p>PDF 소개서 업로드 →<br>AI가 자동 분석</p>
+          <div class="step-anim anim-upload">
+            <div class="pdf-icon"><div class="corner"></div></div>
+            <div class="progress-bar"><div class="progress-fill"></div></div>
+            <div class="status-text">분석 완료 ✓</div>
+            <div class="tags">
+              <span class="tag">SaaS 솔루션</span>
+              <span class="tag">B2B 영업</span>
+              <span class="tag">#2A5BD7</span>
+              <span class="tag">AI 자동화</span>
+            </div>
           </div>
         </div>
       </div>
@@ -693,9 +944,49 @@
           <p>영업할 기업명을 입력하면, AI가 해당 기업에 대한 실시간 리서치를 시작합니다. 업종, 최근 이슈, Pain Point까지 자동으로 파악합니다.</p>
         </div>
         <div class="step-visual">
-          <div class="step-placeholder">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--slate)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.5;margin-bottom:12px"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01"/><path d="M9 12v.01"/><path d="M9 15v.01"/><path d="M9 18v.01"/></svg>
-            <p>기업명 입력 →<br>AI 실시간 리서치</p>
+          <div class="step-anim anim-research">
+            <!-- Step Indicator -->
+            <div class="form-steps">
+              <div class="form-step done">
+                <div class="step-dot"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+                <span>소개서 선택</span>
+              </div>
+              <div class="form-step active">
+                <div class="step-dot">2</div>
+                <span>리서치</span>
+              </div>
+              <div class="form-step">
+                <div class="step-dot">3</div>
+                <span>제안 논리</span>
+              </div>
+              <div class="form-step">
+                <div class="step-dot">4</div>
+                <span>완료</span>
+              </div>
+            </div>
+            <!-- Form Fields -->
+            <div class="form-fields">
+              <div class="form-field field-company">
+                <label>회사명 <span class="required">*</span></label>
+                <div class="field-input"><span class="typed-value" data-text="브레드앤에이아이"></span></div>
+              </div>
+              <div class="form-field field-url">
+                <label>홈페이지 URL</label>
+                <div class="field-input"><span class="typed-value" data-text="www.breadai.co.kr"></span></div>
+              </div>
+              <div class="form-field field-dept">
+                <label>부서</label>
+                <div class="field-input"><span class="typed-value" data-text="AI사업부"></span></div>
+              </div>
+              <div class="form-field field-position">
+                <label>직급</label>
+                <div class="field-input"><span class="typed-value" data-text="부장"></span></div>
+              </div>
+            </div>
+            <div class="btn-wrap">
+              <button class="research-btn">리서치 시작</button>
+              <svg class="click-cursor" viewBox="0 0 24 24" fill="var(--deep-navy)" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87c.45 0 .67-.54.35-.85L6.35 2.85a.5.5 0 0 0-.85.36z"/></svg>
+            </div>
           </div>
         </div>
       </div>
@@ -706,9 +997,57 @@
           <p>맞춤 콜드 이메일과 기업별 제안서가 자동 생성됩니다. 바로 복사하고, 다운로드해서 발송하세요. 영업이 5분 만에 시작됩니다.</p>
         </div>
         <div class="step-visual">
-          <div class="step-placeholder">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--slate)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.5;margin-bottom:12px"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-            <p>맞춤 이메일 + 제안서<br>자동 생성 완료</p>
+          <div class="step-anim anim-complete">
+            <!-- Step Indicator (all done) -->
+            <div class="form-steps">
+              <div class="form-step done">
+                <div class="step-dot"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+                <span>소개서 선택</span>
+              </div>
+              <div class="form-step done">
+                <div class="step-dot"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+                <span>리서치</span>
+              </div>
+              <div class="form-step done">
+                <div class="step-dot"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+                <span>제안 논리</span>
+              </div>
+              <div class="form-step done">
+                <div class="step-dot"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+                <span>완료</span>
+              </div>
+            </div>
+            <!-- Big Check -->
+            <div class="done-check">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="done-title">제안서 생성 완료</div>
+            <div class="done-sub">S전자 DX사업부 맞춤 제안서</div>
+            <!-- File Cards -->
+            <div class="file-cards">
+              <div class="file-card">
+                <div class="file-icon" style="background:rgba(59,130,246,0.08)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <div class="file-info">
+                  <div class="file-name">S전자_콜드이메일.txt</div>
+                  <div class="file-size">2.1 KB</div>
+                </div>
+              </div>
+              <div class="file-card">
+                <div class="file-icon" style="background:rgba(229,62,62,0.08)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#E53E3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                </div>
+                <div class="file-info">
+                  <div class="file-name">S전자_DX사업부_제안서.pdf</div>
+                  <div class="file-size">3.8 MB · 15 pages</div>
+                </div>
+              </div>
+            </div>
+            <button class="download-btn">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              다운로드
+            </button>
           </div>
         </div>
       </div>
@@ -844,6 +1183,93 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal, [data-scroll-reveal]').forEach(el => observer.observe(el));
+
+    // STEP ANIMATION: play once on scroll
+    const stepObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const anim = e.target.querySelector('.step-anim');
+          if (anim) {
+            anim.classList.add('playing');
+            // Step 2: JS typing sequence
+            if (anim.classList.contains('anim-research')) runFormTyping(anim);
+          }
+          stepObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.step-visual').forEach(el => stepObs.observe(el));
+
+    // Step 2 form typing engine
+    function runFormTyping(container) {
+      const wait = ms => new Promise(r => setTimeout(r, ms));
+      const fields = container.querySelectorAll('.field-input');
+      const btn = container.querySelector('.research-btn');
+      const cursor = container.querySelector('.click-cursor');
+
+      async function typeText(fieldInput, span, minMs, maxMs) {
+        const min = minMs || 80, max = maxMs || 150;
+        const text = span.dataset.text;
+        fieldInput.classList.add('typing');
+        await wait(120);
+        for (let i = 0; i < text.length; i++) {
+          span.textContent += text[i];
+          await wait(min + Math.random() * (max - min));
+        }
+        await wait(180);
+        fieldInput.classList.remove('typing');
+        fieldInput.classList.add('done');
+      }
+
+      (async () => {
+        await wait(400);
+
+        // 1) 회사명 타이핑
+        const f1 = container.querySelector('.field-company .field-input');
+        const t1 = container.querySelector('.field-company .typed-value');
+        await typeText(f1, t1);
+
+        await wait(300);
+
+        // 2) 홈페이지 URL 타이핑 (영문이라 좀 더 빠르게)
+        const f2 = container.querySelector('.field-url .field-input');
+        const t2 = container.querySelector('.field-url .typed-value');
+        await typeText(f2, t2, 40, 60);
+
+        await wait(250);
+
+        // 3) 부서 타이핑
+        const f3 = container.querySelector('.field-dept .field-input');
+        const t3 = container.querySelector('.field-dept .typed-value');
+        await typeText(f3, t3);
+
+        await wait(300);
+
+        // 4) 직급 타이핑
+        const f4 = container.querySelector('.field-position .field-input');
+        const t4 = container.querySelector('.field-position .typed-value');
+        await typeText(f4, t4);
+
+        await wait(400);
+
+        // 5) 버튼 등장
+        btn.classList.add('show');
+
+        await wait(500);
+
+        // 6) 커서 슬라이드인
+        cursor.classList.add('show');
+
+        await wait(700);
+
+        // 7) 클릭!
+        cursor.classList.add('click');
+        btn.classList.add('pressed');
+
+        await wait(200);
+        cursor.classList.remove('click');
+      })();
+    }
 
     // TAB SWITCH
     function switchTab(idx) {
