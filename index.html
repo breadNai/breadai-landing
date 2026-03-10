@@ -1106,10 +1106,11 @@
       </div>
       <div class="contact-modal-body">
         <p class="contact-modal-intro">아래 정보를 남겨주시면 담당자가 빠르게 연락드립니다.</p>
-        <form id="contactForm">
+        <form id="contactForm" novalidate>
           <div class="form-group">
             <label for="cf-company">회사명 <span class="required">*</span></label>
-            <input type="text" id="cf-company" name="company" placeholder="예: 삼성전자" required pattern="[가-힣a-zA-Z\s&\.\-]+" title="회사명에 숫자는 입력할 수 없습니다">
+            <input type="text" id="cf-company" name="company" placeholder="예: 삼성전자">
+            <span class="field-error" id="err-company"></span>
           </div>
           <div class="form-row">
             <div class="form-group">
@@ -1123,15 +1124,18 @@
           </div>
           <div class="form-group">
             <label for="cf-name">이름 <span class="required">*</span></label>
-            <input type="text" id="cf-name" name="name" placeholder="홍길동" required pattern="[가-힣a-zA-Z\s]+" title="이름에 숫자는 입력할 수 없습니다">
+            <input type="text" id="cf-name" name="name" placeholder="홍길동">
+            <span class="field-error" id="err-name"></span>
           </div>
           <div class="form-group">
             <label for="cf-email">이메일 <span class="required">*</span></label>
-            <input type="email" id="cf-email" name="email" placeholder="name@company.com" required>
+            <input type="email" id="cf-email" name="email" placeholder="name@company.com">
+            <span class="field-error" id="err-email"></span>
           </div>
           <div class="form-group">
             <label for="cf-phone">연락처</label>
             <input type="tel" id="cf-phone" name="phone" placeholder="01012345678" maxlength="13">
+            <span class="field-error" id="err-phone"></span>
           </div>
           <div class="form-group">
             <label for="cf-message">문의 내용</label>
@@ -1164,6 +1168,9 @@
     .contact-submit-btn { width:100%; padding:14px; background:var(--orange); color:var(--white); border:none; border-radius:12px; font-size:15px; font-weight:700; cursor:pointer; transition:background 0.2s; margin-top:8px; }
     .contact-submit-btn:hover { background:var(--orange-hover); }
     .contact-submit-btn:disabled { opacity:0.6; cursor:not-allowed; }
+    .field-error { display:block; font-size:12px; color:#EF4444; margin-top:4px; min-height:0; transition:all 0.2s; }
+    .field-error:empty { display:none; }
+    .form-group input.invalid, .form-group textarea.invalid { border-color:#EF4444; }
     @media (max-width:768px) { .form-row { grid-template-columns:1fr; } }
   </style>
 
@@ -1305,29 +1312,62 @@
     }
     document.addEventListener('keydown', e => { if(e.key === 'Escape') closeContactModal(); });
 
-    // PHONE NUMBER: auto-format 01012345678 → 010-1234-5678
-    document.getElementById('cf-phone').addEventListener('input', function(e) {
+    // === FORM VALIDATION ===
+    function showErr(id, msg) {
+      const el = document.getElementById(id);
+      const input = el.previousElementSibling;
+      el.textContent = msg;
+      if (msg) input.classList.add('invalid');
+      else input.classList.remove('invalid');
+    }
+    function clearErr(id) { showErr(id, ''); }
+
+    // 회사명: 숫자 불가 (실시간)
+    document.getElementById('cf-company').addEventListener('input', function() {
+      if (/[0-9]/.test(this.value)) showErr('err-company', '회사명에 숫자는 입력할 수 없습니다');
+      else clearErr('err-company');
+    });
+    // 이름: 숫자 불가 (실시간)
+    document.getElementById('cf-name').addEventListener('input', function() {
+      if (/[0-9]/.test(this.value)) showErr('err-name', '이름에 숫자는 입력할 수 없습니다');
+      else clearErr('err-name');
+    });
+    // 이메일: 형식 검증 (blur 시)
+    document.getElementById('cf-email').addEventListener('blur', function() {
+      if (this.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value)) showErr('err-email', '올바른 이메일 형식을 입력해주세요');
+      else clearErr('err-email');
+    });
+    document.getElementById('cf-email').addEventListener('input', function() { clearErr('err-email'); });
+    // 연락처: 자동 포맷 + 검증
+    document.getElementById('cf-phone').addEventListener('input', function() {
       let val = this.value.replace(/[^0-9]/g, '');
       if (val.length > 11) val = val.slice(0, 11);
-      if (val.length >= 8) {
-        this.value = val.slice(0, 3) + '-' + val.slice(3, 7) + '-' + val.slice(7);
-      } else if (val.length >= 4) {
-        this.value = val.slice(0, 3) + '-' + val.slice(3);
-      } else {
-        this.value = val;
-      }
+      if (val.length >= 8) this.value = val.slice(0,3)+'-'+val.slice(3,7)+'-'+val.slice(7);
+      else if (val.length >= 4) this.value = val.slice(0,3)+'-'+val.slice(3);
+      else this.value = val;
+      if (val.length > 0 && val.length < 11) showErr('err-phone', '휴대폰 번호 11자리를 입력해주세요');
+      else clearErr('err-phone');
     });
 
     // CONTACT FORM SUBMIT via Web3Forms API
     document.getElementById('contactForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const btn = this.querySelector('.contact-submit-btn');
-      // 연락처 입력 시 11자리 검증
+      // 제출 시 최종 검증
+      let hasError = false;
+      const company = document.getElementById('cf-company').value.trim();
+      const name = document.getElementById('cf-name').value.trim();
+      const email = document.getElementById('cf-email').value.trim();
       const phone = document.getElementById('cf-phone').value;
-      if (phone && phone.replace(/[^0-9]/g, '').length !== 11) {
-        alert('연락처는 11자리 휴대폰 번호를 입력해주세요.');
-        return;
-      }
+      if (!company) { showErr('err-company', '회사명을 입력해주세요'); hasError = true; }
+      else if (/[0-9]/.test(company)) { showErr('err-company', '회사명에 숫자는 입력할 수 없습니다'); hasError = true; }
+      if (!name) { showErr('err-name', '이름을 입력해주세요'); hasError = true; }
+      else if (/[0-9]/.test(name)) { showErr('err-name', '이름에 숫자는 입력할 수 없습니다'); hasError = true; }
+      if (!email) { showErr('err-email', '이메일을 입력해주세요'); hasError = true; }
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('err-email', '올바른 이메일 형식을 입력해주세요'); hasError = true; }
+      if (phone && phone.replace(/[^0-9]/g,'').length !== 11) { showErr('err-phone', '휴대폰 번호 11자리를 입력해주세요'); hasError = true; }
+      if (hasError) return;
+
+      const btn = this.querySelector('.contact-submit-btn');
       const orig = btn.textContent;
       btn.textContent = '전송 중...';
       btn.disabled = true;
