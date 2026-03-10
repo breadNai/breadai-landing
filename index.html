@@ -1087,7 +1087,7 @@
           </div>
           <div class="footer-col">
             <h4>문의</h4>
-            <a href="mailto:ceo@breadai.co.kr">ceo@breadai.co.kr</a>
+            <a href="mailto:contact@breadai.co.kr">contact@breadai.co.kr</a>
           </div>
         </div>
       </div>
@@ -1109,7 +1109,7 @@
         <form id="contactForm">
           <div class="form-group">
             <label for="cf-company">회사명 <span class="required">*</span></label>
-            <input type="text" id="cf-company" name="company" placeholder="예: 삼성전자" required>
+            <input type="text" id="cf-company" name="company" placeholder="예: 삼성전자" required pattern="[가-힣a-zA-Z\s&\.\-]+" title="회사명에 숫자는 입력할 수 없습니다">
           </div>
           <div class="form-row">
             <div class="form-group">
@@ -1123,7 +1123,7 @@
           </div>
           <div class="form-group">
             <label for="cf-name">이름 <span class="required">*</span></label>
-            <input type="text" id="cf-name" name="name" placeholder="홍길동" required>
+            <input type="text" id="cf-name" name="name" placeholder="홍길동" required pattern="[가-힣a-zA-Z\s]+" title="이름에 숫자는 입력할 수 없습니다">
           </div>
           <div class="form-group">
             <label for="cf-email">이메일 <span class="required">*</span></label>
@@ -1131,7 +1131,7 @@
           </div>
           <div class="form-group">
             <label for="cf-phone">연락처</label>
-            <input type="tel" id="cf-phone" name="phone" placeholder="010-0000-0000">
+            <input type="tel" id="cf-phone" name="phone" placeholder="01012345678" maxlength="13">
           </div>
           <div class="form-group">
             <label for="cf-message">문의 내용</label>
@@ -1305,45 +1305,65 @@
     }
     document.addEventListener('keydown', e => { if(e.key === 'Escape') closeContactModal(); });
 
-    // CONTACT FORM SUBMIT
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
+    // PHONE NUMBER: auto-format 01012345678 → 010-1234-5678
+    document.getElementById('cf-phone').addEventListener('input', function(e) {
+      let val = this.value.replace(/[^0-9]/g, '');
+      if (val.length > 11) val = val.slice(0, 11);
+      if (val.length >= 8) {
+        this.value = val.slice(0, 3) + '-' + val.slice(3, 7) + '-' + val.slice(7);
+      } else if (val.length >= 4) {
+        this.value = val.slice(0, 3) + '-' + val.slice(3);
+      } else {
+        this.value = val;
+      }
+    });
+
+    // CONTACT FORM SUBMIT via Web3Forms API
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const btn = this.querySelector('.contact-submit-btn');
+      // 연락처 입력 시 11자리 검증
+      const phone = document.getElementById('cf-phone').value;
+      if (phone && phone.replace(/[^0-9]/g, '').length !== 11) {
+        alert('연락처는 11자리 휴대폰 번호를 입력해주세요.');
+        return;
+      }
       const orig = btn.textContent;
       btn.textContent = '전송 중...';
       btn.disabled = true;
 
-      const data = {
-        company: document.getElementById('cf-company').value,
-        department: document.getElementById('cf-department').value,
-        position: document.getElementById('cf-position').value,
-        name: document.getElementById('cf-name').value,
-        email: document.getElementById('cf-email').value,
-        phone: document.getElementById('cf-phone').value,
-        message: document.getElementById('cf-message').value,
-        timestamp: new Date().toISOString()
+      const formData = {
+        access_key: '766181fb-d7da-46d3-8a20-20a868afef0b',
+        subject: '[Bread & AI 도입 문의] ' + document.getElementById('cf-company').value,
+        from_name: document.getElementById('cf-name').value,
+        '회사': document.getElementById('cf-company').value,
+        '부서': document.getElementById('cf-department').value,
+        '직함': document.getElementById('cf-position').value,
+        '이름': document.getElementById('cf-name').value,
+        '이메일': document.getElementById('cf-email').value,
+        '연락처': document.getElementById('cf-phone').value,
+        '문의 내용': document.getElementById('cf-message').value
       };
 
-      // Send to email via mailto fallback (can be replaced with API endpoint)
-      const subject = encodeURIComponent('[Bread & AI 도입 문의] ' + data.company);
-      const body = encodeURIComponent(
-        '회사: ' + data.company + '\n' +
-        '부서: ' + data.department + '\n' +
-        '직함: ' + data.position + '\n' +
-        '이름: ' + data.name + '\n' +
-        '이메일: ' + data.email + '\n' +
-        '연락처: ' + data.phone + '\n' +
-        '문의 내용: ' + data.message
-      );
-
-      setTimeout(() => {
-        window.location.href = 'mailto:ceo@breadai.co.kr?subject=' + subject + '&body=' + body;
-        alert('문의가 접수되었습니다.\n빠른 시일 내에 연락드리겠습니다.');
-        this.reset();
-        closeContactModal();
-        btn.textContent = orig;
-        btn.disabled = false;
-      }, 800);
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+        const result = await res.json();
+        if (result.success) {
+          alert('문의가 접수되었습니다.\n빠른 시일 내에 연락드리겠습니다.');
+          this.reset();
+          closeContactModal();
+        } else {
+          alert('전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
+        }
+      } catch (err) {
+        alert('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      }
+      btn.textContent = orig;
+      btn.disabled = false;
     });
   </script>
 </body>
