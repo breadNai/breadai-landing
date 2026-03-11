@@ -59,6 +59,7 @@
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       padding: 0 24px;
+      background: var(--white);
       transition: all 0.3s ease;
     }
     nav.scrolled {
@@ -103,10 +104,54 @@
     .btn-outline:hover { border-color: var(--charcoal); color: var(--deep-navy); }
     .hamburger {
       display: none; background: none;
-      width: 32px; height: 32px;
+      width: 36px; height: 36px;
       flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+      position: relative; z-index: 101;
     }
-    .hamburger span { display: block; width: 20px; height: 2px; background: var(--deep-navy); border-radius: 2px; }
+    .hamburger span {
+      display: block; width: 20px; height: 2px; background: var(--deep-navy); border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* 모바일 드롭다운 메뉴 */
+    .mobile-menu {
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      padding: 0; overflow: hidden;
+      max-height: 0; opacity: 0;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, padding 0.3s ease;
+    }
+    .mobile-menu.open {
+      max-height: 400px; opacity: 1;
+      padding: 8px 0 16px;
+    }
+    .mobile-menu a, .mobile-menu button.mm-btn {
+      display: block; width: 100%;
+      font-size: 15px; font-weight: 500; color: var(--charcoal);
+      background: none; border: none; cursor: pointer;
+      padding: 12px 24px; text-align: left;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .mobile-menu a:hover, .mobile-menu button.mm-btn:hover {
+      background: var(--soft-white); color: var(--deep-navy);
+    }
+    .mobile-menu .mm-divider {
+      height: 1px; background: var(--border); margin: 8px 24px;
+    }
+    .mobile-menu .mm-cta {
+      padding: 8px 24px 0; display: flex; flex-direction: column; gap: 8px;
+    }
+    .mobile-menu .mm-cta .btn-primary {
+      width: 100%; text-align: center; font-size: 15px; padding: 12px; border-radius: 8px;
+    }
+    .mobile-menu .mm-cta .btn-outline {
+      width: 100%; text-align: center; font-size: 14px; padding: 10px; border-radius: 8px;
+    }
 
     /* ===== HERO ===== */
     .hero {
@@ -511,8 +556,8 @@
 
     /* ===== MOBILE ===== */
     @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .nav-cta .btn-login { display: none; }
+      .nav-links { display: none !important; }
+      .nav-cta { display: none !important; }
       .hamburger { display: flex; }
 
       .hero { padding: 120px 20px 80px; min-height: auto; }
@@ -567,6 +612,17 @@
       <button class="hamburger" onclick="toggleMobile()" aria-label="메뉴">
         <span></span><span></span><span></span>
       </button>
+    </div>
+    <!-- Mobile Dropdown -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#features" onclick="toggleMobile()">기능</a>
+      <a href="#how" onclick="toggleMobile()">사용 방법</a>
+      <button class="mm-btn" onclick="toggleMobile();openContactModal()">도입 문의</button>
+      <div class="mm-divider"></div>
+      <div class="mm-cta">
+        <button class="btn-primary" onclick="toggleMobile();window.open('https://app.breadai.co.kr/','_blank')">무료로 시작하기 →</button>
+        <button class="btn-outline" onclick="toggleMobile();window.open('https://app.breadai.co.kr/','_blank')">로그인</button>
+      </div>
     </div>
   </nav>
 
@@ -1181,8 +1237,8 @@
 
     // MOBILE MENU
     function toggleMobile() {
-      const links = document.querySelector('.nav-links');
-      links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+      document.getElementById('mobileMenu').classList.toggle('open');
+      document.querySelector('.hamburger').classList.toggle('open');
     }
 
     // SCROLL REVEAL
