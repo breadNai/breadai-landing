@@ -176,7 +176,7 @@
 
     /* ===== PROBLEM ===== */
     .problem { padding: 140px 24px; background: var(--white); }
-    .problem-inner { max-width: 600px; margin: 0 auto; text-align: center; }
+    .problem-inner { max-width: 640px; margin: 0 auto; text-align: center; }
     .problem-line {
       font-size: 28px; font-weight: 500; color: var(--deep-navy);
       line-height: 1.65; margin-bottom: 40px;
@@ -186,6 +186,21 @@
     .problem-line.visible { opacity: 1; transform: translateY(0); }
     .problem-pain { font-size: 22px; color: var(--slate); }
     .problem-turn { font-size: 32px; font-weight: 700; color: var(--orange); margin-top: 24px; }
+    .problem-stat {
+      font-size: 20px; color: var(--slate); font-weight: 400; line-height: 1.7;
+    }
+    .problem-stat strong { color: var(--deep-navy); font-weight: 700; }
+    .problem-stat .num { font-size: 48px; font-weight: 800; color: var(--orange); display: block; margin-bottom: 4px; letter-spacing: -0.02em; }
+    .problem-divider {
+      width: 40px; height: 3px; background: var(--border); border-radius: 2px;
+      margin: 0 auto 40px;
+    }
+    .problem-shift {
+      font-size: 26px; font-weight: 600; color: var(--deep-navy); line-height: 1.6;
+    }
+    .problem-shift em {
+      font-style: normal; color: var(--orange); font-weight: 700;
+    }
 
     /* ===== FEATURES ===== */
     .features { padding: 120px 24px; background: var(--soft-white); }
@@ -515,6 +530,124 @@
       100% { opacity: 1; transform: scale(1); }
     }
 
+    /* ===== PRICING ===== */
+    .pricing { padding: 120px 24px; background: var(--white); }
+    .pricing-header { text-align: center; margin-bottom: 64px; }
+    .pricing-header .pricing-label {
+      font-size: 14px; font-weight: 600; color: var(--electric-blue);
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;
+    }
+    .pricing-header h2 { font-size: 38px; font-weight: 700; color: var(--deep-navy); line-height: 1.35; margin-bottom: 12px; }
+    .pricing-header h2 .orange { color: var(--orange); }
+    .pricing-header p { font-size: 18px; color: var(--slate); line-height: 1.6; }
+
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; max-width: var(--max-w); margin: 0 auto; align-items: stretch;
+    }
+    .pricing-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 16px; padding: 36px 28px;
+      display: flex; flex-direction: column;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .pricing-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+    .pricing-card.featured {
+      border: 2px solid var(--orange);
+      box-shadow: 0 8px 32px rgba(217,119,6,0.1);
+      position: relative;
+    }
+    .pricing-card.featured .popular-badge {
+      position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%);
+      background: var(--orange); color: var(--white);
+      font-size: 12px; font-weight: 700; padding: 4px 16px;
+      border-radius: 20px; letter-spacing: 0.04em;
+    }
+    .pricing-card h3 { font-size: 24px; font-weight: 700; color: var(--deep-navy); margin-bottom: 8px; }
+    .pricing-card .plan-desc {
+      font-size: 14px; color: var(--slate); line-height: 1.5;
+      margin-bottom: 24px; min-height: 42px;
+    }
+    .pricing-card .plan-price {
+      font-size: 36px; font-weight: 800; color: var(--deep-navy); margin-bottom: 2px;
+    }
+    .pricing-card .plan-period { font-size: 14px; color: var(--slate); margin-bottom: 4px; }
+    .pricing-card .plan-monthly { font-size: 13px; color: var(--slate); margin-bottom: 24px; }
+
+    .pricing-card .plan-includes {
+      background: var(--soft-white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px; margin-bottom: 24px;
+    }
+    .pricing-card.featured .plan-includes {
+      background: #FFFBEB; border-color: rgba(217,119,6,0.15);
+    }
+    .plan-includes .inc-title { font-size: 14px; font-weight: 600; color: var(--charcoal); margin-bottom: 10px; }
+    .plan-includes .inc-row {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 14px; color: var(--charcoal); padding: 4px 0;
+    }
+    .plan-includes .inc-row .val { font-weight: 700; }
+    .plan-includes .inc-row .val.highlight { color: var(--orange); font-weight: 700; }
+
+    .pricing-card .feature-list { list-style: none; flex: 1; margin-bottom: 28px; }
+    .pricing-card .feature-list li {
+      font-size: 14px; color: var(--charcoal); padding: 6px 0 6px 28px; position: relative;
+    }
+    .pricing-card .feature-list li::before {
+      content: ''; position: absolute; left: 0; top: 12px;
+      width: 16px; height: 16px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233B82F6' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E");
+      background-size: contain; background-repeat: no-repeat;
+    }
+    .pricing-card.featured .feature-list li::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D97706' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E");
+    }
+    .pricing-card .feature-list li.bold-item { font-weight: 600; color: var(--deep-navy); }
+    .pricing-card .feature-list li.highlight-item {
+      font-weight: 700; color: var(--deep-navy);
+      background: rgba(217,119,6,0.06); margin-left: -8px; margin-right: -8px;
+      padding-left: 36px; border-radius: 6px;
+    }
+
+    .pricing-card .plan-btn {
+      width: 100%; padding: 14px; border-radius: 10px;
+      font-size: 15px; font-weight: 700; text-align: center;
+      transition: all 0.2s; display: block;
+    }
+    .plan-btn.btn-outline-card {
+      background: var(--white); border: 2px solid var(--charcoal);
+      color: var(--charcoal);
+    }
+    .plan-btn.btn-outline-card:hover { background: var(--soft-white); }
+    .plan-btn.btn-orange {
+      background: var(--orange); border: 2px solid var(--orange);
+      color: var(--white);
+    }
+    .plan-btn.btn-orange:hover { background: var(--orange-hover); border-color: var(--orange-hover); }
+    .plan-btn.btn-dark {
+      background: var(--charcoal); border: 2px solid var(--charcoal);
+      color: var(--white);
+    }
+    .plan-btn.btn-dark:hover { background: var(--deep-navy); border-color: var(--deep-navy); }
+
+    .pricing-notes {
+      max-width: var(--max-w); margin: 40px auto 0;
+      display: flex; gap: 16px;
+    }
+    .pricing-note {
+      flex: 1; background: var(--soft-white); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+    }
+    .pricing-note .note-title {
+      font-size: 14px; font-weight: 700; color: var(--charcoal);
+      margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+    }
+    .pricing-note .note-title .note-icon { color: var(--orange); }
+    .pricing-note .note-title .note-icon.blue { color: var(--electric-blue); }
+    .pricing-note p { font-size: 13px; color: var(--slate); line-height: 1.6; }
+    .pricing-note strong { color: var(--deep-navy); }
+
     /* ===== FINAL CTA ===== */
     .final-cta { padding: 120px 24px; background: var(--soft-white); text-align: center; }
     .final-cta .tagline {
@@ -563,6 +696,9 @@
       .problem { padding: 100px 20px; }
       .problem-line { font-size: 22px; }
       .problem-pain { font-size: 18px; }
+      .problem-shift { font-size: 21px; }
+      .problem-stat .num { font-size: 36px; }
+      .problem-stat { font-size: 17px; }
       .problem-turn { font-size: 24px; }
 
       .features { padding: 80px 20px; }
@@ -577,6 +713,11 @@
       .how { padding: 80px 20px; }
       .how-header h2 { font-size: 28px; }
       .step, .step:nth-child(even) { flex-direction: column !important; gap: 32px; }
+
+      .pricing { padding: 80px 20px; }
+      .pricing-header h2 { font-size: 28px; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
+      .pricing-notes { flex-direction: column; }
 
       .final-cta { padding: 80px 20px; }
       .final-cta .tagline { font-size: 32px; }
@@ -598,6 +739,7 @@
       <div class="nav-links">
         <a href="#features">기능</a>
         <a href="#how">사용 방법</a>
+        <a href="#pricing">가격</a>
         <a href="javascript:void(0)" onclick="openContactModal()">도입 문의</a>
       </div>
       <div class="nav-cta">
@@ -612,6 +754,7 @@
     <div class="mobile-menu" id="mobileMenu">
       <a href="#features" onclick="toggleMobile()">기능</a>
       <a href="#how" onclick="toggleMobile()">사용 방법</a>
+      <a href="#pricing" onclick="toggleMobile()">가격</a>
       <button class="mm-btn" onclick="toggleMobile();openContactModal()">도입 문의</button>
       <div class="mm-divider"></div>
       <div class="mm-cta">
@@ -628,11 +771,11 @@
         <span class="orange">AI Sales.</span><br>Human Impact.
       </h1>
       <p class="hero-main reveal reveal-delay-1">
-        5분 만에 Target 기업에 제안하는<br>신개념 AI 영업 솔루션
+        콜드메일 회신율을 바꾸는<br>AI 맞춤 제안 솔루션
       </p>
       <p class="hero-sub reveal reveal-delay-2">
-        영업 대상 탐색부터 제안 논리 설계, 맞춤 이메일, 제안서 생성까지.<br>
-        AI가 Pre-Sales의 모든 과정을 자동화합니다.
+        상대 기업의 상황을 분석하고, 왜 우리가 필요한지 설명하는 맞춤 제안.<br>
+        AI가 타겟 발굴부터 제안서까지 만들어 드립니다.
       </p>
       <div class="hero-cta reveal reveal-delay-3">
         <button class="btn-primary" onclick="window.open('https://app.breadai.co.kr/','_blank')">무료로 시작하기 →</button>
@@ -645,19 +788,15 @@
   <section class="problem">
     <div class="problem-inner">
       <div class="problem-line" data-scroll-reveal>
-        영업사원의 하루를 떠올려 보세요.
+        콜드메일 100통 중 답장은 2~3통.<br>
+        받는 사람에겐 <strong style="color:var(--deep-navy)">"또 스팸"</strong>이니까요.
       </div>
-      <div class="problem-line problem-pain" data-scroll-reveal>
-        고객사 정보 리서치에 2시간,<br>
-        제안서 작성에 3시간,<br>
-        이메일 한 통 쓰는 데 또 30분.
-      </div>
-      <div class="problem-line problem-pain" data-scroll-reveal>
-        정작 중요한 미팅과 클로징에 쓸 시간은<br>
-        늘 부족합니다.
+      <div class="problem-line problem-shift" data-scroll-reveal>
+        만약 상대가 <em>지금 뭘 고민하는지</em> 알고,<br>
+        <em>왜 우리가 필요한지</em> 설명할 수 있다면?
       </div>
       <div class="problem-line problem-turn" data-scroll-reveal>
-        만약 이 모든 게<br>5분이면 끝난다면?
+        맞춤 제안은 미팅이 되고,<br>미팅은 매출이 됩니다.
       </div>
     </div>
   </section>
@@ -1121,6 +1260,101 @@
     </div>
   </section>
 
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="pricing-header reveal">
+      <div class="pricing-label">Pricing</div>
+      <h2>AI로 가능해지는 B2B 맞춤 제안.<br>달라진 <span class="orange">미팅 수와 매출</span>을 경험하세요.</h2>
+      <p>맞춤 대상 탐색, 제안 논리, 메일, 제안서까지 — pre-sales의 모든 과정을 AI가 맞춤화합니다.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- Basic -->
+      <div class="pricing-card reveal">
+        <h3>Basic</h3>
+        <p class="plan-desc">초개인화 제안으로 의미 있는 첫 미팅을 만들어내려는 성장형 B2B 팀</p>
+        <div class="plan-price">₩3,000,000</div>
+        <div class="plan-period">/ 3개월</div>
+        <div class="plan-monthly">(월 환산 100만원)</div>
+
+        <div class="plan-includes">
+          <div class="inc-title">플랜 포함 사항:</div>
+          <div class="inc-row"><span>기본 제공 계정</span><span class="val">5인</span></div>
+          <div class="inc-row"><span>맞춤 제안서 생성</span><span class="val">무제한*</span></div>
+          <div class="inc-row"><span>제안서 템플릿</span><span class="val">범용 템플릿</span></div>
+        </div>
+
+        <ul class="feature-list">
+          <li>타겟 기업 심층 분석 및 페인포인트 도출</li>
+          <li>기업별 맞춤형 아웃바운드 이메일 작성</li>
+          <li>첫 미팅 성사를 위한 검증된 기본 제안 템플릿 제공</li>
+        </ul>
+        <a href="javascript:void(0)" class="plan-btn btn-outline-card" onclick="openContactModal()">도입 문의하기</a>
+      </div>
+
+      <!-- Pro (Featured) -->
+      <div class="pricing-card featured reveal reveal-delay-1">
+        <span class="popular-badge">Most Popular</span>
+        <h3>Pro</h3>
+        <p class="plan-desc">자사만의 브랜딩이 담긴 특화 제안서로 미팅 전환율을 극대화하려는 영업 조직</p>
+        <div class="plan-price">₩4,000,000</div>
+        <div class="plan-period">/ 3개월</div>
+        <div class="plan-monthly">(월 환산 약 133만원)</div>
+
+        <div class="plan-includes">
+          <div class="inc-title">플랜 포함 사항:</div>
+          <div class="inc-row"><span>기본 제공 계정</span><span class="val">10인</span></div>
+          <div class="inc-row"><span>맞춤 제안서 생성</span><span class="val">무제한*</span></div>
+          <div class="inc-row"><span>제안서 템플릿</span><span class="val highlight">자사 특화 템플릿 세팅</span></div>
+        </div>
+
+        <ul class="feature-list">
+          <li class="bold-item">Basic 플랜의 모든 기능 포함</li>
+          <li class="highlight-item">고객사 전용 디자인/로고 템플릿 세팅</li>
+          <li>초기 온보딩 세션 지원</li>
+        </ul>
+        <a href="javascript:void(0)" class="plan-btn btn-orange" onclick="openContactModal()">도입 문의하기</a>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="pricing-card reveal reveal-delay-2">
+        <h3>Enterprise</h3>
+        <p class="plan-desc">대규모 영업 조직을 위해 다수의 계정과 유연한 맞춤 관리가 필요한 엔터프라이즈</p>
+        <div class="plan-price">Custom</div>
+        <div class="plan-period">/ 연간 계약</div>
+        <div class="plan-monthly">(요구사항에 따른 맞춤 견적)</div>
+
+        <div class="plan-includes">
+          <div class="inc-title">플랜 포함 사항:</div>
+          <div class="inc-row"><span>기본 제공 계정</span><span class="val">무제한 (협의)</span></div>
+          <div class="inc-row"><span>맞춤 제안서 생성</span><span class="val">무제한*</span></div>
+          <div class="inc-row"><span>제안서 템플릿</span><span class="val">다중 브랜드 커스텀</span></div>
+        </div>
+
+        <ul class="feature-list">
+          <li class="bold-item">Pro 플랜의 모든 기능 포함</li>
+          <li>기업 맞춤형 온보딩 및 팀 단위 활용 교육 제공</li>
+          <li>다수 계정 통합 관리 및 부서별 워크스페이스 분리</li>
+          <li>전담 매니저(CSM) 배정 및 우선 기술 지원</li>
+        </ul>
+        <a href="javascript:void(0)" class="plan-btn btn-dark" onclick="openContactModal()">견적 상담하기</a>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="pricing-notes reveal">
+      <div class="pricing-note">
+        <div class="note-title"><span class="note-icon">+</span> 계정 추가 옵션 (Add-on)</div>
+        <p>기본 제공 계정 초과 시, 3개월 기준 <strong>Basic 1인당 50만원, Pro 1인당 40만원</strong>이 추가됩니다.</p>
+      </div>
+      <div class="pricing-note">
+        <div class="note-title"><span class="note-icon blue">i</span> * 공정 사용 정책 (Fair Use Policy)</div>
+        <p><strong>제안서 무제한 생성</strong>을 원칙으로 하되, 비정상적인 과다 호출(어뷰징) 감지 시 이용 속도가 제한될 수 있습니다.</p>
+      </div>
+    </div>
+
+  </section>
+
   <!-- FINAL CTA -->
   <section class="final-cta" id="contact">
     <div class="tagline reveal"><span class="orange">AI Sales.</span> Human Impact.</div>
@@ -1147,6 +1381,7 @@
             <h4>제품</h4>
             <a href="#features">기능 소개</a>
             <a href="#how">사용 방법</a>
+            <a href="#pricing">가격</a>
           </div>
           <div class="footer-col">
             <h4>회사</h4>
