@@ -165,42 +165,29 @@
     .hero-tagline {
       font-size: 58px; font-weight: 800;
       letter-spacing: -0.025em; line-height: 1.15;
-      margin-bottom: 28px; color: var(--deep-navy);
+      margin-bottom: 40px; color: var(--deep-navy);
     }
     .hero-tagline .orange { color: var(--orange); }
-    .hero-main { font-size: 26px; font-weight: 500; color: var(--charcoal); line-height: 1.55; margin-bottom: 16px; }
-    .hero-sub { font-size: 17px; color: var(--slate); line-height: 1.7; margin-bottom: 44px; }
+    .hero-main { font-size: 32px; font-weight: 700; color: var(--deep-navy); line-height: 1.45; margin-bottom: 32px; }
+    .hero-sub { font-size: 17px; color: var(--deep-navy); line-height: 1.7; margin-bottom: 52px; }
     .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
     .hero-cta .btn-primary { font-size: 17px; padding: 15px 36px; border-radius: 12px; }
     .hero-cta .btn-outline { font-size: 17px; padding: 15px 36px; border-radius: 12px; }
 
     /* ===== PROBLEM ===== */
-    .problem { padding: 140px 24px; background: var(--white); }
+    .problem { padding: 180px 24px; background: var(--white); }
     .problem-inner { max-width: 640px; margin: 0 auto; text-align: center; }
     .problem-line {
       font-size: 28px; font-weight: 500; color: var(--deep-navy);
-      line-height: 1.65; margin-bottom: 40px;
+      line-height: 1.65; margin-bottom: 56px;
       opacity: 0; transform: translateY(30px);
       transition: all 0.8s ease;
     }
     .problem-line.visible { opacity: 1; transform: translateY(0); }
-    .problem-pain { font-size: 22px; color: var(--slate); }
-    .problem-turn { font-size: 32px; font-weight: 700; color: var(--orange); margin-top: 24px; }
-    .problem-stat {
-      font-size: 20px; color: var(--slate); font-weight: 400; line-height: 1.7;
-    }
-    .problem-stat strong { color: var(--deep-navy); font-weight: 700; }
-    .problem-stat .num { font-size: 48px; font-weight: 800; color: var(--orange); display: block; margin-bottom: 4px; letter-spacing: -0.02em; }
-    .problem-divider {
-      width: 40px; height: 3px; background: var(--border); border-radius: 2px;
-      margin: 0 auto 40px;
-    }
-    .problem-shift {
-      font-size: 26px; font-weight: 600; color: var(--deep-navy); line-height: 1.6;
-    }
-    .problem-shift em {
-      font-style: normal; color: var(--orange); font-weight: 700;
-    }
+    .problem-pain { font-size: 28px; color: var(--deep-navy); font-weight: 500; }
+    .problem-shift { font-size: 28px; font-weight: 500; color: var(--deep-navy); line-height: 1.65; }
+    .problem-shift em { font-style: normal; color: var(--orange); font-weight: 700; }
+    .problem-turn { font-size: 30px; font-weight: 700; color: var(--orange); margin-top: 24px; }
 
     /* ===== FEATURES ===== */
     .features { padding: 120px 24px; background: var(--soft-white); }
@@ -690,15 +677,13 @@
 
       .hero { padding: 120px 20px 80px; min-height: auto; }
       .hero-tagline { font-size: 38px; }
-      .hero-main { font-size: 21px; }
+      .hero-main { font-size: 26px; }
       .hero-sub { font-size: 15px; }
 
       .problem { padding: 100px 20px; }
       .problem-line { font-size: 22px; }
-      .problem-pain { font-size: 18px; }
-      .problem-shift { font-size: 21px; }
-      .problem-stat .num { font-size: 36px; }
-      .problem-stat { font-size: 17px; }
+      .problem-pain { font-size: 22px; }
+      .problem-shift { font-size: 22px; }
       .problem-turn { font-size: 24px; }
 
       .features { padding: 80px 20px; }
@@ -771,11 +756,11 @@
         <span class="orange">AI Sales.</span><br>Human Impact.
       </h1>
       <p class="hero-main reveal reveal-delay-1">
-        콜드메일 회신율을 바꾸는<br>AI 맞춤 제안 솔루션
+        영업 성공률을 높이는<br>AI 맞춤 제안 솔루션
       </p>
       <p class="hero-sub reveal reveal-delay-2">
-        상대 기업의 상황을 분석하고, 왜 우리가 필요한지 설명하는 맞춤 제안.<br>
-        AI가 타겟 발굴부터 제안서까지 만들어 드립니다.
+        영업할 기업을 분석하고, 왜 필요한지 설명하는 맞춤 제안.<br>
+        AI가 영업 대상 발굴부터 제안서 제작까지 해 드립니다.
       </p>
       <div class="hero-cta reveal reveal-delay-3">
         <button class="btn-primary" onclick="window.open('https://app.breadai.co.kr/','_blank')">무료로 시작하기 →</button>
@@ -788,12 +773,16 @@
   <section class="problem">
     <div class="problem-inner">
       <div class="problem-line" data-scroll-reveal>
-        콜드메일 100통 중 답장은 2~3통.<br>
-        받는 사람에겐 <strong style="color:var(--deep-navy)">"또 스팸"</strong>이니까요.
+        100통의 콜드메일, 2통의 답장.<br>
+        나머지는 읽히지도 않고 스팸함으로.
+      </div>
+      <div class="problem-line problem-pain" data-scroll-reveal>
+        미팅이 안 잡히는 건,<br>
+        <strong style="color:var(--deep-navy)">"왜 우리를 만나야 할지"</strong> 설득하지 못해서입니다.
       </div>
       <div class="problem-line problem-shift" data-scroll-reveal>
-        만약 상대가 <em>지금 뭘 고민하는지</em> 알고,<br>
-        <em>왜 우리가 필요한지</em> 설명할 수 있다면?
+        고객이 <em>지금 뭘 고민하는지</em> 파악하고,<br>
+        <em>5분 만에</em> 맞춤 제안서까지 보낸다면?
       </div>
       <div class="problem-line problem-turn" data-scroll-reveal>
         맞춤 제안은 미팅이 되고,<br>미팅은 매출이 됩니다.
