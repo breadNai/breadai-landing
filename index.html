@@ -110,6 +110,15 @@
       transition: all 0.2s;
     }
     .btn-outline:hover { border-color: var(--charcoal); color: var(--deep-navy); }
+    .btn-brochure {
+      background: var(--white); color: var(--orange);
+      font-size: 15px; font-weight: 700;
+      padding: 10px 24px; border-radius: 8px;
+      border: 2px solid var(--orange);
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+    .btn-brochure:hover { background: var(--orange); color: var(--white); }
     .hamburger {
       display: none; background: none;
       width: 36px; height: 36px;
@@ -181,6 +190,7 @@
     .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
     .hero-cta .btn-primary { font-size: 17px; padding: 15px 36px; border-radius: 12px; }
     .hero-cta .btn-outline { font-size: 17px; padding: 15px 36px; border-radius: 12px; }
+    .hero-cta .btn-brochure { font-size: 17px; padding: 14px 36px; border-radius: 12px; }
 
     /* ===== PROBLEM ===== */
     .problem { padding: 180px 24px; background: var(--white); }
@@ -772,7 +782,7 @@
       </p>
       <div class="hero-cta reveal reveal-delay-3">
         <button class="btn-primary" onclick="window.open('https://app.breadai.co.kr/','_blank')">무료로 시작하기 →</button>
-        <button class="btn-outline" onclick="openBrochureModal()">소개서 받기</button>
+        <button class="btn-brochure" onclick="openBrochureModal()">📄 소개서 받기</button>
       </div>
     </div>
   </section>
