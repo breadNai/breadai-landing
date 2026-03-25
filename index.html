@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bread & AI — AI Sales. Human Impact.</title>
-  <meta name="description" content="영업 성공률을 높이는 AI 맞춤 제안 솔루션. 영업할 기업을 분석하고, 왜 필요한지 설명하는 맞춤 제안. AI가 영업 대상 발굴부터 제안서 제작까지.">
+  <title>Bread & AI — 미팅 전환율 30% 향상, AI B2B 영업 솔루션</title>
+  <meta name="description" content="같은 영업, 30% 더 많은 미팅. AI가 타겟 기업을 분석하고, 왜 만나야 하는지 설득하는 맞춤 제안을 만들어 미팅과 매출을 늘립니다.">
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -191,6 +191,42 @@
     .hero-cta .btn-primary { font-size: 17px; padding: 15px 36px; border-radius: 12px; }
     .hero-cta .btn-outline { font-size: 17px; padding: 15px 36px; border-radius: 12px; }
     .hero-cta .btn-brochure { font-size: 17px; padding: 14px 36px; border-radius: 12px; }
+
+    /* Before/After comparison in hero */
+    .hero-comparison {
+      display: flex; gap: 20px; justify-content: center; align-items: stretch;
+      margin-bottom: 48px; max-width: 620px; margin-left: auto; margin-right: auto;
+    }
+    .hero-comp-card {
+      flex: 1; padding: 24px 20px; border-radius: 14px; text-align: left;
+    }
+    .hero-comp-card.before {
+      background: var(--white); border: 1px solid var(--border);
+    }
+    .hero-comp-card.after {
+      background: rgba(217,119,6,0.04); border: 1.5px solid rgba(217,119,6,0.25);
+    }
+    .hero-comp-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+      margin-bottom: 12px;
+    }
+    .hero-comp-card.before .hero-comp-label { color: var(--slate); }
+    .hero-comp-card.after .hero-comp-label { color: var(--orange); }
+    .hero-comp-email {
+      font-size: 14px; line-height: 1.55; margin-bottom: 12px;
+      font-style: italic; min-height: 44px;
+    }
+    .hero-comp-card.before .hero-comp-email { color: var(--charcoal); }
+    .hero-comp-card.after .hero-comp-email { color: var(--deep-navy); font-weight: 500; }
+    .hero-comp-result {
+      font-size: 14px; font-weight: 700; padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .hero-comp-card.before .hero-comp-result { color: var(--slate); }
+    .hero-comp-card.after .hero-comp-result { color: var(--orange); }
+    .hero-comp-arrow {
+      display: flex; align-items: center; color: var(--orange); font-size: 24px; font-weight: 700;
+    }
 
     /* ===== PROBLEM ===== */
     .problem { padding: 180px 24px; background: var(--white); }
@@ -695,8 +731,11 @@
 
       .hero { padding: 120px 20px 80px; min-height: auto; }
       .hero-tagline { font-size: 38px; }
-      .hero-main { font-size: 26px; }
+      .hero-main { font-size: 22px; }
       .hero-sub { font-size: 15px; }
+      .hero-comparison { flex-direction: column; gap: 12px; }
+      .hero-comp-arrow { justify-content: center; transform: rotate(90deg); }
+      .hero-comp-email { font-size: 13px; }
 
       .problem { padding: 100px 20px; }
       .problem-line { font-size: 22px; }
@@ -774,15 +813,25 @@
         <span class="orange">AI Sales.</span><br>Human Impact.
       </h1>
       <p class="hero-main reveal reveal-delay-1">
-        영업 성공률을 높이는<br>AI 맞춤 제안 솔루션
+        상대를 이해한 제안은, 미팅이 됩니다.<br>
+        AI가 B2B 맞춤 제안을 가능하게 합니다.
       </p>
-      <p class="hero-sub reveal reveal-delay-2">
-        영업할 기업을 분석하고, 왜 필요한지 설명하는 맞춤 제안.<br>
-        AI가 영업 대상 발굴부터 제안서 제작까지 해 드립니다.
-      </p>
+      <div class="hero-comparison reveal reveal-delay-2">
+        <div class="hero-comp-card before">
+          <div class="hero-comp-label">기존 영업</div>
+          <div class="hero-comp-email">"귀사에 도움이 될 것 같아<br>연락드립니다..."</div>
+          <div class="hero-comp-result">→ 읽지도 않고 삭제</div>
+        </div>
+        <div class="hero-comp-arrow">→</div>
+        <div class="hero-comp-card after">
+          <div class="hero-comp-label">AI 맞춤 제안</div>
+          <div class="hero-comp-email">"최근 [고객사]의 동남아 진출<br>발표를 보고, 현지 B2B 개척<br>전략을 준비했습니다."</div>
+          <div class="hero-comp-result">→ "어떻게 아셨죠? 한번 만나볼까요?"</div>
+        </div>
+      </div>
       <div class="hero-cta reveal reveal-delay-3">
         <button class="btn-primary" onclick="window.open('https://app.breadai.co.kr/','_blank')">무료로 시작하기 →</button>
-        <button class="btn-brochure" onclick="openBrochureModal()">📄 소개서 받기</button>
+        <button class="btn-brochure" onclick="openBrochureModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>소개서 받기</button>
       </div>
     </div>
   </section>
@@ -791,16 +840,16 @@
   <section class="problem">
     <div class="problem-inner">
       <div class="problem-line" data-scroll-reveal>
-        100통의 콜드메일, 2통의 답장.<br>
-        나머지는 읽히지도 않고 스팸함으로.
+        맞춤 추천이 B2C를 바꿨듯이,<br>
+        <strong style="color:var(--deep-navy)">맞춤 제안이 B2B 영업을 바꿉니다.</strong>
       </div>
       <div class="problem-line problem-pain" data-scroll-reveal>
-        미팅이 안 잡히는 건,<br>
-        <strong style="color:var(--deep-navy)">"왜 우리를 만나야 할지"</strong> 설득하지 못해서입니다.
+        문제는 늘 같았습니다. 한 기업을 분석하고<br>
+        맞춤 제안을 쓰는 데 반나절이 걸렸으니까.
       </div>
       <div class="problem-line problem-shift" data-scroll-reveal>
-        고객이 <em>지금 뭘 고민하는지</em> 파악하고,<br>
-        <em>5분 만에</em> 맞춤 제안서까지 보낸다면?
+        AI가 이 벽을 허물었습니다.<br>
+        <em>5분이면</em> 상대를 이해하고, <em>맞춤 제안까지</em> 완성합니다.
       </div>
       <div class="problem-line problem-turn" data-scroll-reveal>
         맞춤 제안은 미팅이 되고,<br>미팅은 매출이 됩니다.
@@ -811,28 +860,28 @@
   <!-- FEATURES -->
   <section class="features" id="features">
     <div class="features-header reveal">
-      <h2>AI가 영업을 바꾸는 3가지 방법</h2>
-      <p>Pre-Sales의 모든 과정을 AI가 대신합니다.</p>
+      <h2>미팅을 만드는 AI 영업 프로세스</h2>
+      <p>타겟 발굴 → 심층 리서치 → 맞춤 제안. 매출로 이어지는 영업 전체를 AI가 설계합니다.</p>
     </div>
 
     <div class="tabs reveal">
       <button class="tab-btn active" onclick="switchTab(0)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;vertical-align:-2px"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>영업 대상 발굴</button>
       <button class="tab-btn" onclick="switchTab(1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;vertical-align:-2px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>제안 논리 & 이메일</button>
-      <button class="tab-btn" onclick="switchTab(2)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;vertical-align:-2px"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>맞춤 제안서</button>
+      <button class="tab-btn" onclick="switchTab(2)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;vertical-align:-2px"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>미팅을 만드는 제안</button>
     </div>
 
     <div class="tab-panels">
       <!-- Tab 0: Prospect Discovery -->
       <div class="tab-panel active" data-tab="0">
         <div class="tab-text">
-          <h3>누구에게 팔아야 할지,<br>AI가 찾아줍니다.</h3>
+          <h3>미팅 가능성이 높은 기업,<br>AI가 먼저 찾아줍니다.</h3>
           <p>
-            제품 소개서를 업로드하면, AI가 최적의 타겟 기업을
-            자동으로 발굴합니다. 가망 영역 분석부터 기업별
-            적합도 점수, 추천 사유, 공개된 연락처까지 한 번에.
+            제품 소개서를 업로드하면, AI가 미팅으로 이어질 가능성이 높은
+            타겟 기업을 자동으로 발굴합니다. 적합도 점수부터
+            추천 사유, 공개된 연락처까지 한 번에.
           </p>
           <ul>
-            <li>AI가 분석한 가망 영역 & 타겟 부서 추천</li>
+            <li>미팅 가능성 높은 가망 영역 & 타겟 부서 자동 추천</li>
             <li>기업별 Fit Score 및 근거 기반 추천 사유</li>
             <li>공개된 Contact Point (대표메일, 전화) 탐색</li>
           </ul>
@@ -886,16 +935,15 @@
       <!-- Tab 1: Proposal Logic + Email -->
       <div class="tab-panel" data-tab="1">
         <div class="tab-text">
-          <h3>어떤 논리로 제안할지,<br>AI가 설계합니다.</h3>
+          <h3>"왜 만나야 하는지"<br>AI가 설득 논리를 만듭니다.</h3>
           <p>
-            타겟 기업에 대한 심층 리서치를 바탕으로
-            어떤 Pain Point를 어떻게 풀어줄 수 있는지
-            제안 논리를 자동 구성합니다.
-            바로 보낼 수 있는 콜드 이메일까지 생성합니다.
+            타겟 기업의 최근 이슈와 Pain Point를 AI가 심층 리서치하고,
+            "왜 우리를 만나야 하는지" 설득하는 제안 논리를 자동 설계합니다.
+            바로 보낼 수 있는 콜드 이메일까지 한 번에 생성합니다.
           </p>
           <ul>
-            <li>기업별 맞춤 제안 논리 자동 생성</li>
-            <li>톤 조절 가능한 콜드 이메일 초안</li>
+            <li>"만나봐야겠다"를 이끌어내는 맞춤 제안 논리</li>
+            <li>고객 Pain Point 기반 콜드 이메일 자동 작성</li>
             <li>원클릭 복사 & AI 재생성</li>
           </ul>
         </div>
@@ -927,16 +975,16 @@
       <!-- Tab 2: AI Proposal -->
       <div class="tab-panel" data-tab="2">
         <div class="tab-text">
-          <h3>기업 맞춤 제안서,<br>AI가 자동으로 만듭니다.</h3>
+          <h3>미팅으로 이어지는 제안,<br>AI가 완성합니다.</h3>
           <p>
-            리서치 결과와 제안 논리를 바탕으로
-            전문 디자인의 제안서를 PPTX로 자동 생성합니다.
-            소개서의 디자인 스타일까지 자동으로 반영합니다.
+            리서치와 제안 논리를 바탕으로, 상대방이 "만나봐야겠다"고
+            느끼는 맞춤 제안서를 자동 생성합니다.
+            콜드메일 + 제안서가 한 세트로 5분 만에 완성됩니다.
           </p>
           <ul>
-            <li>기업 맞춤 15~20장 PPTX 자동 생성</li>
-            <li>소개서 디자인 반영한 프로 템플릿</li>
-            <li>평균 3~5분 만에 생성 완료</li>
+            <li>고객별 Pain Point 기반 맞춤 제안서 자동 생성</li>
+            <li>"만나봐야겠다"를 이끌어내는 1:1 맞춤 콘텐츠</li>
+            <li>5분 만에 이메일 + 제안서 세트 완성</li>
           </ul>
         </div>
         <div class="tab-visual" style="padding:16px;overflow:hidden">
@@ -1103,23 +1151,23 @@
   <!-- METRICS -->
   <section class="metrics">
     <div class="metrics-header reveal">
-      <h2>숫자로 보는 변화</h2>
+      <h2>미팅과 매출, 숫자로 증명합니다</h2>
     </div>
     <div class="metrics-grid">
       <div class="metric-card reveal">
-        <div class="metric-number"><span data-count="5">0</span><span class="unit">분</span></div>
-        <div class="metric-label">평균 제안서 생성시간</div>
-        <div class="metric-desc">타겟 기업 입력부터<br>완성된 제안서까지</div>
+        <div class="metric-number"><span data-count="30">0</span><span class="unit">%↑</span></div>
+        <div class="metric-label">미팅 전환율 향상</div>
+        <div class="metric-desc">복붙 이메일 대비<br>맞춤 제안의 차이</div>
       </div>
       <div class="metric-card reveal reveal-delay-1">
-        <div class="metric-number"><span data-count="30">0</span><span class="unit">%↑</span></div>
-        <div class="metric-label">미팅 성사율 향상</div>
-        <div class="metric-desc">맞춤 제안으로<br>응답률이 달라집니다</div>
+        <div class="metric-number"><span data-count="10">0</span><span class="unit">x</span></div>
+        <div class="metric-label">영업 생산성</div>
+        <div class="metric-desc">같은 시간에 10배 더<br>많은 기업에 맞춤 제안</div>
       </div>
       <div class="metric-card reveal reveal-delay-2">
-        <div class="metric-number"><span data-count="10">0</span><span class="unit">x</span></div>
-        <div class="metric-label">영업 생산성 향상</div>
-        <div class="metric-desc">같은 시간에 10배 더<br>많은 기업에 제안</div>
+        <div class="metric-number"><span data-count="5">0</span><span class="unit">분</span></div>
+        <div class="metric-label">맞춤 제안 완성</div>
+        <div class="metric-desc">리서치부터 이메일, 제안서까지<br>한 세트 5분 완성</div>
       </div>
     </div>
   </section>
@@ -1206,8 +1254,8 @@
       <div class="step reveal">
         <div class="step-info">
           <div class="step-num">3</div>
-          <h3>AI가 제안 완성</h3>
-          <p>맞춤 콜드 이메일과 기업별 제안서가 자동 생성됩니다. 바로 복사하고, 다운로드해서 발송하세요. 영업이 5분 만에 시작됩니다.</p>
+          <h3>미팅으로 이어지는 제안 완성</h3>
+          <p>상대방이 "만나봐야겠다"고 느끼는 맞춤 이메일과 제안서가 자동 생성됩니다. 바로 발송하세요. 미팅이 잡히기 시작합니다.</p>
         </div>
         <div class="step-visual">
           <div class="step-anim anim-complete">
@@ -1271,15 +1319,15 @@
   <section class="pricing" id="pricing">
     <div class="pricing-header reveal">
       <div class="pricing-label">Pricing</div>
-      <h2>AI로 가능해지는 B2B 맞춤 제안.<br>달라진 <span class="orange">미팅 수와 매출</span>을 경험하세요.</h2>
-      <p>맞춤 대상 탐색, 제안 논리, 메일, 제안서까지 — pre-sales의 모든 과정을 AI가 맞춤화합니다.</p>
+      <h2>맞춤 제안에 투자하세요.<br>달라진 <span class="orange">미팅 수와 매출</span>로 돌아옵니다.</h2>
+      <p>타겟 발굴 → 리서치 → 맞춤 제안 → 미팅 성사. 매출로 이어지는 영업 프로세스 전체를 AI가 설계합니다.</p>
     </div>
 
     <div class="pricing-grid">
       <!-- Basic -->
       <div class="pricing-card reveal">
         <h3>Basic</h3>
-        <p class="plan-desc">초개인화 제안으로 의미 있는 첫 미팅을 만들어내려는 성장형 B2B 팀</p>
+        <p class="plan-desc">미팅 전환율을 높여 영업 성과를 만들어야 하는 성장형 B2B 팀</p>
         <div class="plan-price">₩3,000,000</div>
         <div class="plan-period">/ 3개월</div>
         <div class="plan-monthly">(월 환산 100만원)</div>
@@ -1303,7 +1351,7 @@
       <div class="pricing-card featured reveal reveal-delay-1">
         <span class="popular-badge">Most Popular</span>
         <h3>Pro</h3>
-        <p class="plan-desc">자사만의 브랜딩이 담긴 특화 제안서로 미팅 전환율을 극대화하려는 영업 조직</p>
+        <p class="plan-desc">자사 브랜딩 제안서로 미팅 전환율을 극대화하고, 매출 파이프라인을 키우려는 영업 조직</p>
         <div class="plan-price">₩4,000,000</div>
         <div class="plan-period">/ 3개월</div>
         <div class="plan-monthly">(월 환산 약 133만원)</div>
@@ -1365,7 +1413,7 @@
   <!-- FINAL CTA -->
   <section class="final-cta" id="contact">
     <div class="tagline reveal"><span class="orange">AI Sales.</span> Human Impact.</div>
-    <p class="sub reveal reveal-delay-1">영업의 새로운 기준을 경험하세요.</p>
+    <p class="sub reveal reveal-delay-1">상대를 이해한 제안이 미팅을 만들고, 미팅이 매출을 만듭니다.</p>
     <div class="cta-row reveal reveal-delay-2">
       <button class="btn-primary" onclick="window.open('https://app.breadai.co.kr/','_blank')">무료로 시작하기 →</button>
       <button class="btn-outline" onclick="openContactModal()">도입 문의하기</button>
@@ -1381,7 +1429,7 @@
             <img src="Bread&AI_로고_배경제거.png" alt="Bread & AI" style="height:24px" onerror="this.style.display='none'">
             <span>Bread & AI</span>
           </div>
-          <p style="margin-top:8px">AI로 B2B 영업의 방식을 바꿉니다.</p>
+          <p style="margin-top:8px">맞춤 제안으로 미팅을 만들고, 매출을 만듭니다.</p>
         </div>
         <div class="footer-links">
           <div class="footer-col">
