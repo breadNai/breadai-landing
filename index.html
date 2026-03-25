@@ -611,9 +611,17 @@
       margin-bottom: 24px; min-height: 42px;
     }
     .pricing-card .plan-price {
-      font-size: 36px; font-weight: 800; color: var(--deep-navy); margin-bottom: 2px;
+      font-size: 40px; font-weight: 800; color: var(--deep-navy); margin-bottom: 0; line-height: 1.1;
+    }
+    .pricing-card .plan-price .price-unit {
+      font-size: 16px; font-weight: 600; color: var(--charcoal); margin-left: 2px;
     }
     .pricing-card .plan-period { font-size: 14px; color: var(--slate); margin-bottom: 4px; }
+    .pricing-card .plan-total {
+      font-size: 13px; color: var(--slate); margin-bottom: 24px;
+      background: var(--soft-white); display: inline-block;
+      padding: 4px 12px; border-radius: 6px; margin-top: 8px;
+    }
     .pricing-card .plan-monthly { font-size: 13px; color: var(--slate); margin-bottom: 24px; }
 
     .pricing-card .plan-includes {
@@ -1328,9 +1336,8 @@
       <div class="pricing-card reveal">
         <h3>Basic</h3>
         <p class="plan-desc">미팅 전환율을 높여 영업 성과를 만들어야 하는 성장형 B2B 팀</p>
-        <div class="plan-price">₩3,000,000</div>
-        <div class="plan-period">/ 3개월</div>
-        <div class="plan-monthly">(월 환산 100만원)</div>
+        <div class="plan-price">₩100만원<span class="price-unit">/월</span></div>
+        <div class="plan-total">3개월 단위 결제 · 총 300만원 · 5인 기본</div>
 
         <div class="plan-includes">
           <div class="inc-title">플랜 포함 사항:</div>
@@ -1352,9 +1359,8 @@
         <span class="popular-badge">Most Popular</span>
         <h3>Pro</h3>
         <p class="plan-desc">자사 브랜딩 제안서로 미팅 전환율을 극대화하고, 매출 파이프라인을 키우려는 영업 조직</p>
-        <div class="plan-price">₩4,000,000</div>
-        <div class="plan-period">/ 3개월</div>
-        <div class="plan-monthly">(월 환산 약 133만원)</div>
+        <div class="plan-price">₩133만원<span class="price-unit">/월</span></div>
+        <div class="plan-total">3개월 단위 결제 · 총 400만원 · 10인 기본</div>
 
         <div class="plan-includes">
           <div class="inc-title">플랜 포함 사항:</div>
@@ -1376,8 +1382,7 @@
         <h3>Enterprise</h3>
         <p class="plan-desc">대규모 영업 조직을 위해 다수의 계정과 유연한 맞춤 관리가 필요한 엔터프라이즈</p>
         <div class="plan-price">Custom</div>
-        <div class="plan-period">/ 연간 계약</div>
-        <div class="plan-monthly">(요구사항에 따른 맞춤 견적)</div>
+        <div class="plan-total">연간 계약 · 요구사항에 따른 협의</div>
 
         <div class="plan-includes">
           <div class="inc-title">플랜 포함 사항:</div>
@@ -1400,7 +1405,7 @@
     <div class="pricing-notes reveal">
       <div class="pricing-note">
         <div class="note-title"><span class="note-icon">+</span> 계정 추가 옵션 (Add-on)</div>
-        <p>기본 제공 계정 초과 시, 3개월 기준 <strong>Basic 1인당 50만원, Pro 1인당 40만원</strong>이 추가됩니다.</p>
+        <p>기본 제공 계정 초과 시, <strong>Basic 월 약 17만원/인, Pro 월 약 13만원/인</strong>이 추가됩니다. (3개월 단위 결제)</p>
       </div>
       <div class="pricing-note">
         <div class="note-title"><span class="note-icon blue">i</span> * 공정 사용 정책 (Fair Use Policy)</div>
