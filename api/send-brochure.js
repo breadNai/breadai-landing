@@ -28,6 +28,7 @@ export default async function handler(req, res) {
   const PROCESS_SECRET = process.env.PROCESS_SECRET || 'brochure-internal-key';
   const origin = `https://${req.headers.host || 'www.breadai.co.kr'}`;
 
+  // fetch를 먼저 시작하고, 요청이 Vercel 네트워크에 도달할 시간을 확보
   fetch(`${origin}/api/send-brochure-process`, {
     method: 'POST',
     headers: {
@@ -37,6 +38,9 @@ export default async function handler(req, res) {
     body: JSON.stringify({ email, company, name, department, position, phone }),
   }).catch(err => console.error('Background trigger failed:', err));
 
-  // ── 즉시 응답 ──
+  // Vercel이 함수 종료하기 전에 HTTP 요청이 나갈 시간 확보 (1.5초)
+  await new Promise(resolve => setTimeout(resolve, 1500));
+
+  // ── 응답 (유저 체감 ~2초) ──
   return res.status(200).json({ success: true });
 }
