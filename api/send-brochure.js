@@ -1,4 +1,4 @@
-// Vercel 서버리스 함수 타임아웃: 웹 검색 포함 시 응답 시간이 길어지므로 60초로 설정
+// Vercel 서버리스 함수: 즉시 응답 후 백그라운드에서 AI + 메일 발송
 export const config = {
   maxDuration: 60,
 };
@@ -25,14 +25,16 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Server configuration error' });
   }
 
-  const BROCHURE_URL = process.env.BROCHURE_PDF_URL || 'https://breadai.co.kr/BreadAI_%EC%86%8C%EA%B0%9C%EC%84%9C.pdf';
-  const now = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+  // ── 즉시 응답: 유저는 여기서 "완료" 화면을 보게 됨 ──
+  res.status(200).json({ success: true });
 
-  // 직함/부서 조합으로 인사말 구성
-  const positionText = position ? ` ${position}님` : '님';
-  const deptText = department ? `${department} ` : '';
-
+  // ── 이하 백그라운드 실행 (유저는 이미 완료 화면) ──
   try {
+    const BROCHURE_URL = process.env.BROCHURE_PDF_URL || 'https://breadai.co.kr/BreadAI_%EC%86%8C%EA%B0%9C%EC%84%9C.pdf';
+    const now = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+    const positionText = position ? ` ${position}님` : '님';
+    const deptText = department ? `${department} ` : '';
+
     // ── 1) PDF 첨부 준비 (base64) ──
     let attachments = [];
     try {
@@ -93,7 +95,6 @@ export default async function handler(req, res) {
     if (!visitorRes.ok) {
       const err = await visitorRes.json();
       console.error('Visitor email failed:', err);
-      return res.status(500).json({ error: '이메일 발송에 실패했습니다.' });
     }
 
     // ── 4) 승욱님에게 알림 메일 (리드 정보 + AI 메시지) ──
@@ -128,11 +129,8 @@ export default async function handler(req, res) {
         `,
       }),
     });
-
-    return res.status(200).json({ success: true });
   } catch (error) {
-    console.error('Send brochure error:', error);
-    return res.status(500).json({ error: '서버 오류가 발생했습니다.' });
+    console.error('Background processing error:', error);
   }
 }
 
