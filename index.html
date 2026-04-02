@@ -188,6 +188,7 @@
       background: var(--orange); color: var(--white);
       font-size: 15px; font-weight: 600;
       padding: 10px 24px; border-radius: 8px;
+      border: 2px solid var(--orange);
       transition: background 0.2s;
     }
     .btn-primary:hover { background: var(--orange-hover); }
@@ -276,10 +277,10 @@
     .hero-tagline .orange { color: var(--orange); }
     .hero-main { font-size: 32px; font-weight: 700; color: var(--deep-navy); line-height: 1.45; margin-bottom: 32px; }
     .hero-sub { font-size: 17px; color: var(--deep-navy); line-height: 1.7; margin-bottom: 52px; }
-    .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .hero-cta { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; align-items: flex-start; }
     .hero-cta .btn-primary { font-size: 17px; padding: 15px 36px; border-radius: 12px; }
     .hero-cta .btn-outline { font-size: 17px; padding: 15px 36px; border-radius: 12px; }
-    .hero-cta .btn-brochure { font-size: 17px; padding: 14px 36px; border-radius: 12px; }
+    .hero-cta .btn-brochure { font-size: 17px; padding: 15px 36px; border-radius: 12px; }
 
     /* Before/After comparison in hero */
     .hero-comparison {
@@ -833,6 +834,8 @@
       .hero-comparison { flex-direction: column; gap: 12px; }
       .hero-comp-arrow { justify-content: center; transform: rotate(90deg); }
       .hero-comp-email { font-size: 13px; }
+      .hero-cta { flex-direction: column; align-items: center; gap: 16px; }
+      .hero-cta .btn-primary, .hero-cta .btn-brochure { width: 280px; text-align: center; }
 
       .problem { padding: 100px 20px; }
       .problem-line { font-size: 22px; }
@@ -883,7 +886,7 @@
       </div>
       <div class="nav-cta">
         <button class="btn-login" onclick="window.open('https://app.breadai.co.kr/','_blank')">로그인</button>
-        <button class="btn-primary" onclick="window.open('https://app.breadai.co.kr/','_blank')">무료 시작 →</button>
+        <button class="btn-primary" onclick="window.open('https://app.breadai.co.kr/','_blank')">무료 체험 →</button>
       </div>
       <button class="hamburger" onclick="toggleMobile()" aria-label="메뉴">
         <span></span><span></span><span></span>
@@ -897,7 +900,7 @@
       <button class="mm-btn" onclick="toggleMobile();openContactModal()">도입 문의</button>
       <div class="mm-divider"></div>
       <div class="mm-cta">
-        <button class="btn-primary" onclick="toggleMobile();window.open('https://app.breadai.co.kr/','_blank')">무료로 시작하기 →</button>
+        <button class="btn-primary" onclick="toggleMobile();window.open('https://app.breadai.co.kr/','_blank')">무료 체험 →</button>
         <button class="btn-outline" onclick="toggleMobile();window.open('https://app.breadai.co.kr/','_blank')">로그인</button>
       </div>
     </div>
@@ -927,7 +930,10 @@
         </div>
       </div>
       <div class="hero-cta reveal reveal-delay-3">
-        <button class="btn-primary" onclick="window.open('https://app.breadai.co.kr/','_blank')">무료로 시작하기 →</button>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+          <button class="btn-primary" onclick="window.open('https://app.breadai.co.kr/','_blank')">7일 무료 체험하기 →</button>
+          <p style="font-size:12px;color:var(--orange);font-weight:600;margin:8px 0 0;letter-spacing:-0.2px">결제 불필요 · 1분 만에 시작</p>
+        </div>
         <button class="btn-brochure" onclick="openBrochureModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>소개서 받기</button>
       </div>
     </div>
@@ -1509,7 +1515,10 @@
     <div class="tagline reveal"><span class="orange">AI Sales.</span> Human Impact.</div>
     <p class="sub reveal reveal-delay-1">상대를 이해한 제안이 미팅을 만들고, 미팅이 매출을 만듭니다.</p>
     <div class="cta-row reveal reveal-delay-2">
-      <button class="btn-primary" onclick="window.open('https://app.breadai.co.kr/','_blank')">무료로 시작하기 →</button>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+        <button class="btn-primary" onclick="window.open('https://app.breadai.co.kr/','_blank')">7일 무료 체험하기 →</button>
+        <p style="font-size:12px;color:var(--orange);font-weight:600;margin:8px 0 0;letter-spacing:-0.2px">결제 불필요 · 1분 만에 시작</p>
+      </div>
       <button class="btn-outline" onclick="openContactModal()">도입 문의하기</button>
     </div>
   </section>
