@@ -121,11 +121,43 @@ export default async function handler(req, res) {
       }),
     });
 
+    // ── 5) Google Sheets 리드 기록 ──
+    const SHEETS_WEBHOOK = process.env.GOOGLE_SHEETS_WEBHOOK;
+    if (SHEETS_WEBHOOK) {
+      try {
+        await fetch(SHEETS_WEBHOOK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            timestamp: now,
+            company,
+            name,
+            department: department || '',
+            position: position || '',
+            email,
+            phone: phone || '',
+            isDummy: isDummyCompanyCheck(company),
+          }),
+        });
+      } catch (sheetErr) {
+        console.error('Google Sheets webhook failed:', sheetErr);
+      }
+    }
+
     return res.status(200).json({ success: true });
   } catch (error) {
     console.error('Send brochure process error:', error);
     return res.status(500).json({ error: '서버 오류가 발생했습니다.' });
   }
+}
+
+
+// ── 더미 회사명 체크 함수 ──
+function isDummyCompanyCheck(company) {
+  const dummyExact = ['개인', '없음', 'test', 'none', 'n/a', '-', '없어요', 'asdf', 'aaa', 'ㅇㅇ', 'ㅇㅇㅇ', 'ㄱㄱ'];
+  const dummyContains = ['테스트', 'test', 'sample', '더미', 'dummy', '임시'];
+  const companyLower = company.trim().toLowerCase();
+  return dummyExact.some(d => companyLower === d) || dummyContains.some(d => companyLower.includes(d));
 }
 
 
