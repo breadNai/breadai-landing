@@ -361,7 +361,7 @@ function buildVisitorEmail({ company, deptText, name, positionText, personalized
     </div>
 
     <div style="background:#FFFBEB;border-radius:12px;padding:24px 28px;margin:0 0 28px">
-      <p style="font-size:14px;font-weight:700;color:#1B2A4A;margin:0 0 16px">Bread & AI는 이렇게 작동합니다</p>
+      <p style="font-size:14px;font-weight:700;color:#1B2A4A;margin:0 0 16px">Bread & AI는 이렇게 맞춤 제안을 돕습니다</p>
       <table style="font-size:14px;color:#374151;line-height:1.7;border-collapse:collapse;width:100%">
         <tr>
           <td style="padding:8px 16px 8px 0;vertical-align:top;color:#D97706;font-weight:700;width:24px">①</td>
