@@ -63,7 +63,7 @@ export default async function handler(req, res) {
 
     // AI 실패 시 기본 메시지
     if (!personalizedSection) {
-      personalizedSection = `고객사를 대상으로 B2B 영업을 하다 보면, 맞춤 제안이 효과적이라는 건 누구나 알지만 한 기업당 제안을 준비하는 데 2~3시간이 걸리다 보니 결국 소수에게만 맞춤 제안을 하고 나머지는 같은 메일을 보내게 되는 현실을 겪고 계실 겁니다.<br><br>Bread & AI는 이 문제를 AI로 해결합니다. 타겟 기업명만 입력하면 AI가 그 기업의 현황과 Pain Point를 자동으로 분석하고, <strong>"왜 만나야 하는지"</strong> 설득하는 맞춤 제안 논리와 이메일, 제안서를 5분 만에 완성합니다. 맞춤 제안 도입 시 미팅율이 평균 30% 개선되고, 영업 생산성은 10배 향상됩니다.<br><br>첨부드린 소개서에서 구체적인 내용을 확인하실 수 있고, 7일 무료 체험도 가능하니 부담 없이 먼저 사용해보시기 바랍니다. 추가로 궁금하신 점이 있으시면 편하게 말씀해주세요.`;
+      personalizedSection = `고객사를 대상으로 B2B 영업을 하다 보면, 맞춤 제안이 효과적이라는 건 누구나 알지만 한 기업당 제안을 준비하는 데 2~3시간이 걸리다 보니 결국 소수에게만 맞춤 제안을 하고 나머지는 같은 메일을 보내게 되는 현실을 겪고 계실 겁니다.<br><br>Bread & AI는 이 문제를 AI로 해결합니다. 타겟 기업명만 입력하면 AI가 그 기업의 현황과 Pain Point를 자동으로 분석하고, <strong>"왜 만나야 하는지"</strong> 설득하는 맞춤 제안 논리와 이메일, 제안서를 5분 만에 완성합니다. 맞춤 제안 도입 시 미팅율이 평균 30% 개선되고, 기존 2~3시간 걸리던 영업 준비를 5분으로 단축할 수 있습니다.<br><br>첨부드린 소개서에서 구체적인 내용을 확인하실 수 있고, 7일 무료 체험도 가능하니 부담 없이 먼저 사용해보시기 바랍니다. 추가로 궁금하신 점이 있으시면 편하게 말씀해주세요.`;
     }
 
     // ── 3) 방문자에게 소개서 메일 발송 ──
@@ -174,7 +174,7 @@ async function generatePersonalizedMessage({ apiKey, company, department, positi
   · STEP 1 탐색: 제품 소개서 업로드 → AI가 맞춤 제안이 먹힐 최적의 타겟 기업 자동 발굴
   · STEP 2 리서치: 타겟 기업 현황, Pain Point, 차별화 포인트 자동 분석 → 맞춤 제안 논리 + 콜드 이메일 생성
   · STEP 3 제안: 기업별 맞춤 15~20장 제안서 자동 생성, 바로 발송
-- 성과: 맞춤 제안 도입 시 미팅율 +30% 개선, 영업 생산성 10배
+- 성과: 맞춤 제안 도입 시 미팅율 +30% 개선, 영업 준비 시간 대폭 단축
 
 ## 소개서 요청자 정보
 - 회사명: ${company}
@@ -198,7 +198,7 @@ ${department ? `- ${department}에서 특히 겪을 영업 관련 pain point를 
 **2단락: Bread & AI가 해결하는 방식 (2-3줄)**
 - "${company}의 [구체적 상황]에서 Bread & AI가 어떻게 도움이 되는지" 연결.
 - 기능 나열이 아닌, 이 회사 맥락에서 AI 맞춤 제안이 만들어내는 구체적 임팩트를 보여주세요.
-- 맞춤 제안 도입 시 미팅율 평균 30% 개선, 영업 생산성 10배 향상 등 수치 활용.
+- 맞춤 제안 도입 시 미팅율 평균 30% 개선. 기존 2~3시간 걸리던 영업 준비가 5분으로 단축된다는 점 활용.
 
 **3단락: 부드러운 CTA (2줄)**
 - ⛔ "미팅하자", "시연을 보여드리겠다"는 말은 하지 마세요. 처음부터 미팅을 요구하면 부담스럽습니다.
@@ -323,15 +323,15 @@ function buildVisitorEmail({ company, deptText, name, positionText, personalized
       <p style="font-size:14px;font-weight:700;color:#1B2A4A;margin:0 0 16px">Bread & AI는 이렇게 작동합니다</p>
       <table style="font-size:14px;color:#374151;line-height:1.7;border-collapse:collapse;width:100%">
         <tr>
-          <td style="padding:8px 12px 8px 0;vertical-align:top;white-space:nowrap;color:#D97706;font-weight:700">STEP 1</td>
+          <td style="padding:8px 16px 8px 0;vertical-align:top;color:#D97706;font-weight:700;width:24px">①</td>
           <td style="padding:8px 0"><strong>타겟 발굴</strong> — 맞춤 제안이 먹힐 최적의 기업을 AI가 자동으로 찾아줍니다</td>
         </tr>
         <tr>
-          <td style="padding:8px 12px 8px 0;vertical-align:top;white-space:nowrap;color:#D97706;font-weight:700">STEP 2</td>
-          <td style="padding:8px 0"><strong>리서치 & 제안 논리</strong> — 상대 기업의 현황과 Pain Point를 분석, 맞춤 이메일 생성</td>
+          <td style="padding:8px 16px 8px 0;vertical-align:top;color:#D97706;font-weight:700;width:24px">②</td>
+          <td style="padding:8px 0"><strong>리서치 &amp; 제안 논리</strong> — 상대 기업의 현황과 Pain Point를 분석, 맞춤 이메일 생성</td>
         </tr>
         <tr>
-          <td style="padding:8px 12px 8px 0;vertical-align:top;white-space:nowrap;color:#D97706;font-weight:700">STEP 3</td>
+          <td style="padding:8px 16px 8px 0;vertical-align:top;color:#D97706;font-weight:700;width:24px">③</td>
           <td style="padding:8px 0"><strong>맞춤 제안서</strong> — 5분 만에 기업별 맞춤 제안서까지 완성</td>
         </tr>
       </table>
