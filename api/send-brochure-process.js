@@ -137,6 +137,7 @@ export default async function handler(req, res) {
             email,
             phone: phone || '',
             isDummy: isDummyCompanyCheck(company),
+            remarks: req.body.remarks || '',
           }),
         });
       } catch (sheetErr) {

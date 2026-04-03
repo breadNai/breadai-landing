@@ -33,9 +33,9 @@ const ALLOWED_ORIGINS = ['https://breadai.co.kr', 'https://www.breadai.co.kr', '
 
 export default async function handler(req, res) {
   // CORS headers — 허용 도메인만
-  const origin = req.headers.origin || '';
-  if (ALLOWED_ORIGINS.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
+  const reqOrigin = req.headers.origin || '';
+  if (ALLOWED_ORIGINS.includes(reqOrigin)) {
+    res.setHeader('Access-Control-Allow-Origin', reqOrigin);
   } else {
     res.setHeader('Access-Control-Allow-Origin', 'https://breadai.co.kr');
   }
@@ -87,7 +87,7 @@ export default async function handler(req, res) {
       'Content-Type': 'application/json',
       'x-internal-secret': PROCESS_SECRET,
     },
-    body: JSON.stringify({ email, company, name, department, position, phone }),
+    body: JSON.stringify({ email, company, name, department, position, phone, remarks: sanitize(req.body.remarks) || '' }),
   }).catch(err => console.error('Background trigger failed:', err));
 
   // Vercel이 함수 종료하기 전에 HTTP 요청이 나갈 시간 확보 (1.5초)
