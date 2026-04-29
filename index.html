@@ -704,7 +704,7 @@
     .pricing-header { text-align: center; margin-bottom: 64px; }
     .pricing-header .pricing-label {
       font-size: 14px; font-weight: 600; color: var(--orange);
-      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;
+      text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px;
     }
     .pricing-header h2 { font-size: 38px; font-weight: 700; color: var(--deep-navy); line-height: 1.35; margin-bottom: 12px; }
     .pricing-header h2 .orange { color: var(--orange); }
@@ -739,7 +739,7 @@
       margin-bottom: 24px; min-height: 42px;
     }
     .pricing-card .plan-price {
-      font-size: 40px; font-weight: 800; color: var(--deep-navy); margin-bottom: 0; line-height: 1.1;
+      font-size: 34px; font-weight: 800; color: var(--deep-navy); margin-bottom: 0; line-height: 1.1;
     }
     .pricing-card .plan-price .price-unit {
       font-size: 16px; font-weight: 600; color: var(--charcoal); margin-left: 2px;
@@ -1067,13 +1067,15 @@
       .hamburger { display: flex; }
 
       .hero { padding: 110px 20px 40px; }
-      .hero-tagline { font-size: 34px; }
+      .hero-tagline { font-size: 30px; }
       .mobile-br { display: inline; }
       .hero-main { font-size: 16px; }
       .hero-chart-visual { padding: 16px 20px; }
       .hero-chart-wrap { max-width: 100%; margin-bottom: 32px; }
       .hero-chart-visual .chart-callout-center { padding: 10px 18px !important; }
       .hero-chart-visual .chart-callout-center div:first-child { font-size: 36px !important; }
+      .hero-chart-visual .chart-callout-small { right: 35px !important; }
+      .hero-chart-visual .chart-before-after span:last-child { font-size: 16px !important; }
       .hero-cta { flex-direction: column; align-items: center; gap: 16px; }
       .hero-cta .btn-primary, .hero-cta .btn-brochure { width: 280px; text-align: center; }
 
@@ -1084,10 +1086,9 @@
       .problem-turn { font-size: 24px; }
 
       .features { padding: 80px 20px; }
-      .features-header h2 { font-size: 28px; font-weight: 800; }
-      .tabs { flex-direction: row; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; max-width: 100%; gap: 6px; padding: 3px; }
-      .tabs::-webkit-scrollbar { display: none; }
-      .tab-btn { flex: 0 0 auto; padding: 12px 14px; font-size: 13px; }
+      .features-header h2 { font-size: 28px; font-weight: 800; line-height: 1.35; }
+      .tabs { flex-direction: row; overflow-x: visible; max-width: 100%; gap: 4px; padding: 3px; }
+      .tab-btn { flex: 1 1 0; padding: 10px 8px; font-size: 12px; white-space: normal; min-width: 0; }
       .tab-btn svg { display: none; }
       .tab-panel.active { flex-direction: column; background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; margin-top: 12px; gap: 20px; }
       .tab-text { background: none !important; border: none !important; border-radius: 0 !important; padding: 0 !important; margin-top: 0 !important; }
@@ -1108,8 +1109,9 @@
       .pricing-notes { flex-direction: column; }
 
       .final-cta { padding: 80px 20px; }
-      .metrics-header h2 { font-size: 28px; font-weight: 800; }
-      .final-cta .tagline { font-size: 28px; font-weight: 800; }
+      .metrics-header h2 { font-size: 28px; font-weight: 800; line-height: 1.35; }
+      .final-cta .tagline { font-size: 24px; font-weight: 700; }
+      .final-cta .sub { font-size: 15px; }
 
       /* Client logos mobile */
       .logo-bar { flex-direction: column; gap: 16px; }
@@ -1119,7 +1121,7 @@
 
       /* Quality Compare mobile */
       .quality-compare { padding: 80px 20px; }
-      .qc-header h2 { font-size: 28px; font-weight: 800; }
+      .qc-header h2 { font-size: 28px; font-weight: 800; line-height: 1.35; }
       .qc-grid { grid-template-columns: 1fr !important; }
       .qc-proposal-grid { flex-direction: column; }
       .qc-proposal-arrow { transform: rotate(90deg); }
@@ -1189,11 +1191,11 @@
         AI Pre-Sales Intelligence
       </div>
       <h1 class="hero-tagline reveal">
-        미팅을 더 잡고 싶으신가요?<br><span class="orange">영업인원 늘리지 말고,<br>AI로 맞춤 제안을 보내세요</span>
+        미팅을 더 잡고 싶으세요?<br><span class="orange">영업인원 늘리지 말고<br>AI 맞춤 제안 보내세요</span>
       </h1>
       <p class="hero-main reveal reveal-delay-1">
-        기업별 맞춤 제안을 보내야 미팅 전환율이 <strong>3배 증가</strong>합니다.<br>
-        타겟 기업 리서치부터 맞춤 이메일, 고퀄리티 제안서까지<br class="m-br"> <strong>5분 만에 완성</strong>하세요.
+        기업별 맞춤 제안을 보내야<br class="m-br"> 미팅 전환율이 <strong>3배 증가</strong>합니다.<br>
+        타겟 기업 리서치부터 맞춤 이메일,<br class="m-br"> 고퀄리티 제안서까지 <strong>5분 만에 완성</strong>하세요.
       </p>
 
       <!-- Conversion Rate Chart -->
@@ -1213,8 +1215,8 @@
               <path class="chart-line-animated" d="M0 158 Q70 155 140 148 Q240 125 340 75 Q400 40 480 15" stroke="#CC7247" stroke-width="2.5" fill="none"/>
               <path class="chart-area-animated" d="M0 158 Q70 155 140 148 Q240 125 340 75 Q400 40 480 15 L480 180 L0 180 Z" fill="url(#areaFill)"/>
               <circle cx="70" cy="155" r="4" fill="#D5CBC2" stroke="#FEFCFA" stroke-width="2"/>
-              <text x="70" y="146" font-size="11" fill="#81746F" text-anchor="middle" font-weight="600">2%</text>
             </svg>
+            <div class="chart-label-2pct" style="position:absolute;bottom:22px;left:12%;font-size:11px;font-weight:600;color:#81746F;transform:translateX(-50%)">2%</div>
             <!-- x3 GROWTH: centered for maximum impact -->
             <div class="chart-callout-center" style="position:absolute;top:50%;left:55%;background:#FEFCFA;border:1.5px solid var(--border);border-radius:16px;padding:16px 28px;text-align:center;box-shadow:0 6px 24px rgba(0,0,0,0.08)">
               <div style="font-size:52px;font-weight:800;color:var(--orange);line-height:1">x3</div>
@@ -1225,7 +1227,7 @@
               <span style="font-weight:800;color:var(--charcoal);font-size:20px">6.0%</span>
             </div>
           </div>
-          <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--slate);font-weight:500">
+          <div class="chart-before-after" style="display:flex;justify-content:space-between;font-size:13px;color:var(--slate);font-weight:500">
             <span>Before</span><span style="font-size:22px;font-weight:800"><span style="color:var(--slate)">After</span> <span style="color:var(--orange)">BREAD&AI</span></span>
           </div>
         </div>
@@ -1290,7 +1292,7 @@
   <section class="quality-compare" id="pain-points">
     <div class="qc-header reveal">
       <div class="qc-label">WHY BREAD & AI</div>
-      <h2>B2B 영업, 미팅이 안 잡히는 이유?</h2>
+      <h2>B2B 영업,<br class="m-br"> 미팅이 안 잡히는 이유?</h2>
       <p>대부분의 영업팀이 겪는 3가지 병목.<br class="m-br"> Bread & AI는 이걸 풀기 위해 만들어졌습니다.</p>
     </div>
 
@@ -1426,8 +1428,8 @@
             바로 보낼 수 있는 콜드 이메일까지 한 번에 생성합니다.
           </p>
           <ul>
-            <li>"만나봐야겠다"를 이끌어내는 맞춤 제안 논리</li>
-            <li>고객 Pain Point 기반 콜드 이메일 자동 작성</li>
+            <li>타겟 기업 맞춤 제안 논리 도출</li>
+            <li>고객 Pain Point 기반 콜드메일 자동 작성</li>
             <li>원클릭 복사 & AI 재생성</li>
           </ul>
         </div>
@@ -1466,8 +1468,8 @@
             콜드메일 + 제안서가 한 세트로 5분 만에 완성됩니다.
           </p>
           <ul>
-            <li>고객별 Pain Point 기반 맞춤 제안서 자동 생성</li>
-            <li>"만나봐야겠다"를 이끌어내는 1:1 맞춤 콘텐츠</li>
+            <li>고객 Pain Point 기반 맞춤 제안서 자동 생성</li>
+            <li>타겟 기업 1:1 맞춤 콘텐츠</li>
             <li>5분 만에 이메일 + 제안서 세트 완성</li>
           </ul>
         </div>
@@ -1805,7 +1807,7 @@
     <div class="pricing-header reveal">
       <div class="pricing-label">Pricing</div>
       <h2>맞춤 제안에 투자하세요<br>달라진 <span class="orange">미팅 수와 매출</span>로 돌아옵니다</h2>
-      <p>타겟 발굴 → 리서치 → 맞춤 제안 → 미팅 성사. 매출로 이어지는 영업 프로세스 전체를 AI가 설계합니다.</p>
+      <p>타겟 발굴 → 리서치 → 맞춤 제안 → 미팅 성사.<br class="m-br"> 매출로 이어지는 영업 프로세스 전체를<br class="m-br"> AI가 설계합니다.</p>
     </div>
 
     <div class="pricing-grid">
