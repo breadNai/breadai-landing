@@ -53,8 +53,9 @@ export default async function handler(req, res) {
     return res.status(429).json({ error: '요청이 너무 많습니다. 잠시 후 다시 시도해주세요.' });
   }
 
-  // Honeypot
+  // Honeypot (봇 감지 시 조용히 성공 리턴)
   if (req.body._hp) {
+    console.log('Honeypot triggered:', { company: req.body.company, _hp: req.body._hp });
     return res.status(200).json({ success: true });
   }
 
