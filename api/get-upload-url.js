@@ -39,6 +39,9 @@ export default async function handler(req, res) {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     },
+    // 브라우저에서 직접 업로드 시 체크섬 헤더 문제 방지
+    requestChecksumCalculation: 'WHEN_REQUIRED',
+    responseChecksumValidation: 'WHEN_REQUIRED',
   });
 
   try {
@@ -48,7 +51,11 @@ export default async function handler(req, res) {
       ContentType: contentType || 'application/pdf',
     });
 
-    const uploadUrl = await getSignedUrl(client, command, { expiresIn: 600 }); // 10분 유효
+    const uploadUrl = await getSignedUrl(client, command, {
+      expiresIn: 600, // 10분 유효
+      // 브라우저 PUT 요청에서 체크섬 헤더를 빼야 CORS 문제 없음
+      unhoistableHeaders: new Set(['x-amz-checksum-crc32']),
+    });
 
     return res.status(200).json({ uploadUrl, key });
   } catch (err) {
