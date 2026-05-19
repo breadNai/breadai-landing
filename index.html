@@ -517,6 +517,8 @@
       height: auto;
       object-fit: contain;
       display: block;
+      border: 1px solid #D1D1D1;
+      border-radius: 4px;
     }
     /* (overlap 레이아웃 제거됨 — Step 3 단일 이미지 사용) */
     @media (max-width: 768px) {
@@ -903,7 +905,7 @@
       gap: 24px; max-width: var(--max-w); margin: 0 auto; align-items: stretch;
     }
     .pricing-card {
-      background: #FEFCFA; border: 1px solid var(--border);
+      background: #FEFCFA; border: 1px solid #1A1A1A;
       border-radius: 16px; padding: 36px 28px;
       display: flex; flex-direction: column;
       box-shadow: 0 4px 24px rgba(0,0,0,0.04);
@@ -1038,6 +1040,7 @@
       font-size: 16px;
       color: var(--charcoal);
       line-height: 1.6;
+      font-weight: 700;
     }
     .end-form {
       position: relative;
@@ -1450,7 +1453,7 @@
       .hamburger { display: flex; }
 
       .hero { padding: 110px 20px 40px; }
-      .hero-tagline { font-size: 30px; }
+      .hero-tagline { font-size: 26px; }
       .hero-sub { font-size: 17px; margin-bottom: 32px; }
       .mobile-br { display: inline; }
       .hero-cta { flex-direction: column; align-items: center; gap: 12px; margin-bottom: 40px; }
@@ -1474,7 +1477,8 @@
       .proposal-slide-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 4px !important; }
 
       .metrics { padding: 80px 20px; }
-      .metrics-grid { grid-template-columns: 1fr; gap: 16px; }
+      .metrics-grid { grid-template-columns: 1fr; gap: 4px; }
+      .metric-card { padding: 24px 24px; }
       .metric-number { font-size: 56px; }
 
       .how { padding: 80px 20px; }
@@ -1575,8 +1579,8 @@
         <span class="accent">AI가 고객사를 찾고,<br class="mobile-br"> 맞춤 제안서까지 씁니다</span>
       </h1>
       <p class="hero-sub reveal reveal-delay-1">
-        기업별 맞춤 제안을 보내면 미팅 전환율이 3배 증가합니다.<br>
-        타겟 리서치부터 이메일, 제안서까지 5분 만에 완성하세요.
+        기업별 맞춤 제안을 보내면<br class="mobile-br"> 미팅 전환율이 3배 증가합니다.<br>
+        타겟 리서치부터 이메일, 제안서까지<br class="mobile-br"> 5분 만에 완성하세요.
       </p>
       <div class="hero-cta reveal reveal-delay-2">
         <button class="btn-primary" onclick="window.open('https://app.breadai.co.kr/','_blank')">무료 체험하기</button>
@@ -1643,7 +1647,7 @@
     <div class="features-header reveal">
       <div style="font-size:13px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px">HOW WE SOLVE</div>
       <h2>미팅 전환율을 높이는<br class="m-br"> AI 영업 프로세스</h2>
-      <p>소개서 업로드 한 번이면, 타겟 발굴부터 맞춤 제안서까지<br class="m-br"> AI가 한 번에 완성합니다.</p>
+      <p>소개서 업로드만 하시면,<br class="m-br"> 고객사 발굴부터 맞춤 이메일, 제안서까지<br class="m-br"> AI가 완성합니다.</p>
     </div>
 
     <div class="feature-blocks">
@@ -1691,7 +1695,7 @@
           </ul>
         </div>
         <div class="feature-block-visual">
-          <img src="image_3_이메일콜스크립트.png" alt="Bread&AI 맞춤 이메일 초안 및 콜드콜 스크립트" loading="lazy">
+          <img src="image_3_이메일콜스크립트.png" alt="Bread&AI 맞춤 이메일 초안 및 콜드콜 스크립트" loading="lazy" style="border:none;border-radius:0">
         </div>
       </div>
 
@@ -1866,8 +1870,8 @@
   <section class="end-form-section" id="end-form">
     <div class="end-form-inner">
       <div class="end-form-header reveal">
-        <h2>우리 회사가 영업할 신규 고객사는?<br><span style="color:var(--orange)">지금 무료로 고객사 리스트를 받으세요</span></h2>
-        <p>아래 내용을 작성하시면, 귀사에 맞는 고객사 리스트를<br class="mobile-br"> 메일로 보내드립니다. (영업일 기준 1일 이내)</p>
+        <h2>영업할 고객사를 찾으세요?<br><span style="color:var(--orange)">무료로 고객 리스트 받아가세요!</span></h2>
+        <p>아래 내용 작성하시면, 귀사에 맞는 고객사를<br>메일로 보내드립니다. (영업일 기준 1일 이내)</p>
       </div>
 
       <form id="endLeadForm" class="end-form reveal reveal-delay-1" autocomplete="off">
