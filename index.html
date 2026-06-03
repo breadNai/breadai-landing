@@ -14,7 +14,7 @@
   <!-- Open Graph / SNS 공유용 -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Bread&AI — B2B 영업, AI가 고객사를 찾고 제안서까지 써드립니다">
-  <meta property="og:description" content="회사 소개서만 올려보세요. 고객 발굴 및 맞춤 이메일, 제안서까지 10분 내에 나옵니다.">
+  <meta property="og:description" content="회사 소개서만 올려보세요. AI가 고객사 상황을 분석하고, 맞춤 이메일과 제안서를 만들어드립니다.">
   <meta property="og:url" content="https://breadai.co.kr/">
   <meta property="og:site_name" content="Bread&AI (브레드앤에이아이)">
   <meta property="og:locale" content="ko_KR">
@@ -25,7 +25,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Bread&AI — B2B 영업, AI가 고객사를 찾고 제안서까지 써드립니다">
-  <meta name="twitter:description" content="회사 소개서만 올려보세요. 고객 발굴 및 맞춤 이메일, 제안서까지 10분 내에 나옵니다.">
+  <meta name="twitter:description" content="회사 소개서만 올려보세요. AI가 고객사 상황을 분석하고, 맞춤 이메일과 제안서를 만들어드립니다.">
   <meta name="twitter:image" content="https://breadai.co.kr/og-image.png">
 
   <!-- 구조화 데이터: Organization -->
@@ -38,7 +38,7 @@
     "url": "https://breadai.co.kr",
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Web",
-    "description": "브레드앤에이아이(Bread&AI)는 AI가 타겟 기업을 리서치하고 맞춤 제안서와 콜드 이메일을 5분 만에 자동 생성하는 B2B 영업 AI 솔루션입니다. 미팅 전환율 30% 향상.",
+    "description": "브레드앤에이아이(Bread&AI)는 AI가 타겟 기업을 리서치하고 기업별 상황에 맞는 제안서와 이메일을 자동 생성하는 B2B 영업 AI 솔루션입니다. 맞춤 제안으로 미팅 전환율 향상.",
     "offers": {
       "@type": "Offer",
       "price": "1000000",
@@ -77,7 +77,7 @@
         "name": "Bread & AI는 어떤 솔루션인가요?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Bread & AI는 B2B 영업의 Pre-sales 전체를 AI로 자동화하는 세일즈 인텔리전스 솔루션입니다. 타겟 기업 발굴, AI 리서치, 맞춤 제안서 자동 생성까지 5분 만에 완성하여 미팅 전환율을 30% 향상시킵니다."
+          "text": "Bread & AI는 B2B 영업의 Pre-sales 전체를 AI로 자동화하는 세일즈 인텔리전스 솔루션입니다. AI가 타겟 기업의 상황을 분석하고, 그에 맞는 제안서와 이메일을 자동 생성하여 미팅 전환율을 높입니다."
         }
       },
       {
@@ -85,7 +85,7 @@
         "name": "기존 영업 방식과 무엇이 다른가요?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "기존에는 한 기업에 맞춤 제안을 준비하는 데 2-3시간이 걸려 대부분 같은 내용의 메일을 복사해 보냈습니다. Bread & AI는 AI가 타겟 기업의 현황, Pain Point, 최근 이슈를 자동 분석하고 기업별 맞춤 제안서와 콜드 이메일을 5분 만에 생성합니다."
+          "text": "기존에는 한 기업에 맞춤 제안을 준비하는 데 2-3시간이 걸려 대부분 같은 내용의 메일을 복사해 보냈습니다. Bread & AI는 AI가 타겟 기업의 현황, Pain Point, 최근 이슈를 자동 분석하고 기업 상황에 맞는 제안서와 이메일을 생성합니다."
         }
       },
       {
@@ -289,15 +289,33 @@
     }
     .mobile-br { display: none; }
 
-    .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; align-items: stretch; margin-bottom: 64px; }
+    .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; align-items: stretch; margin-bottom: 40px; }
     .hero-cta .btn-primary { font-size: 17px; padding: 15px 0; border-radius: 12px; width: 220px; text-align: center; }
     .hero-cta .btn-brochure { font-size: 17px; padding: 15px 0; border-radius: 12px; width: 220px; text-align: center; }
 
-    /* Hero Device Mockups */
-    .hero-devices {
-      position: relative; max-width: 360px; margin: 0 auto;
-      display: flex; justify-content: center; align-items: flex-end;
+    /* Hero Device Mockups (legacy — kept for reference) */
+    .hero-devices { display: none; }
+
+    /* Hero Video */
+    .hero-video {
+      max-width: 720px;
+      margin: 0 auto;
     }
+    .hero-video-wrap {
+      position: relative;
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+      background: #1a1a1a;
+    }
+    .hero-video-wrap video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .hero-play-btn { display: none; }
     .device-laptop {
       width: 100%; position: relative;
       filter: drop-shadow(0 16px 48px rgba(0,0,0,0.10));
@@ -1458,7 +1476,7 @@
       .mobile-br { display: inline; }
       .hero-cta { flex-direction: column; align-items: center; gap: 12px; margin-bottom: 40px; }
       .hero-cta .btn-primary, .hero-cta .btn-brochure { width: 280px; text-align: center; }
-      .device-mobile { left: -12px; }
+      .hero-video { margin-top: 8px; }
 
       .problem { padding: 100px 20px; }
       .problem-line { font-size: 22px; }
@@ -1540,8 +1558,7 @@
   <nav id="nav">
     <div class="nav-inner">
       <a href="javascript:void(0)" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="logo">
-        <img src="Bread&AI_로고_다크용.png" alt="Bread & AI" style="height:30px;position:relative;top:-6px;left:3px" onerror="this.style.display='none'">
-        <span>Bread & AI</span>
+        <img src="arrow_Color_2x.png" alt="Bread&AI" style="height:32px">
       </a>
       <div class="nav-links">
         <a href="javascript:void(0)" onclick="smoothGo('features')">기능</a>
@@ -1579,25 +1596,18 @@
         <span class="accent">AI가 고객사를 찾고,<br class="mobile-br"> 맞춤 제안서까지 씁니다</span>
       </h1>
       <p class="hero-sub reveal reveal-delay-1">
-        기업별 맞춤 제안을 보내면<br class="mobile-br"> 미팅 전환율이 3배 증가합니다.<br>
-        타겟 리서치부터 이메일, 제안서까지<br class="mobile-br"> 5분 만에 완성하세요.
+        기업별 상황을 이해한 맞춤 제안은<br class="mobile-br"> 미팅 전환율을 바꿉니다.<br>
+        타겟 리서치부터 맞춤 이메일, 제안서까지<br class="mobile-br"> AI가 완성합니다.
       </p>
       <div class="hero-cta reveal reveal-delay-2">
         <button class="btn-primary" onclick="window.open('https://app.breadai.co.kr/','_blank')">무료 체험하기</button>
-        <button class="btn-brochure" onclick="smoothGo('end-form')">신규 고객사 리스트 받기</button>
+        <button class="btn-brochure" onclick="openBrochureModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>소개서 받기</button>
       </div>
-      <div class="hero-devices reveal reveal-delay-2">
-        <div class="device-laptop">
-          <div class="device-laptop-screen">
-            <img src="image_hero_pc.png" alt="Bread&AI PC 화면 — 영업 대상 탐색하기" loading="eager">
-          </div>
-          <div class="device-laptop-base"></div>
-          <div class="device-laptop-bottom"></div>
-        </div>
-        <div class="device-mobile">
-          <div class="device-mobile-screen">
-            <img src="image_hero_mobile.png" alt="Bread&AI 모바일 — 소개서 업로드 화면" loading="eager">
-          </div>
+      <div class="hero-video reveal reveal-delay-2">
+        <div class="hero-video-wrap">
+          <video playsinline autoplay muted loop preload="auto">
+            <source src="demo.mp4" type="video/mp4">
+          </video>
         </div>
       </div>
     </div>
