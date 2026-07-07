@@ -1034,107 +1034,6 @@
     .pricing-note strong { color: var(--deep-navy); }
 
     /* ===== FINAL CTA ===== */
-    /* ===== END FORM ===== */
-    .end-form-section {
-      padding: 120px 24px;
-      background: #F5EDE4;
-    }
-    .end-form-inner {
-      max-width: 680px;
-      margin: 0 auto;
-    }
-    .end-form-header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    .end-form-header h2 {
-      font-size: 34px;
-      font-weight: 800;
-      color: var(--deep-navy);
-      line-height: 1.35;
-      margin-bottom: 12px;
-    }
-    .end-form-header p {
-      font-size: 16px;
-      color: var(--charcoal);
-      line-height: 1.6;
-      font-weight: 700;
-    }
-    .end-form {
-      position: relative;
-    }
-    .end-form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-    .end-form-field label {
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--charcoal);
-      margin-bottom: 6px;
-    }
-    .end-form-field input[type="text"],
-    .end-form-field input[type="email"],
-    .end-form-field input[type="url"] {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: #fff;
-      color: var(--charcoal);
-      font-size: 15px;
-      transition: border-color 0.2s;
-      box-sizing: border-box;
-    }
-    .end-form-field input::placeholder {
-      color: var(--slate);
-    }
-    .end-form-field input:focus {
-      outline: none;
-      border-color: var(--orange);
-      background: #fff;
-    }
-    .end-form-file-field {
-      margin-bottom: 24px;
-    }
-    .end-form-upload {
-      border: 2px dashed var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-      background: #fff;
-    }
-    .end-form-upload:hover,
-    .end-form-upload.dragover {
-      border-color: var(--orange);
-      background: rgba(204,114,71,0.06);
-    }
-    .end-form-upload-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      color: var(--slate);
-      font-size: 14px;
-    }
-    .end-form-upload-done {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      color: #34D399;
-      font-size: 14px;
-      font-weight: 600;
-    }
-    .end-form-submit {
-      text-align: center;
-    }
-
     .final-cta { padding: 120px 24px; background: #2D2520; text-align: center; }
     .final-cta .tagline {
       font-size: 44px; font-weight: 800; color: #FEFCFA;
@@ -1508,9 +1407,6 @@
       .pricing-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
       .pricing-notes { flex-direction: column; }
 
-      .end-form-section { padding: 80px 20px; }
-      .end-form-header h2 { font-size: 26px; }
-      .end-form-grid { grid-template-columns: 1fr; }
       .final-cta { padding: 80px 20px; }
       .metrics-header h2 { font-size: 30px; font-weight: 800; line-height: 1.35; }
       .final-cta .tagline { font-size: 24px; font-weight: 700; }
@@ -1563,7 +1459,7 @@
       <div class="nav-links">
         <a href="javascript:void(0)" onclick="smoothGo('features')">기능</a>
         <a href="javascript:void(0)" onclick="smoothGo('pricing')">가격</a>
-        <a href="javascript:void(0)" onclick="smoothGo('end-form')">무료 신청</a>
+        <a href="https://app.breadai.co.kr/" target="_blank">무료 가입</a>
         <a href="javascript:void(0)" onclick="openContactModal()">도입 문의</a>
       </div>
       <div class="nav-cta">
@@ -1578,7 +1474,7 @@
     <div class="mobile-menu" id="mobileMenu">
       <a href="javascript:void(0)" onclick="toggleMobile();smoothGo('features')">기능</a>
       <a href="javascript:void(0)" onclick="toggleMobile();smoothGo('pricing')">가격</a>
-      <a href="javascript:void(0)" onclick="toggleMobile();smoothGo('end-form')">무료 신청</a>
+      <a href="https://app.breadai.co.kr/" target="_blank" onclick="toggleMobile()">무료 가입</a>
       <button class="mm-btn" onclick="toggleMobile();openContactModal()">도입 문의</button>
       <div class="mm-divider"></div>
       <div class="mm-cta">
@@ -1876,60 +1772,6 @@
 
   </section>
 
-  <!-- END — 인라인 리드 폼 -->
-  <section class="end-form-section" id="end-form">
-    <div class="end-form-inner">
-      <div class="end-form-header reveal">
-        <h2>영업할 고객사를 찾으세요?<br><span style="color:var(--orange)">무료로 고객 리스트 받아가세요!</span></h2>
-        <p>아래 내용 작성하시면, 귀사에 맞는 고객사를<br>메일로 보내드립니다. (영업일 기준 1일 이내)</p>
-      </div>
-
-      <form id="endLeadForm" class="end-form reveal reveal-delay-1" autocomplete="off">
-        <!-- Honeypot -->
-        <input type="text" name="_hp" value="" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;overflow:hidden;pointer-events:none" tabindex="-1" autocomplete="new-password" aria-hidden="true">
-
-        <div class="end-form-grid">
-          <div class="end-form-field">
-            <label for="endCompany">회사명 <span style="color:var(--orange)">*</span></label>
-            <input type="text" id="endCompany" name="company" required placeholder="예: 브레드앤에이아이" maxlength="100">
-          </div>
-          <div class="end-form-field">
-            <label for="endName">담당자 성함 <span style="color:var(--orange)">*</span></label>
-            <input type="text" id="endName" name="name" required placeholder="예: 홍길동" maxlength="50">
-          </div>
-          <div class="end-form-field">
-            <label for="endEmail">이메일 <span style="color:var(--orange)">*</span></label>
-            <input type="email" id="endEmail" name="email" required placeholder="예: contact@company.com" maxlength="100">
-          </div>
-          <div class="end-form-field">
-            <label for="endUrl">회사 홈페이지 주소</label>
-            <input type="url" id="endUrl" name="url" placeholder="https://www.company.com" maxlength="200">
-          </div>
-        </div>
-
-        <div class="end-form-field end-form-file-field">
-          <label>회사 소개서 (PDF) <span style="color:var(--orange)">*</span></label>
-          <div class="end-form-upload" id="endUploadArea">
-            <input type="file" id="endFile" accept=".pdf" style="display:none">
-            <div class="end-form-upload-content" id="endUploadContent">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              <span>PDF 파일을 드래그하거나 클릭하여 업로드</span>
-            </div>
-            <div class="end-form-upload-done" id="endUploadDone" style="display:none">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span id="endFileName"></span>
-              <button type="button" onclick="clearEndFile()" style="background:none;border:none;color:var(--slate);cursor:pointer;font-size:18px;padding:0 4px">&times;</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="end-form-submit">
-          <button type="submit" class="btn-primary" style="font-size:17px;padding:16px 48px;border-radius:12px;width:100%;max-width:400px">타겟 고객사 리스트 신청</button>
-        </div>
-      </form>
-    </div>
-  </section>
-
   <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
@@ -1945,19 +1787,21 @@
           <div class="footer-col">
             <h4>제품</h4>
             <a href="javascript:void(0)" onclick="smoothGo('features')">기능 소개</a>
-            <a href="javascript:void(0)" onclick="smoothGo('how')">사용 방법</a>
+            <a href="javascript:void(0)" onclick="smoothGo('features')">사용 방법</a>
             <a href="javascript:void(0)" onclick="smoothGo('pricing')">가격</a>
           </div>
           <div class="footer-col">
             <h4>회사</h4>
             <a href="javascript:void(0)" onclick="window.scrollTo({top:0,behavior:'smooth'})">소개</a>
           </div>
+          <!-- 리소스 열 숨김 (aeo.breadai.co.kr 삭제됨, 2026-07) — 복구 시 주석 해제
           <div class="footer-col">
             <h4>리소스</h4>
             <a href="https://aeo.breadai.co.kr/" target="_blank">B2B 영업 인사이트</a>
             <a href="https://aeo.breadai.co.kr/aeo/sales-ai-tools-faq.html" target="_blank">AI 영업 도구 가이드</a>
             <a href="https://aeo.breadai.co.kr/aeo/b2b-proposal-faq.html" target="_blank">제안서 작성 팁</a>
           </div>
+          -->
           <div class="footer-col">
             <h4>문의</h4>
             <a href="mailto:contact@breadai.co.kr">contact@breadai.co.kr</a>
@@ -2084,72 +1928,6 @@
     </div>
   </div>
 
-  <!-- PROSPECT LIST MODAL — "신규 고객사 리스트 받기" -->
-  <div id="prospectModal" class="contact-modal">
-    <div class="contact-modal-content">
-      <div class="contact-modal-header">
-        <h2>우리 회사에 맞는 신규 고객사를 AI가 찾아드립니다</h2>
-        <button class="contact-modal-close" onclick="closeProspectModal()">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>
-      <div class="contact-modal-body">
-        <p class="contact-modal-intro" id="prospectIntro">아래 정보를 남겨주시면, AI가 귀사에 맞는 신규 고객사를 탐색합니다.<br>영업일 기준 1일 내로 결과를 이메일로 보내드립니다.</p>
-        <form id="prospectForm" novalidate>
-          <!-- Honeypot -->
-          <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true">
-            <input type="text" name="_hp" id="pr-hp" tabindex="-1" autocomplete="off">
-          </div>
-          <div class="form-group">
-            <label for="pr-company">회사명 <span class="required">*</span></label>
-            <input type="text" id="pr-company" name="company" placeholder="예: 브레드앤에이아이">
-            <span class="field-error" id="err-pr-company"></span>
-          </div>
-          <div class="form-group">
-            <label for="pr-url">홈페이지 URL</label>
-            <input type="url" id="pr-url" name="url" placeholder="예: https://www.breadai.co.kr">
-          </div>
-          <div class="form-group">
-            <label for="pr-industry">업종 또는 제품 한줄 설명 <span class="required">*</span></label>
-            <input type="text" id="pr-industry" name="industry" placeholder="예) HR SaaS, 제조업 자동화 솔루션">
-            <span class="field-error" id="err-pr-industry"></span>
-          </div>
-          <div class="form-group">
-            <label for="pr-email">이메일 <span class="required">*</span></label>
-            <input type="email" id="pr-email" name="email" placeholder="name@company.com">
-            <span class="field-error" id="err-pr-email"></span>
-          </div>
-          <div class="form-group-file">
-            <label>자사 상품 소개서 <span class="required">*</span></label>
-            <div class="file-upload-area" id="prospectFileArea" onclick="document.getElementById('pr-file').click()">
-              <input type="file" id="pr-file" name="brochure" accept=".pdf" style="display:none" onchange="handleProspectFile(this)">
-              <div id="prospectFileDefault">
-                <div class="upload-icon">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--slate)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                </div>
-                <div class="upload-text">클릭하여 PDF 파일 선택</div>
-                <div class="upload-hint">PDF 형식, 최대 50MB</div>
-              </div>
-              <div id="prospectFileSelected" class="file-selected" style="display:none">
-                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
-                <span id="prospectFileName"></span>
-              </div>
-            </div>
-            <span class="field-error" id="err-pr-file"></span>
-          </div>
-          <button type="submit" class="contact-submit-btn" id="prospectSubmitBtn">신규 고객사 리스트 받기</button>
-        </form>
-        <!-- Success state -->
-        <div id="prospectSuccess" style="display:none;text-align:center;padding:20px 0">
-          <div style="width:52px;height:52px;border-radius:50%;background:#009A9A;margin:0 auto 16px;display:flex;align-items:center;justify-content:center">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-          </div>
-          <div style="font-size:18px;font-weight:700;color:var(--deep-navy);margin-bottom:8px">요청이 접수되었습니다!</div>
-          <div style="font-size:14px;color:var(--slate);line-height:1.6">영업일 기준 1일 내로 귀사에 맞는<br>신규 고객사 Top 5를 이메일로 보내드립니다.</div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <style>
     .contact-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); z-index:9999; align-items:center; justify-content:center; }
@@ -2351,7 +2129,7 @@
       document.body.style.overflow = '';
     }
     document.addEventListener('keydown', e => {
-      if(e.key === 'Escape') { closeContactModal(); closeBrochureModal(); closeProspectModal(); }
+      if(e.key === 'Escape') { closeContactModal(); closeBrochureModal(); }
     });
 
     // === FORM VALIDATION ===
@@ -2390,6 +2168,20 @@
       if (val.length > 0 && val.length < 11) showErr('err-phone', '휴대폰 번호 11자리를 입력해주세요');
       else clearErr('err-phone');
     });
+
+    // ===== 리드 훅: 폼 제출 성공 시 통합 리드 마스터(구글시트)에도 기록 =====
+    const LEAD_HOOK = 'https://script.google.com/macros/s/AKfycbzFvhzyy9Mye3ftozjDqdZAyofwiXwLtVb9FSVHqBJksyoUuWLteo8EQYlTKiejEM7aWg/exec';
+    const LEAD_HOOK_SECRET = '17b997a38d4a5f02fe18fa93ff8edf11';
+    function logLead(source, data) {
+      try {
+        fetch(LEAD_HOOK, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({ secret: LEAD_HOOK_SECRET, source: source, ...data })
+        });
+      } catch (e) { /* 훅 실패는 무시 — 기존 제출 흐름에 영향 없음 */ }
+    }
 
     // CONTACT FORM SUBMIT via Web3Forms API
     document.getElementById('contactForm').addEventListener('submit', async function(e) {
@@ -2438,6 +2230,12 @@
         });
         const result = await res.json();
         if (result.success) {
+          logLead('도입문의', {
+            company: company, name: name, email: email, phone: phone,
+            department: document.getElementById('cf-department').value,
+            position: document.getElementById('cf-position').value,
+            plan: planVal, message: document.getElementById('cf-message').value
+          });
           alert('문의가 접수되었습니다.\n빠른 시일 내에 연락드리겠습니다.');
           this.reset();
           closeContactModal();
@@ -2449,164 +2247,6 @@
       }
       btn.textContent = orig;
       btn.disabled = false;
-    });
-
-    // PROSPECT LIST MODAL
-    function openProspectModal() {
-      document.getElementById('prospectForm').style.display = '';
-      document.getElementById('prospectSuccess').style.display = 'none';
-      document.getElementById('prospectIntro').style.display = '';
-      document.getElementById('prospectModal').classList.add('show');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeProspectModal() {
-      document.getElementById('prospectModal').classList.remove('show');
-      document.body.style.overflow = '';
-    }
-
-    // Prospect file upload handler
-    function handleProspectFile(input) {
-      const file = input.files[0];
-      if (file) {
-        if (file.size > 50 * 1024 * 1024) {
-          document.getElementById('err-pr-file').textContent = '파일 크기가 50MB를 초과합니다';
-          input.value = '';
-          return;
-        }
-        if (!file.name.toLowerCase().endsWith('.pdf')) {
-          document.getElementById('err-pr-file').textContent = 'PDF 파일만 업로드 가능합니다';
-          input.value = '';
-          return;
-        }
-        document.getElementById('err-pr-file').textContent = '';
-        document.getElementById('prospectFileDefault').style.display = 'none';
-        document.getElementById('prospectFileSelected').style.display = 'flex';
-        document.getElementById('prospectFileName').textContent = file.name;
-      }
-    }
-
-    // Prospect file drag & drop
-    (function() {
-      const area = document.getElementById('prospectFileArea');
-      if (!area) return;
-      ['dragenter','dragover'].forEach(evt => area.addEventListener(evt, e => { e.preventDefault(); area.classList.add('dragover'); }));
-      ['dragleave','drop'].forEach(evt => area.addEventListener(evt, e => { e.preventDefault(); area.classList.remove('dragover'); }));
-      area.addEventListener('drop', e => {
-        const file = e.dataTransfer.files[0];
-        if (file) {
-          const input = document.getElementById('pr-file');
-          const dt = new DataTransfer();
-          dt.items.add(file);
-          input.files = dt.files;
-          handleProspectFile(input);
-        }
-      });
-    })();
-
-    // Prospect form validation
-    document.getElementById('pr-company').addEventListener('input', function() {
-      if (this.value.trim()) { document.getElementById('err-pr-company').textContent = ''; this.classList.remove('invalid'); }
-    });
-    document.getElementById('pr-industry').addEventListener('input', function() {
-      if (this.value.trim()) { document.getElementById('err-pr-industry').textContent = ''; this.classList.remove('invalid'); }
-    });
-    document.getElementById('pr-email').addEventListener('input', function() {
-      document.getElementById('err-pr-email').textContent = ''; this.classList.remove('invalid');
-    });
-    document.getElementById('pr-email').addEventListener('blur', function() {
-      if (this.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value)) {
-        document.getElementById('err-pr-email').textContent = '올바른 이메일 형식을 입력해주세요';
-        this.classList.add('invalid');
-      }
-    });
-
-    // Prospect form submit
-    document.getElementById('prospectForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      var company = document.getElementById('pr-company').value.trim();
-      var url = document.getElementById('pr-url').value.trim();
-      var industry = document.getElementById('pr-industry').value.trim();
-      var email = document.getElementById('pr-email').value.trim();
-      var fileInput = document.getElementById('pr-file');
-      var hasError = false;
-
-      if (!company) { document.getElementById('err-pr-company').textContent = '회사명을 입력해주세요'; document.getElementById('pr-company').classList.add('invalid'); hasError = true; }
-      if (!industry) { document.getElementById('err-pr-industry').textContent = '업종 또는 제품 설명을 입력해주세요'; document.getElementById('pr-industry').classList.add('invalid'); hasError = true; }
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('err-pr-email').textContent = '올바른 이메일을 입력해주세요'; document.getElementById('pr-email').classList.add('invalid'); hasError = true; }
-      if (!fileInput.files.length) { document.getElementById('err-pr-file').textContent = '소개서 PDF를 업로드해주세요'; hasError = true; }
-      if (hasError) return;
-
-      var btn = document.getElementById('prospectSubmitBtn');
-      btn.disabled = true; btn.textContent = '파일 업로드 중...';
-
-      try {
-        var fileKey = '';
-        var file = fileInput.files[0];
-
-        // ── Step 1: S3에 파일 업로드 ──
-        if (file) {
-          // 파일 크기 체크 (20MB 제한)
-          if (file.size > 20 * 1024 * 1024) {
-            alert('파일 크기는 20MB 이하만 가능합니다.');
-            btn.disabled = false; btn.textContent = '신규 고객사 리스트 받기';
-            return;
-          }
-
-          // Presigned URL 요청
-          var urlRes = await fetch('/api/get-upload-url', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ fileName: file.name, contentType: file.type || 'application/pdf' })
-          });
-          var urlData = await urlRes.json();
-          if (!urlData.uploadUrl) {
-            alert('파일 업로드 준비에 실패했습니다. 잠시 후 다시 시도해주세요.');
-            btn.disabled = false; btn.textContent = '신규 고객사 리스트 받기';
-            return;
-          }
-
-          // S3에 직접 업로드
-          var uploadRes = await fetch(urlData.uploadUrl, {
-            method: 'PUT',
-            headers: { 'Content-Type': file.type || 'application/pdf' },
-            body: file
-          });
-          if (!uploadRes.ok) {
-            alert('파일 업로드에 실패했습니다. 잠시 후 다시 시도해주세요.');
-            btn.disabled = false; btn.textContent = '신규 고객사 리스트 받기';
-            return;
-          }
-          fileKey = urlData.key;
-        }
-
-        // ── Step 2: 폼 데이터 제출 ──
-        btn.textContent = '전송 중...';
-        var res = await fetch('/api/send-prospect-request', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            company: company,
-            url: url,
-            industry: industry,
-            email: email,
-            fileName: file ? file.name : '',
-            fileKey: fileKey,
-            _hp: document.getElementById('pr-hp').value
-          })
-        });
-        var result = await res.json();
-        if (result.success) {
-          document.getElementById('prospectForm').style.display = 'none';
-          document.getElementById('prospectIntro').style.display = 'none';
-          document.getElementById('prospectSuccess').style.display = 'block';
-        } else {
-          alert(result.error || '전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
-          btn.disabled = false; btn.textContent = '신규 고객사 리스트 받기';
-        }
-      } catch(err) {
-        alert('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-        btn.disabled = false; btn.textContent = '신규 고객사 리스트 받기';
-      }
     });
 
     // BROCHURE MODAL
@@ -2673,6 +2313,7 @@
         });
         var result = await res.json();
         if (result.success) {
+          logLead('소개서요청', { company: company, name: name, email: email, phone: phone, department: department, position: position });
           document.getElementById('brochureForm').style.display = 'none';
           document.getElementById('brochureIntro').style.display = 'none';
           document.getElementById('brochureSuccess').style.display = 'block';
@@ -2686,111 +2327,6 @@
       }
     });
 
-    // ========== END LEAD FORM ==========
-    // File upload
-    (function() {
-      const area = document.getElementById('endUploadArea');
-      const fileInput = document.getElementById('endFile');
-      if (!area || !fileInput) return;
-
-      area.addEventListener('click', () => fileInput.click());
-      ['dragenter','dragover'].forEach(evt => area.addEventListener(evt, e => { e.preventDefault(); area.classList.add('dragover'); }));
-      ['dragleave','drop'].forEach(evt => area.addEventListener(evt, e => { e.preventDefault(); area.classList.remove('dragover'); }));
-      area.addEventListener('drop', e => {
-        const file = e.dataTransfer.files[0];
-        if (file) { const dt = new DataTransfer(); dt.items.add(file); fileInput.files = dt.files; showEndFile(file); }
-      });
-      fileInput.addEventListener('change', () => { if (fileInput.files[0]) showEndFile(fileInput.files[0]); });
-    })();
-
-    function showEndFile(file) {
-      if (!file.name.toLowerCase().endsWith('.pdf')) { alert('PDF 파일만 업로드 가능합니다.'); return; }
-      if (file.size > 50 * 1024 * 1024) { alert('50MB 이하 파일만 가능합니다.'); return; }
-      document.getElementById('endUploadContent').style.display = 'none';
-      document.getElementById('endUploadDone').style.display = 'flex';
-      document.getElementById('endFileName').textContent = file.name;
-    }
-    function clearEndFile() {
-      document.getElementById('endFile').value = '';
-      document.getElementById('endUploadContent').style.display = 'flex';
-      document.getElementById('endUploadDone').style.display = 'none';
-    }
-
-    // Form submit
-    document.getElementById('endLeadForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const company = document.getElementById('endCompany').value.trim();
-      const name = document.getElementById('endName').value.trim();
-      const email = document.getElementById('endEmail').value.trim();
-      const url = document.getElementById('endUrl').value.trim();
-      const fileInput = document.getElementById('endFile');
-
-      if (!company || !name || !email) { alert('필수 항목을 모두 입력해주세요.'); return; }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('올바른 이메일 형식을 입력해주세요.'); return; }
-      if (!fileInput.files.length) { alert('회사 소개서(PDF)를 업로드해주세요.'); return; }
-
-      const btn = this.querySelector('button[type="submit"]');
-      btn.disabled = true; btn.textContent = '파일 업로드 중...';
-
-      try {
-        var endFileKey = '';
-        var endFileObj = fileInput.files[0];
-
-        // ── Step 1: S3에 파일 업로드 ──
-        if (endFileObj) {
-          if (endFileObj.size > 20 * 1024 * 1024) {
-            alert('파일 크기는 20MB 이하만 가능합니다.');
-            btn.disabled = false; btn.textContent = '타겟 고객사 리스트 신청';
-            return;
-          }
-          var endUrlRes = await fetch('/api/get-upload-url', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ fileName: endFileObj.name, contentType: endFileObj.type || 'application/pdf' })
-          });
-          var endUrlData = await endUrlRes.json();
-          if (!endUrlData.uploadUrl) {
-            alert('파일 업로드 준비에 실패했습니다.');
-            btn.disabled = false; btn.textContent = '타겟 고객사 리스트 신청';
-            return;
-          }
-          var endUploadRes = await fetch(endUrlData.uploadUrl, {
-            method: 'PUT',
-            headers: { 'Content-Type': endFileObj.type || 'application/pdf' },
-            body: endFileObj
-          });
-          if (!endUploadRes.ok) {
-            alert('파일 업로드에 실패했습니다.');
-            btn.disabled = false; btn.textContent = '타겟 고객사 리스트 신청';
-            return;
-          }
-          endFileKey = endUrlData.key;
-        }
-
-        // ── Step 2: 폼 데이터 제출 ──
-        btn.textContent = '전송 중...';
-        const res = await fetch('/api/send-prospect-request', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            company, name, email, url,
-            fileName: endFileObj ? endFileObj.name : '',
-            fileKey: endFileKey,
-            _hp: this.querySelector('[name="_hp"]').value
-          })
-        });
-        const result = await res.json();
-        if (result.success) {
-          this.innerHTML = '<div style="text-align:center;padding:40px 0"><div style="font-size:48px;margin-bottom:16px">&#10003;</div><h3 style="font-size:22px;font-weight:700;color:var(--deep-navy);margin-bottom:12px">신청이 완료되었습니다!</h3><p style="font-size:15px;color:var(--slate);line-height:1.6">영업일 1일 내로 ' + email + '로 결과를 보내드리겠습니다.</p></div>';
-        } else {
-          alert(result.error || '전송에 실패했습니다.');
-          btn.disabled = false; btn.textContent = '타겟 고객사 리스트 신청';
-        }
-      } catch(err) {
-        alert('네트워크 오류가 발생했습니다.');
-        btn.disabled = false; btn.textContent = '타겟 고객사 리스트 신청';
-      }
-    });
   </script>
 </body>
 </html>
