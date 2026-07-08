@@ -11,6 +11,10 @@
   <meta name="keywords" content="B2B 영업 AI, 맞춤 제안서 자동화, AI 세일즈, 콜드 이메일 AI, 영업 자동화, AI proposal generator, B2B sales automation">
   <link rel="canonical" href="https://breadai.co.kr/">
 
+  <!-- Favicon (Bread&AI 로고) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20width%3D'160'%20height%3D'160'%20viewBox%3D'0%200%20160%20160'%20fill%3D'none'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M57.2554%2046.4758L152.412%207.25773L113.134%20104.577L113.364%2047.6204L55.0928%2047.3283L57.2554%2046.4758Z'%20fill%3D'%23CC7247'%2F%3E%3Crect%20x%3D'7.25775'%20y%3D'55.9175'%20width%3D'96.4948'%20height%3D'96.4948'%20fill%3D'%231A1A1A'%2F%3E%3C%2Fsvg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20width%3D'160'%20height%3D'160'%20viewBox%3D'0%200%20160%20160'%20fill%3D'none'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Crect%20width%3D'160'%20height%3D'160'%20fill%3D'white'%2F%3E%3Cpath%20d%3D'M57.2554%2046.4758L152.412%207.25773L113.134%20104.577L113.364%2047.6204L55.0928%2047.3283L57.2554%2046.4758Z'%20fill%3D'%23CC7247'%2F%3E%3Crect%20x%3D'7.25775'%20y%3D'55.9175'%20width%3D'96.4948'%20height%3D'96.4948'%20fill%3D'%231A1A1A'%2F%3E%3C%2Fsvg%3E">
+
   <!-- Open Graph / SNS 공유용 -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Bread&AI — B2B 영업, AI가 고객사를 찾고 제안서까지 써드립니다">
@@ -1034,6 +1038,107 @@
     .pricing-note strong { color: var(--deep-navy); }
 
     /* ===== FINAL CTA ===== */
+    /* ===== END FORM ===== */
+    .end-form-section {
+      padding: 120px 24px;
+      background: #F5EDE4;
+    }
+    .end-form-inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .end-form-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .end-form-header h2 {
+      font-size: 34px;
+      font-weight: 800;
+      color: var(--deep-navy);
+      line-height: 1.35;
+      margin-bottom: 12px;
+    }
+    .end-form-header p {
+      font-size: 16px;
+      color: var(--charcoal);
+      line-height: 1.6;
+      font-weight: 700;
+    }
+    .end-form {
+      position: relative;
+    }
+    .end-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .end-form-field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+    }
+    .end-form-field input[type="text"],
+    .end-form-field input[type="email"],
+    .end-form-field input[type="url"] {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--charcoal);
+      font-size: 15px;
+      transition: border-color 0.2s;
+      box-sizing: border-box;
+    }
+    .end-form-field input::placeholder {
+      color: var(--slate);
+    }
+    .end-form-field input:focus {
+      outline: none;
+      border-color: var(--orange);
+      background: #fff;
+    }
+    .end-form-file-field {
+      margin-bottom: 24px;
+    }
+    .end-form-upload {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: #fff;
+    }
+    .end-form-upload:hover,
+    .end-form-upload.dragover {
+      border-color: var(--orange);
+      background: rgba(204,114,71,0.06);
+    }
+    .end-form-upload-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--slate);
+      font-size: 14px;
+    }
+    .end-form-upload-done {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #34D399;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .end-form-submit {
+      text-align: center;
+    }
+
     .final-cta { padding: 120px 24px; background: #2D2520; text-align: center; }
     .final-cta .tagline {
       font-size: 44px; font-weight: 800; color: #FEFCFA;
@@ -1407,6 +1512,9 @@
       .pricing-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
       .pricing-notes { flex-direction: column; }
 
+      .end-form-section { padding: 80px 20px; }
+      .end-form-header h2 { font-size: 26px; }
+      .end-form-grid { grid-template-columns: 1fr; }
       .final-cta { padding: 80px 20px; }
       .metrics-header h2 { font-size: 30px; font-weight: 800; line-height: 1.35; }
       .final-cta .tagline { font-size: 24px; font-weight: 700; }
