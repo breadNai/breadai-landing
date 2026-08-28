@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/blog",
+      "destination": "https://aeo.breadai.co.kr/"
+    },
+    {
+      "source": "/blog/:path*",
+      "destination": "https://aeo.breadai.co.kr/:path*"
+    }
+  ]
+}
