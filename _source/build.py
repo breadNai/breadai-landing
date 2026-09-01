@@ -321,7 +321,7 @@ SCENE_2 = [
      '<path class="wdw" d="M68 26h12M88 26h10M68 42h12M88 42h10M68 58h12M88 58h10'
      'M68 74h12M88 74h10M68 90h12M88 90h10M68 106h12M88 106h10"/>'
      '<rect x="0" y="124" width="120" height="4" rx="2" class="grd"/></svg>'
-     '<b>대형 제조 A사</b><u>임직원 4,800명 · 48개 사업장</u></div>'
+     '<b>대형 제조 A사</b><u>임직원 4,800명<br>48개 사업장</u></div>'
      + _lwins() +
      '<div class="lout"><span class="lt">제안 논리</span>'
      + "".join('<span class="ln l%d">%s</span>' % (k + 1, t) for k, t in enumerate(LOGIC)) +
@@ -400,7 +400,7 @@ TRACKS = [
         ("<em>왜 우리를 선택해야 하는지</em> 논리를 만들고", "상대 회사의 이슈와 우리 강점을 연결해 제안 논리를 세웁니다"),
         ("그 회사만을 위한 <em>이메일</em>이 작성되고", "상대 회사 맥락에서 시작하는 첫 문단이 그대로 완성됩니다"),
         ("원클릭으로 바로 <em>아웃룩에</em> 보낼 수 있고", "제목과 본문이 아웃룩으로 그대로 넘어갑니다"),
-        ("<em>제안서</em>까지 한 번에 완성됩니다", "자사 특화 템플릿에 그 회사만을 위한 내용이 채워집니다"),
+        ("<em>제안서</em>까지 AI가 한 번에 완성합니다", "자사 특화 템플릿에 그 회사만을 위한 내용이 채워집니다"),
     ]),
 ]
 
@@ -1237,8 +1237,8 @@ JS = r"""
     }catch(e){ /* 훅 실패는 무시 — 제출 흐름에 영향 없음 */ }
   }
 
-  /* 도입 문의 수신처 (Web3Forms) */
-  var WEB3FORMS_KEY = '766181fb-d7da-46d3-8a20-20a868afef0b';
+  /* 도입 문의는 자체 API(/api/send-contact)로 발송한다.
+     이전에는 외부 서비스(Web3Forms)를 거쳤으나 수신이 누락되어 전환함. */
 
   var mdl=document.getElementById('mdl');
   if(mdl){
@@ -1312,18 +1312,12 @@ JS = r"""
             done(true,'소개서를 이메일로 보내드렸습니다. 메일함을 확인해주세요.');
           }else{ done(false, r.error); }
         }else{
-          /* ── 도입 문의 → Web3Forms ── */
-          var subjectPrefix = plan ? '[Bread & AI '+plan+' 문의]' : '[Bread & AI 도입 문의]';
-          var res2=await fetch('https://api.web3forms.com/submit',{
+          /* ── 도입 문의 → 자체 발송 API ── */
+          var res2=await fetch('/api/send-contact',{
             method:'POST', headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
-              access_key:WEB3FORMS_KEY,
-              subject:subjectPrefix+' '+company,
-              from_name:name,
-              '관심 플랜':plan||'일반 문의',
-              '회사':company, '부서':department, '직함':position,
-              '이름':name, '이메일':email, '연락처':f['연락처']||'',
-              '문의 내용':message
+              company:company, name:name, email:email, phone:f['연락처']||'',
+              department:department, position:position, plan:plan, message:message, _hp:''
             })
           });
           var r2=await res2.json();
@@ -1331,7 +1325,7 @@ JS = r"""
             logLead('도입문의',{company:company, name:name, email:email, phone:phone,
               department:department, position:position, plan:plan, message:message});
             done(true);
-          }else{ done(false); }
+          }else{ done(false, r2.error); }
         }
       }catch(err){
         done(false,'네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
@@ -1346,7 +1340,7 @@ JS = r"""
 
 # ── 운영 연동 블록 (SEO / 검색엔진 인증 / Schema.org / Favicon / Clarity) ──
 #    ※ 실제 서비스 연동이므로 임의로 지우지 말 것.
-SEO_HEAD = '<meta name="google-site-verification" content="DzKa9n_gNSL7cgofNCclCsIcJZ9DR7sMfHbndN2PE7I" />\n  <meta name="naver-site-verification" content="86171a58f78e357d53b482a7265c1a09e59316c1" />\n  <meta name="msvalidate.01" content="93A125744D27E4846DE5E2CE0517D791" />\n  <title>Bread&AI (브레드앤에이아이) — B2B 영업, AI가 고객사를 찾고 제안서까지 써드립니다</title>\n  <meta name="description" content="B2B 영업하세요? 회사 소개서만 올려보세요. AI가 신규 고객사를 발굴하고, 맞춤 이메일과 제안서까지 만들어드립니다. 더 많은 미팅, 더 높은 매출.">\n  <meta name="keywords" content="B2B 영업 AI, 맞춤 제안서 자동화, AI 세일즈, 콜드 이메일 AI, 영업 자동화, AI proposal generator, B2B sales automation">\n  <link rel="canonical" href="https://breadai.co.kr/">\n\n  <!-- Favicon (Bread&AI 로고) -->\n  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20width%3D\'160\'%20height%3D\'160\'%20viewBox%3D\'0%200%20160%20160\'%20fill%3D\'none\'%20xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\'%3E%3Cpath%20d%3D\'M57.2554%2046.4758L152.412%207.25773L113.134%20104.577L113.364%2047.6204L55.0928%2047.3283L57.2554%2046.4758Z\'%20fill%3D\'%23CC7247\'%2F%3E%3Crect%20x%3D\'7.25775\'%20y%3D\'55.9175\'%20width%3D\'96.4948\'%20height%3D\'96.4948\'%20fill%3D\'%231A1A1A\'%2F%3E%3C%2Fsvg%3E">\n  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20width%3D\'160\'%20height%3D\'160\'%20viewBox%3D\'0%200%20160%20160\'%20fill%3D\'none\'%20xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\'%3E%3Crect%20width%3D\'160\'%20height%3D\'160\'%20fill%3D\'white\'%2F%3E%3Cpath%20d%3D\'M57.2554%2046.4758L152.412%207.25773L113.134%20104.577L113.364%2047.6204L55.0928%2047.3283L57.2554%2046.4758Z\'%20fill%3D\'%23CC7247\'%2F%3E%3Crect%20x%3D\'7.25775\'%20y%3D\'55.9175\'%20width%3D\'96.4948\'%20height%3D\'96.4948\'%20fill%3D\'%231A1A1A\'%2F%3E%3C%2Fsvg%3E">\n\n  <!-- Open Graph / SNS 공유용 -->\n  <meta property="og:type" content="website">\n  <meta property="og:title" content="Bread&AI — B2B 영업, AI가 고객사를 찾고 제안서까지 써드립니다">\n  <meta property="og:description" content="회사 소개서만 올려보세요. AI가 고객사 상황을 분석하고, 맞춤 이메일과 제안서를 만들어드립니다.">\n  <meta property="og:url" content="https://breadai.co.kr/">\n  <meta property="og:site_name" content="Bread&AI (브레드앤에이아이)">\n  <meta property="og:locale" content="ko_KR">\n  <meta property="og:image" content="https://breadai.co.kr/og-image.png">\n  <meta property="og:image:width" content="1200">\n  <meta property="og:image:height" content="630">\n\n  <!-- Twitter Card -->\n  <meta name="twitter:card" content="summary_large_image">\n  <meta name="twitter:title" content="Bread&AI — B2B 영업, AI가 고객사를 찾고 제안서까지 써드립니다">\n  <meta name="twitter:description" content="회사 소개서만 올려보세요. AI가 고객사 상황을 분석하고, 맞춤 이메일과 제안서를 만들어드립니다.">\n  <meta name="twitter:image" content="https://breadai.co.kr/og-image.png">\n\n  <!-- 구조화 데이터: Organization -->\n  <script type="application/ld+json">\n  {\n    "@context": "https://schema.org",\n    "@type": "SoftwareApplication",\n    "name": "Bread&AI (브레드앤에이아이)",\n    "alternateName": "브레드앤에이아이",\n    "url": "https://breadai.co.kr",\n    "applicationCategory": "BusinessApplication",\n    "operatingSystem": "Web",\n    "description": "브레드앤에이아이(Bread&AI)는 AI가 타겟 기업을 리서치하고 기업별 상황에 맞는 제안서와 이메일을 자동 생성하는 B2B 영업 AI 솔루션입니다. 맞춤 제안으로 미팅 전환율 향상.",\n    "offers": {\n      "@type": "Offer",\n      "price": "1000000",\n      "priceCurrency": "KRW",\n      "priceValidUntil": "2026-12-31",\n      "availability": "https://schema.org/InStock"\n    },\n    "provider": {\n      "@type": "Organization",\n      "name": "Bread&AI (브레드앤에이아이)",\n      "alternateName": "브레드앤에이아이",\n      "url": "https://breadai.co.kr",\n      "email": "contact@breadai.co.kr",\n      "foundingDate": "2025",\n      "description": "브레드앤에이아이(Bread&AI) — AI 세일즈 인텔리전스. B2B 영업의 Pre-sales 전체를 AI로 맞춤화하여 미팅 수를 늘리는 솔루션.",\n      "sameAs": []\n    },\n    "featureList": [\n      "타겟 기업 자동 발굴",\n      "AI 기업 리서치 및 Pain Point 분석",\n      "맞춤 콜드 이메일 자동 생성",\n      "기업별 맞춤 제안서 15-20장 자동 생성",\n      "맞춤 제안으로 미팅 전환율 30% 향상"\n    ]\n  }\n  </script>\n\n  <!-- 구조화 데이터: FAQ (검색결과 풍부한 표시용) -->\n  <script type="application/ld+json">\n  {\n    "@context": "https://schema.org",\n    "@type": "FAQPage",\n    "mainEntity": [\n      {\n        "@type": "Question",\n        "name": "Bread & AI는 어떤 솔루션인가요?",\n        "acceptedAnswer": {\n          "@type": "Answer",\n          "text": "Bread & AI는 B2B 영업의 Pre-sales 전체를 AI로 자동화하는 세일즈 인텔리전스 솔루션입니다. AI가 타겟 기업의 상황을 분석하고, 그에 맞는 제안서와 이메일을 자동 생성하여 미팅 전환율을 높입니다."\n        }\n      },\n      {\n        "@type": "Question",\n        "name": "기존 영업 방식과 무엇이 다른가요?",\n        "acceptedAnswer": {\n          "@type": "Answer",\n          "text": "기존에는 한 기업에 맞춤 제안을 준비하는 데 2-3시간이 걸려 대부분 같은 내용의 메일을 복사해 보냈습니다. Bread & AI는 AI가 타겟 기업의 현황, Pain Point, 최근 이슈를 자동 분석하고 기업 상황에 맞는 제안서와 이메일을 생성합니다."\n        }\n      },\n      {\n        "@type": "Question",\n        "name": "가격은 얼마인가요?",\n        "acceptedAnswer": {\n          "@type": "Answer",\n          "text": "Basic 플랜 월 100만원(3개월 단위 결제, 5인 기본), Pro 플랜 월 200만원(3개월 단위 결제, 10인 기본)부터 시작합니다. Enterprise는 맞춤 견적을 제공합니다."\n        }\n      }\n    ]\n  }\n  </script>\n\n  <!-- Microsoft Clarity -->\n  <script type="text/javascript">\n    (function(c,l,a,r,i,t,y){\n      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};\n      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;\n      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);\n    })(window, document, "clarity", "script", "vx5y6icwmu");\n  </script>\n  <link rel="preconnect" href="https://cdn.jsdelivr.net">'
+SEO_HEAD = '<meta name="google-site-verification" content="DzKa9n_gNSL7cgofNCclCsIcJZ9DR7sMfHbndN2PE7I" />\n  <meta name="naver-site-verification" content="86171a58f78e357d53b482a7265c1a09e59316c1" />\n  <meta name="msvalidate.01" content="93A125744D27E4846DE5E2CE0517D791" />\n  <title>Bread&AI - B2B 영업, AI 세일즈 인텔리전스로 맞춤 제안하세요.</title>\n  <meta name="description" content="B2B 영업 준비를 자동화하는 AI 세일즈 인텔리전스, 맞춤 제안으로 더 많은 미팅과 매출 성과를 만듭니다">\n  <meta name="keywords" content="B2B 영업 AI, 맞춤 제안서 자동화, AI 세일즈, 콜드 이메일 AI, 영업 자동화, AI proposal generator, B2B sales automation">\n  <link rel="canonical" href="https://breadai.co.kr/">\n\n  <!-- Favicon (Bread&AI 로고) -->\n  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20width%3D\'160\'%20height%3D\'160\'%20viewBox%3D\'0%200%20160%20160\'%20fill%3D\'none\'%20xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\'%3E%3Cpath%20d%3D\'M57.2554%2046.4758L152.412%207.25773L113.134%20104.577L113.364%2047.6204L55.0928%2047.3283L57.2554%2046.4758Z\'%20fill%3D\'%23CC7247\'%2F%3E%3Crect%20x%3D\'7.25775\'%20y%3D\'55.9175\'%20width%3D\'96.4948\'%20height%3D\'96.4948\'%20fill%3D\'%231A1A1A\'%2F%3E%3C%2Fsvg%3E">\n  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20width%3D\'160\'%20height%3D\'160\'%20viewBox%3D\'0%200%20160%20160\'%20fill%3D\'none\'%20xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\'%3E%3Crect%20width%3D\'160\'%20height%3D\'160\'%20fill%3D\'white\'%2F%3E%3Cpath%20d%3D\'M57.2554%2046.4758L152.412%207.25773L113.134%20104.577L113.364%2047.6204L55.0928%2047.3283L57.2554%2046.4758Z\'%20fill%3D\'%23CC7247\'%2F%3E%3Crect%20x%3D\'7.25775\'%20y%3D\'55.9175\'%20width%3D\'96.4948\'%20height%3D\'96.4948\'%20fill%3D\'%231A1A1A\'%2F%3E%3C%2Fsvg%3E">\n\n  <!-- Open Graph / SNS 공유용 -->\n  <meta property="og:type" content="website">\n  <meta property="og:title" content="B2B 영업 준비를 자동화하는 AI 세일즈 인텔리전스">\n  <meta property="og:description" content="맞춤 제안으로 더 많은 미팅과 매출 성과를 만듭니다">\n  <meta property="og:url" content="https://breadai.co.kr/">\n  <meta property="og:site_name" content="Bread&AI (브레드앤에이아이)">\n  <meta property="og:locale" content="ko_KR">\n  <meta property="og:image" content="https://breadai.co.kr/og-image.png">\n  <meta property="og:image:width" content="1200">\n  <meta property="og:image:height" content="630">\n\n  <!-- Twitter Card -->\n  <meta name="twitter:card" content="summary_large_image">\n  <meta name="twitter:title" content="B2B 영업 준비를 자동화하는 AI 세일즈 인텔리전스">\n  <meta name="twitter:description" content="맞춤 제안으로 더 많은 미팅과 매출 성과를 만듭니다">\n  <meta name="twitter:image" content="https://breadai.co.kr/og-image.png">\n\n  <!-- 구조화 데이터: Organization -->\n  <script type="application/ld+json">\n  {\n    "@context": "https://schema.org",\n    "@type": "SoftwareApplication",\n    "name": "Bread&AI (브레드앤에이아이)",\n    "alternateName": "브레드앤에이아이",\n    "url": "https://breadai.co.kr",\n    "applicationCategory": "BusinessApplication",\n    "operatingSystem": "Web",\n    "description": "브레드앤에이아이(Bread&AI)는 AI가 타겟 기업을 리서치하고 기업별 상황에 맞는 제안서와 이메일을 자동 생성하는 B2B 영업 AI 솔루션입니다. 맞춤 제안으로 미팅 전환율 향상.",\n    "offers": {\n      "@type": "Offer",\n      "price": "1000000",\n      "priceCurrency": "KRW",\n      "priceValidUntil": "2026-12-31",\n      "availability": "https://schema.org/InStock"\n    },\n    "provider": {\n      "@type": "Organization",\n      "name": "Bread&AI (브레드앤에이아이)",\n      "alternateName": "브레드앤에이아이",\n      "url": "https://breadai.co.kr",\n      "email": "contact@breadai.co.kr",\n      "foundingDate": "2025",\n      "description": "브레드앤에이아이(Bread&AI) — AI 세일즈 인텔리전스. B2B 영업의 Pre-sales 전체를 AI로 맞춤화하여 미팅 수를 늘리는 솔루션.",\n      "sameAs": []\n    },\n    "featureList": [\n      "타겟 기업 자동 발굴",\n      "AI 기업 리서치 및 Pain Point 분석",\n      "맞춤 콜드 이메일 자동 생성",\n      "기업별 맞춤 제안서 15-20장 자동 생성",\n      "맞춤 제안으로 미팅 전환율 30% 향상"\n    ]\n  }\n  </script>\n\n  <!-- 구조화 데이터: FAQ (검색결과 풍부한 표시용) -->\n  <script type="application/ld+json">\n  {\n    "@context": "https://schema.org",\n    "@type": "FAQPage",\n    "mainEntity": [\n      {\n        "@type": "Question",\n        "name": "Bread & AI는 어떤 솔루션인가요?",\n        "acceptedAnswer": {\n          "@type": "Answer",\n          "text": "Bread & AI는 B2B 영업의 Pre-sales 전체를 AI로 자동화하는 세일즈 인텔리전스 솔루션입니다. AI가 타겟 기업의 상황을 분석하고, 그에 맞는 제안서와 이메일을 자동 생성하여 미팅 전환율을 높입니다."\n        }\n      },\n      {\n        "@type": "Question",\n        "name": "기존 영업 방식과 무엇이 다른가요?",\n        "acceptedAnswer": {\n          "@type": "Answer",\n          "text": "기존에는 한 기업에 맞춤 제안을 준비하는 데 2-3시간이 걸려 대부분 같은 내용의 메일을 복사해 보냈습니다. Bread & AI는 AI가 타겟 기업의 현황, Pain Point, 최근 이슈를 자동 분석하고 기업 상황에 맞는 제안서와 이메일을 생성합니다."\n        }\n      },\n      {\n        "@type": "Question",\n        "name": "가격은 얼마인가요?",\n        "acceptedAnswer": {\n          "@type": "Answer",\n          "text": "Basic 플랜 월 100만원(3개월 단위 결제, 5인 기본), Pro 플랜 월 200만원(3개월 단위 결제, 10인 기본)부터 시작합니다. Enterprise는 맞춤 견적을 제공합니다."\n        }\n      }\n    ]\n  }\n  </script>\n\n  <!-- Microsoft Clarity -->\n  <script type="text/javascript">\n    (function(c,l,a,r,i,t,y){\n      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};\n      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;\n      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);\n    })(window, document, "clarity", "script", "vx5y6icwmu");\n  </script>\n  <link rel="preconnect" href="https://cdn.jsdelivr.net">'
 
 CLARITY = '<script type="text/javascript">\n    (function(c,l,a,r,i,t,y){\n      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};\n      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;\n      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);\n    })(window, document, "clarity", "script", "vx5y6icwmu");\n  </script>'
 
@@ -1376,7 +1370,7 @@ def build(ab, hv="hero"):
             '<div class="pills">' + nav_links(ab) + '</div>'
             '<div class="pills"><a class="mut" href="' + APP + '" target="_blank" rel="noopener">로그인</a>'
             '<a class="cta" href="' + APP + '" target="_blank" rel="noopener">무료로 시작하기</a></div>'
-            '<button class="burger" aria-label="메뉴"><i></i><i></i><i></i></button>'
+            ''
             '</div></nav>\n'
             + body +
             '\n<script>' + tracks_js + lf_js + JS.replace('__MAIL__', CONTACT_MAIL) + '</script>\n</body>\n</html>\n')

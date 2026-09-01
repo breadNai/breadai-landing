@@ -1,6 +1,7 @@
 // 소개서 요청 접수 — 즉시 응답 후 백그라운드 처리 함수를 별도 호출
 export const config = {
-  maxDuration: 10,
+  // 발송 완료(PDF 첨부 + AI 문구 생성 + 메일 2건)를 끝까지 기다리므로 여유를 둔다
+  maxDuration: 60,
 };
 
 // ── Rate Limiter (IP당 분당 20회) ──
@@ -76,23 +77,37 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Server configuration error' });
   }
 
-  // ── 백그라운드 처리 함수 호출 (fire-and-forget) ──
+  // ── 발송 처리 함수 호출 ──
+  // 이전에는 fire-and-forget(응답을 안 기다림) 방식이었으나, 서버리스에서
+  // 응답 반환 직후 함수가 정지되면 이 요청이 중간에 끊겨 메일이 조용히 누락됐다.
+  // (화면에는 "발송 완료"가 뜨는데 실제로는 안 나가는 문제)
+  // → 완료를 끝까지 기다리고, 실패하면 사용자에게 실패를 알린다.
   const PROCESS_SECRET = process.env.PROCESS_SECRET || 'brochure-internal-key';
   const origin = `https://${req.headers.host || 'www.breadai.co.kr'}`;
 
-  // fetch를 먼저 시작하고, 요청이 Vercel 네트워크에 도달할 시간을 확보
-  fetch(`${origin}/api/send-brochure-process`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-internal-secret': PROCESS_SECRET,
-    },
-    body: JSON.stringify({ email, company, name, department, position, phone, remarks: sanitize(req.body.remarks) || '' }),
-  }).catch(err => console.error('Background trigger failed:', err));
+  try {
+    const procRes = await fetch(`${origin}/api/send-brochure-process`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-internal-secret': PROCESS_SECRET,
+      },
+      body: JSON.stringify({ email, company, name, department, position, phone, remarks: sanitize(req.body.remarks) || '' }),
+    });
 
-  // Vercel이 함수 종료하기 전에 HTTP 요청이 나갈 시간 확보 (1.5초)
-  await new Promise(resolve => setTimeout(resolve, 1500));
+    if (!procRes.ok) {
+      const detail = await procRes.text().catch(() => '');
+      console.error('Brochure send failed:', procRes.status, detail.slice(0, 500));
+      return res.status(502).json({
+        error: '소개서 발송에 실패했습니다. contact@breadai.co.kr 로 요청해주시면 바로 보내드리겠습니다.',
+      });
+    }
 
-  // ── 응답 (유저 체감 ~2초) ──
-  return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    console.error('Brochure send error:', err);
+    return res.status(502).json({
+      error: '소개서 발송에 실패했습니다. contact@breadai.co.kr 로 요청해주시면 바로 보내드리겠습니다.',
+    });
+  }
 }

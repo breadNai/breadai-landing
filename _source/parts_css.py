@@ -19,7 +19,9 @@ CSS = r"""
   --s4:0 10px 20px rgba(26,23,20,.05),0 56px 100px -30px rgba(26,23,20,.32),0 0 0 1px rgba(26,23,20,.07);
   --dot:radial-gradient(circle at 1px 1px, rgba(26,23,20,.30) 1px, transparent 0);
 }
-html{scroll-behavior:smooth}
+/* 안드로이드 Chrome 은 좁은 화면에서 작은 글자를 임의로 키운다(text autosizing).
+   씬 목업의 5~9px 글자가 부풀어 표·본문이 겹치므로 반드시 꺼둔다. */
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{font-family:var(--f);background:var(--paper);color:var(--ink);line-height:1.65;letter-spacing:-.012em;
   word-break:keep-all;-webkit-font-smoothing:antialiased;overflow-x:clip}
 ::selection{background:var(--petw2);color:var(--pet2)}
@@ -1313,7 +1315,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 40px;background:var(--pap
 
   /* ── 엔딩 ── 실사 블러 대신 딥 틸 블루, 서브카피+CTA 를 한 쌍씩 */
   .end{padding:104px 0 110px;background:linear-gradient(168deg,#0E5766 0%,#08333D 100%)}
-  .end h2{font-size:clamp(27px,7.6vw,34px);max-width:none;color:#fff;text-shadow:none}
+  .end h2{font-size:clamp(27px,7.6vw,34px);max-width:none;color:#fff;text-shadow:none;line-height:1.34}
   /* 딥 틸 위에서는 반투명 마커가 회색으로 탁해진다(어두운 바탕과 섞이기 때문).
      그래서 불투명 형광펜으로 바꾸고 글자를 어둡게 뒤집는다. */
   .end .hlmark{color:#0B2C35}
@@ -1449,7 +1451,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 40px;background:var(--pap
   .res .chart{display:none}
   .res .pnl{padding:6px 8px;gap:4px;border-radius:6px}
   .res .pnt{font-size:7.5px}
-  .res .iv{font-size:8.5px;white-space:normal;line-height:1.4}
+  .res .iv{font-size:7.8px;white-space:normal;line-height:1.35;letter-spacing:-.04em}
   .res .iv.hit{margin-top:4px}
   .res .insight{justify-content:flex-start}
   .res .iv.hit{font-size:9.5px}
@@ -1532,10 +1534,12 @@ footer{border-top:1px solid var(--line);padding:64px 0 40px;background:var(--pap
   .cmphead h2{font-size:clamp(23px,6.3vw,30px)}
   /* 표를 하나의 큰 박스로 두면 전체 폭 질문 행이 틸 컬럼을 가로질러 '잘린' 것처럼 보인다.
      그래서 질문은 배경 위로 빼고, 답변 한 쌍만 카드로 묶어 질문별 카드 목록으로 만든다. */
-  .cmp{background:none;box-shadow:none;border:0;border-radius:0;padding:0;overflow:visible}
+  /* 질문과 답변이 따로 떠 보이던 문제 — 표 전체를 한 톤 낮은 레이어로 감싸 묶어준다 */
+  .cmp{background:var(--paper2);box-shadow:none;border:1px solid var(--line);
+    border-radius:18px;padding:20px 16px;overflow:visible}
   .cmpcol{display:none}
   .cmphd{grid-template-columns:minmax(0,1fr) minmax(0,1fr);padding-left:0;
-    background:none;margin-bottom:12px}
+    background:none;margin-bottom:14px}
   /* 두 진영 사이가 비어 보이지 않도록 가운데 vs 표시 */
   .cmphd::after{content:'vs';position:absolute;left:50%;top:50%;
     transform:translate(-50%,-50%);font-size:12.5px;font-weight:800;
@@ -1553,6 +1557,9 @@ footer{border-top:1px solid var(--line);padding:64px 0 40px;background:var(--pap
     font-size:14.5px;font-weight:800;letter-spacing:-.035em;color:var(--terra)}
   /* 답변 박스는 min-height 로 높이를 맞춰 4행이 한 눈에 들어오게 한다 */
   .cmpr>.cmpa,.cmpr>.cmpb{min-height:50px;justify-content:center;padding:10px 13px}
+  .cmpr>.cmpa{background:#fff;border-color:rgba(26,23,20,.10);
+    box-shadow:0 1px 3px rgba(26,23,20,.05)}
+  .cmpr>.cmpb{box-shadow:0 1px 3px rgba(14,87,102,.18)}
   .cmpa{grid-area:a;background:var(--surf);border:1px solid var(--line);border-right:0;
     border-radius:13px 0 0 13px}
   .cmpb{grid-area:b;background:var(--pet);border-radius:0 13px 13px 0}

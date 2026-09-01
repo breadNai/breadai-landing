@@ -365,71 +365,133 @@ function sanitizeAIOutput(text) {
 
 // ── 이메일 HTML 템플릿 ──
 function buildVisitorEmail({ company, deptText, name, positionText, personalizedSection }) {
+  // 상품 소개서와 동일한 톤: 딥 틸(#0E5766) · 테라코타(#CC7247) · 아이보리 페이퍼(#FAF8F3)
+  // 메일 클라이언트 호환을 위해 table 레이아웃 + 인라인 스타일만 사용한다.
+  const F = "-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Malgun Gothic','Apple SD Gothic Neo',sans-serif";
+
+  // 숫자는 카드 안쪽에 크고 흐리게 깔아 장식처럼 쓰고, 옆에 제목·설명을 세운다.
+  const step = (no, title, desc) => `
+              <tr>
+                <td style="padding:0 0 10px">
+                  <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#ffffff;border-radius:14px;border-collapse:separate">
+                    <tr>
+                      <td width="64" valign="middle" align="center" style="padding:16px 0 16px 6px">
+                        <div style="font:800 40px/1 ${F};color:#EDE0D5;letter-spacing:-0.05em">${no}</div>
+                      </td>
+                      <td valign="middle" style="padding:16px 18px 16px 4px">
+                        <div style="font:800 15px/1.45 ${F};color:#0E5766;letter-spacing:-0.025em">${title}</div>
+                        <div style="font:400 13.5px/1.65 ${F};color:#5A554B;margin-top:4px">${desc}</div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>`;
+
   return `
-<div style="font-family:-apple-system,'Pretendard Variable','Malgun Gothic',sans-serif;max-width:600px;margin:0 auto;padding:0;background:#ffffff">
-  <div style="padding:32px 32px 24px;border-bottom:1px solid #F1F5F9">
-    <table cellpadding="0" cellspacing="0" border="0">
-      <tr>
-        <td style="vertical-align:middle;padding-right:10px">
-          <img src="https://breadai.co.kr/logo_email.png" alt="" style="height:32px;width:auto;display:block" />
-        </td>
-        <td style="vertical-align:middle">
-          <span style="font-size:18px;font-weight:700;color:#1B2A4A;letter-spacing:-0.3px">Bread & AI</span>
-        </td>
-      </tr>
-    </table>
-  </div>
+<div style="background:#F3EFE6;padding:28px 12px;font-family:${F};-webkit-text-size-adjust:100%">
+  <table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:600px;margin:0 auto;background:#FAF8F3;border-radius:18px;overflow:hidden;border-collapse:separate">
 
-  <div style="padding:32px">
-    <p style="font-size:16px;color:#1B2A4A;font-weight:700;margin:0 0 8px;line-height:1.6">
-      안녕하세요, ${company} ${deptText}${name}${positionText}.
-    </p>
-    <p style="font-size:15px;color:#374151;line-height:1.8;margin:0 0 20px">
-      Bread & AI 대표 이승욱입니다.<br>
-      제품 소개서를 신청해주셔서 감사합니다.
-    </p>
+    <!-- 헤더 : 소개서 표지와 같은 다크 잉크 -->
+    <tr>
+      <td style="background:#1A1714;padding:26px 32px">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td style="vertical-align:middle;padding-right:9px">
+              <img src="https://breadai.co.kr/logo_email.png" alt="" width="26" style="height:26px;width:auto;display:block;border:0" />
+            </td>
+            <td style="vertical-align:middle">
+              <span style="font:800 17px/1 ${F};color:#ffffff;letter-spacing:-0.02em">Bread&amp;AI</span>
+            </td>
+          </tr>
+        </table>
+        <div style="font:700 13px/1.5 ${F};color:#7FB4BF;margin-top:16px;letter-spacing:-0.01em">AI Sales Intelligence</div>
+        <div style="font:800 21px/1.4 ${F};color:#ffffff;margin-top:5px;letter-spacing:-0.03em">요청하신 상품 소개서를 보내드립니다</div>
+      </td>
+    </tr>
 
-    <div style="font-size:15px;color:#374151;line-height:1.9;margin:0 0 28px">
-      ${personalizedSection}
-    </div>
+    <!-- 본문 -->
+    <tr>
+      <td style="padding:32px 32px 8px">
+        <div style="font:700 16.5px/1.6 ${F};color:#1A1714;letter-spacing:-0.02em;margin-bottom:14px">
+          안녕하세요, ${company} ${deptText}${name}${positionText}.
+        </div>
+        <div style="font:400 15px/1.85 ${F};color:#3F3A33;margin-bottom:22px">
+          Bread &amp; AI 대표 이승욱입니다.<br>
+          제품 소개서를 신청해주셔서 감사합니다.
+        </div>
+        <div style="font:400 15px/1.9 ${F};color:#3F3A33">
+          ${personalizedSection}
+        </div>
+      </td>
+    </tr>
 
-    <div style="background:#FFFBEB;border-radius:12px;padding:24px 28px;margin:0 0 28px">
-      <p style="font-size:14px;font-weight:700;color:#1B2A4A;margin:0 0 16px">Bread & AI는 이렇게 맞춤 제안을 돕습니다</p>
-      <table style="font-size:14px;color:#374151;line-height:1.7;border-collapse:collapse;width:100%">
-        <tr>
-          <td style="padding:8px 16px 8px 0;vertical-align:top;color:#D97706;font-weight:700;width:24px">①</td>
-          <td style="padding:8px 0"><strong>타겟 발굴</strong> — 맞춤 제안이 먹힐 최적의 기업을 AI가 자동으로 찾아줍니다</td>
-        </tr>
-        <tr>
-          <td style="padding:8px 16px 8px 0;vertical-align:top;color:#D97706;font-weight:700;width:24px">②</td>
-          <td style="padding:8px 0"><strong>리서치 &amp; 제안 논리</strong> — 상대 기업의 현황과 Pain Point를 분석, 맞춤 이메일 생성</td>
-        </tr>
-        <tr>
-          <td style="padding:8px 16px 8px 0;vertical-align:top;color:#D97706;font-weight:700;width:24px">③</td>
-          <td style="padding:8px 0"><strong>맞춤 제안서</strong> — 5분 만에 기업별 맞춤 제안서까지 완성</td>
-        </tr>
-      </table>
-    </div>
+    <!-- 첨부 안내 -->
+    <tr>
+      <td style="padding:24px 32px 0">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#E4EEF0;border-radius:12px;border-collapse:separate">
+          <tr>
+            <td style="padding:15px 18px">
+              <div style="font:700 13.5px/1.5 ${F};color:#0A414D;letter-spacing:-0.01em">📎 상품 소개서가 이 메일에 첨부되어 있습니다</div>
+              <div style="font:400 12.5px/1.6 ${F};color:#0E5766;margin-top:3px">BreadAI_상품소개서.pdf</div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
 
-    <p style="font-size:15px;color:#374151;line-height:1.8;margin:0 0 24px">
-      첨부드린 소개서에서 더 자세한 내용을 확인하실 수 있습니다.<br>
-      7일 무료 체험도 가능하니 부담 없이 먼저 사용해보시고,<br>
-      추가로 궁금하신 점이 있으시면 편하게 회신 부탁드립니다.
-    </p>
+    <!-- 3단계 -->
+    <tr>
+      <td style="padding:26px 32px 0">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#EAE4D7;border-radius:14px;border-collapse:separate">
+          <tr>
+            <td style="padding:20px 16px 10px">
+              <div style="font:800 14.5px/1.5 ${F};color:#1A1714;letter-spacing:-0.02em;padding:0 0 14px 4px">
+                Bread&amp;AI는 이렇게 맞춤 제안을 돕습니다
+              </div>
+              <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:separate">
+${step('1', '타겟 발굴', '지금 제안하기 좋은 최적의 기업을 AI가 자동으로 찾아줍니다')}
+${step('2', '리서치 &amp; 제안 논리', '상대 기업의 현황과 Pain Point를 분석, 맞춤 이메일 생성')}
+${step('3', '맞춤 제안서', '5분 만에 기업별 맞춤 제안서까지 완성')}
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
 
-    <a href="https://app.breadai.co.kr" style="display:inline-block;padding:14px 32px;background:#D97706;color:#ffffff;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;margin-bottom:8px">
-      7일 무료 체험하기
-    </a>
-    <p style="font-size:12px;color:#D97706;font-weight:600;margin:8px 0 0">결제 불필요 · 1분 만에 시작</p>
-  </div>
+    <!-- CTA -->
+    <tr>
+      <td style="padding:28px 32px 0">
+        <div style="font:400 15px/1.85 ${F};color:#3F3A33;margin-bottom:20px">
+          첨부드린 소개서에서 더 자세한 내용을 확인하실 수 있습니다.<br>
+          7일 무료 체험도 가능하니 부담 없이 먼저 사용해보시고,<br>
+          추가로 궁금하신 점이 있으시면 편하게 회신 부탁드립니다.
+        </div>
+        <table cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td style="background:#CC7247;border-radius:11px">
+              <a href="https://app.breadai.co.kr" style="display:inline-block;padding:14px 32px;font:700 15px/1 ${F};color:#ffffff;text-decoration:none;letter-spacing:-0.02em">7일 무료 체험하기 →</a>
+            </td>
+          </tr>
+        </table>
+        <div style="font:600 12px/1.6 ${F};color:#8B857A;margin-top:10px">결제 불필요 · 1분 만에 시작</div>
+      </td>
+    </tr>
 
-  <div style="padding:24px 32px;background:#F8FAFC;border-top:1px solid #F1F5F9">
-    <p style="font-size:13px;color:#1B2A4A;font-weight:600;margin:0 0 4px">이승욱 대표</p>
-    <p style="font-size:12px;color:#64748B;margin:0;line-height:1.6">
-      Bread & AI — AI Sales Intelligence<br>
-      <a href="mailto:contact@breadai.co.kr" style="color:#D97706;text-decoration:none">contact@breadai.co.kr</a> ·
-      <a href="https://breadai.co.kr" style="color:#D97706;text-decoration:none">breadai.co.kr</a>
-    </p>
-  </div>
+    <!-- 서명 -->
+    <tr>
+      <td style="padding:28px 32px 30px">
+        <div style="border-top:1px solid #E7E1D4;padding-top:20px">
+          <div style="font:700 13.5px/1.5 ${F};color:#1A1714">이승욱 대표</div>
+          <div style="font:400 12.5px/1.75 ${F};color:#8B857A;margin-top:3px">
+            Bread &amp; AI — AI Sales Intelligence<br>
+            <a href="mailto:contact@breadai.co.kr" style="color:#0E5766;text-decoration:none;font-weight:600">contact@breadai.co.kr</a>
+            &nbsp;·&nbsp;
+            <a href="https://breadai.co.kr" style="color:#0E5766;text-decoration:none;font-weight:600">breadai.co.kr</a>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
 </div>`;
 }
