@@ -34,7 +34,7 @@ export default async function handler(req, res) {
         const pdfBuffer = await pdfRes.arrayBuffer();
         const pdfBase64 = Buffer.from(pdfBuffer).toString('base64');
         attachments = [{
-          filename: 'Bread_AI_AI_Sales_Intelligence_소개서.pdf',
+          filename: 'BreadAI_상품소개서.pdf',
           content: pdfBase64,
         }];
       }
