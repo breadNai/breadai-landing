@@ -84,8 +84,9 @@ export default async function handler(req, res) {
       }),
     });
 
-    if (!visitorRes.ok) {
-      const err = await visitorRes.json();
+    const visitorFailed = !visitorRes.ok;
+    if (visitorFailed) {
+      const err = await visitorRes.json().catch(() => ({}));
       console.error('Visitor email failed:', err);
     }
 
@@ -99,7 +100,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         from: 'Bread&AI <contact@breadai.co.kr>',
         to: 'contact@breadai.co.kr',
-        subject: `[소개서 요청] ${company} ${name}`,
+        subject: `${visitorFailed ? '[확인 필요: 고객 메일 발송 실패] ' : ''}[소개서 요청] ${company} ${name}`,
         html: `
           <div style="font-family:sans-serif;padding:20px">
             <h3 style="color:#1B2A4A;margin-bottom:16px">새로운 소개서 요청</h3>
