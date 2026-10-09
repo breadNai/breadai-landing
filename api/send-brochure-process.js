@@ -1,6 +1,7 @@
 // 소개서 발송 백그라운드 처리 — PDF + AI 맞춤 메시지 + 이메일 발송
 export const config = {
-  maxDuration: 60,
+  // AI 맞춤 문구(Opus, 웹 검색 포함)에 최대 90초를 주고, PDF 첨부와 메일 2건 발송까지 여유를 둔다
+  maxDuration: 120,
 };
 
 export default async function handler(req, res) {
@@ -63,7 +64,7 @@ export default async function handler(req, res) {
 
     // AI 실패 시 기본 메시지
     if (!personalizedSection) {
-      personalizedSection = `고객사를 대상으로 B2B 영업을 하다 보면, 맞춤 제안이 효과적이라는 건 누구나 알지만 한 기업당 제안을 준비하는 데 2~3시간이 걸리다 보니 결국 소수에게만 맞춤 제안을 하고 나머지는 같은 메일을 보내게 되는 현실을 겪고 계실 겁니다.<br><br>Bread&AI는 이 문제를 AI로 해결합니다. 타겟 기업명만 입력하면 AI가 그 기업의 현황과 Pain Point를 자동으로 분석하고, <strong>"왜 만나야 하는지"</strong> 설득하는 맞춤 제안 논리와 이메일, 제안서를 5분 만에 완성합니다. 맞춤 제안 도입 시 미팅율이 평균 30% 개선되고, 기존 2~3시간 걸리던 영업 준비를 5분으로 단축할 수 있습니다.<br><br>첨부드린 소개서에서 구체적인 내용을 확인하실 수 있고, 7일 무료 체험도 가능하니 부담 없이 먼저 사용해보시기 바랍니다. 추가로 궁금하신 점이 있으시면 편하게 말씀해주세요.`;
+      personalizedSection = `B2B 영업에서 맞춤 제안이 효과가 좋다는 건 대부분 알고 계실 겁니다. 다만 한 곳을 제대로 준비하는 데 2~3시간씩 걸리다 보니, 실제로는 몇 곳만 맞춤으로 준비하고 나머지에는 같은 소개서를 보내게 되는 경우가 많습니다.<br><br>Bread&AI는 이 준비 과정을 AI로 대신합니다. 상품 소개서를 올리면 사업 확장, 신규 조직, 채용처럼 최근 영업 기회가 생긴 기업을 먼저 찾아드리고, 그 기업의 상황에 맞춰 <strong>왜 지금 만나야 하는지</strong>를 담은 제안 논리와 이메일, 제안서까지 만들어 드립니다. 기업 한 곳당 몇 분이면 맞춤 제안 준비가 끝납니다.`;
     }
 
     // ── 3) 방문자에게 소개서 메일 발송 ──
@@ -77,7 +78,7 @@ export default async function handler(req, res) {
         from: 'Bread&AI <contact@breadai.co.kr>',
         reply_to: 'contact@breadai.co.kr',
         to: email,
-        subject: `[Bread&AI] ${name}${positionText}, 요청하신 AI 세일즈 인텔리전스 소개서입니다`,
+        subject: `[Bread&AI] ${name}${positionText}, 요청하신 상품 소개서를 보내드립니다`,
         attachments,
         html: buildVisitorEmail({ company, deptText, name, positionText, personalizedSection }),
       }),
@@ -180,34 +181,36 @@ async function generatePersonalizedMessage({ apiKey, company, department, positi
     || dummyContains.some(d => companyLower.includes(d));
   const canIdentify = !isDummyCompany && company.trim().length >= 2;
 
+  const PRODUCT = `## Bread&AI 제품 정보 (이 안의 내용과 수치만 사용)
+- 한 줄 소개: 세일즈 시그널로 지금 영업하기 좋은 고객사를 찾고, 기업별 맞춤 제안서까지 만드는 B2B 영업 AI
+- 고객의 문제: 맞춤 제안이 효과적이라는 건 알지만 한 곳 준비에 2~3시간이 걸려, 소수에게만 맞춤 제안을 하고 나머지에는 같은 소개서를 보내게 됨. 또 어느 회사부터 영업해야 할지 정하기 어려움
+- 1단계 세일즈 시그널 탐색: 상품 소개서를 올리면 AI가 우리 상품에 맞는 시그널(사업 확장, 신규 조직, 채용, 인력 증감, 신공장, 신제품 등)을 추천하고, 최근 시그널이 포착된 기업을 20곳 이상 찾아 우선순위대로 보여줌
+- 2단계 심층 리서치: 기업 현황, 재무, 조직, 채용, 뉴스를 출처와 함께 정리하고, 그 회사가 왜 지금 우리 상품을 써야 하는지 제안 논리를 세움
+- 3단계 맞춤 이메일과 제안서: 리서치한 논리로 첫 연락용 이메일과 콜 스크립트를 쓰고, 미팅에 가져갈 15~20장 제안서(PPT)를 약 5분 만에 만듦
+- 쓸 수 있는 수치: 일반 콜드메일 회신율 2~3% 대비 상대 회사 맥락을 담은 맞춤 메일 회신율 8~9%, 맞춤 제안 1건 준비 시간 2~3시간에서 몇 분으로 단축
+- 이 밖의 수치(미팅율, 매출 증가율, ROI 등)는 절대 만들지 마세요.`;
+
+  const STYLE = `### 문체 규칙
+- 대표가 직접 쓰는 메일입니다. 동료에게 설명하듯 담백하고 구체적인 한국어로 쓰세요.
+- 과장 표현 금지: "혁신적인", "획기적인", "극대화", "폭발적" 같은 말을 쓰지 마세요.
+- 줄표(—)와 가운데점(·)을 쓰지 마세요. 나열은 쉼표로 하세요.
+- 마크다운 금지. HTML은 <br>(줄바꿈)과 <strong>(강조, 본문 전체에서 한 번만)만 사용.
+- 인사말, 자기소개, 감사 인사, 첨부 안내, 무료 체험 안내, 서명은 쓰지 마세요. 메일 템플릿에 이미 들어 있습니다.
+- 첫 글자부터 바로 본문을 시작하고, 순수 본문(HTML)만 출력하세요. JSON이나 코드블록으로 감싸지 마세요.`;
+
   let prompt;
   let useWebSearch = false;
 
   if (canIdentify) {
     useWebSearch = true;
-    prompt = `당신은 Bread&AI의 영업 담당자입니다. 소개서를 요청한 잠재 고객에게 보낼 이메일의 핵심 본문을 작성하세요.
+    prompt = `당신은 Bread&AI 대표 이승욱입니다. 홈페이지에서 상품 소개서를 요청한 잠재 고객에게 보낼 메일의 핵심 본문 두 단락을 쓰세요.
 
-## ⚠️ 최우선 규칙: 반드시 웹 검색으로 확인
-- 반드시 web_search 도구를 사용하여 "${company}"가 정확히 어떤 회사인지 검색하세요.
-- 검색 결과에서 확인된 사실만 사용하세요. 추측하거나 지어내면 절대 안 됩니다.
-- 검색해도 회사 정보를 확신할 수 없으면, 회사 구체 정보를 언급하지 말고 일반적인 B2B 영업 관점으로 작성하세요.
-- 잘못된 업종/사업 내용을 쓰는 것은 치명적입니다. 차라리 안 쓰는 게 낫습니다.
+## 최우선 규칙: 회사 정보는 웹 검색으로 확인된 사실만
+- 반드시 web_search 도구로 "${company}"가 어떤 회사인지 먼저 확인하세요.
+- 확인된 사실만 쓰세요. 업종이나 사업 내용을 추측해서 쓰는 것은 치명적입니다. 확신이 없으면 회사 이야기를 빼고 일반적인 B2B 영업 이야기로 쓰세요.
+- "검색", "확인", "조사", "리서치 결과" 같은 말로 검색 과정을 드러내지 마세요. 회사를 못 찾았다는 사실도 언급하지 마세요.
 
-## 🚫 절대 금지 (이것만은 반드시 지켜주세요)
-- "검색 결과에서 ~를 확인할 수 없습니다", "정확한 정보를 찾을 수 없어", "~가 어떤 회사인지 명확하지 않으므로" 같은 문장은 ⛔️절대 금지⛔️입니다. 이 메일은 실제 고객에게 발송됩니다.
-- 회사를 찾을 수 없으면 검색 실패를 언급하지 말고, 자연스럽게 일반 B2B 영업 맥락으로 작성하세요. 고객은 AI가 검색했다는 사실 자체를 몰라야 합니다.
-- "검색", "확인", "조사", "리서치 결과" 등 검색 과정을 암시하는 단어를 본문에 절대 쓰지 마세요.
-
-## Bread&AI 제품 정보
-- AI 세일즈 인텔리전스: B2B 영업의 Pre-sales 전체를 AI로 맞춤화하여 미팅 수를 늘리는 솔루션
-- 핵심 가치: B2C에서 맞춤 추천이 성과를 폭발시켰듯이, B2B 영업에서도 AI로 1:1 맞춤 제안이 가능해짐
-- 기존 문제: 한 기업에 맞춤 제안을 준비하는 데 2~3시간 소요 → 소수 고객에게만 맞춤 가능, 나머지는 복붙
-- Bread&AI 해결: 5분 만에 타겟 기업 리서치 → 맞춤 제안 논리 → 맞춤 이메일 + 제안서까지 자동 완성
-- 3단계 프로세스:
-  · STEP 1 탐색: 제품 소개서 업로드 → AI가 맞춤 제안이 먹힐 최적의 타겟 기업 자동 발굴
-  · STEP 2 리서치: 타겟 기업 현황, Pain Point, 차별화 포인트 자동 분석 → 맞춤 제안 논리 + 콜드 이메일 생성
-  · STEP 3 제안: 기업별 맞춤 15~20장 제안서 자동 생성, 바로 발송
-- 성과: 맞춤 제안 도입 시 미팅율 +30% 개선, 영업 준비 시간 대폭 단축
+${PRODUCT}
 
 ## 소개서 요청자 정보
 - 회사명: ${company}
@@ -215,78 +218,28 @@ async function generatePersonalizedMessage({ apiKey, company, department, positi
 - 직함: ${position || '(미입력)'}
 - 이메일 도메인: ${emailDomain}
 
-## 당신의 임무
-1단계: web_search로 "${company}"를 검색하여 이 회사의 실제 사업 내용을 확인하세요.
-2단계: 검색 결과를 바탕으로 아래 구조의 이메일 본문을 작성하세요.
+## 본문 구성 (딱 두 단락, 단락 사이는 <br><br>)
+1단락 (2~3문장): ${company}가 하는 일을 한 문장으로 짧게 짚고, 이 회사가 신규 고객사를 찾고 제안할 때 겪을 만한 어려움을 이야기하세요.${department ? ` ${department} 입장에서 겪을 어려움이면 더 좋습니다.` : ''} 회사 설명을 길게 늘어놓지 마세요.
+2단락 (2~3문장): Bread&AI가 ${company}의 영업에 어떻게 쓰일 수 있는지 구체적인 장면으로 보여주세요. 예를 들어 이 회사 고객사에게 생길 만한 세일즈 시그널이 무엇인지 한두 개 예시를 들고, 그런 기업을 찾아 맞춤 제안까지 이어지는 흐름을 설명하세요. 기능을 나열하지 마세요.
 
-### 작성 구조 (3단락, 각 단락 2-3줄)
-⚠️ 가독성이 매우 중요합니다. 반드시 단락 사이에 <br><br>로 빈 줄을 넣어 단락을 구분하세요.
-
-**1단락: 상대 회사 이해 + pain point (2-3줄)**
-- ${company}의 사업을 1줄로 축약하여 언급하세요 ("~에 특화된 [업종]으로 이해하고 있습니다" 정도). 상대방은 자기 회사를 이미 아니까 길게 설명할 필요 없습니다.
-- 이어서 이 회사가 B2B 영업에서 겪을 pain point를 짚으세요. 특히 "맞춤 제안을 하고 싶지만 시간이 없어서 결국 같은 자료를 보내는" 현실.
-${department ? `- ${department}에서 특히 겪을 영업 관련 pain point를 짚으면 더 효과적.` : ''}
-- ⛔ 회사 소개를 3줄 이상 쓰지 마세요. 상대방이 자기 회사 설명을 장황하게 읽는 건 지루합니다.
-
-**2단락: Bread&AI가 해결하는 방식 (2-3줄)**
-- "${company}의 [구체적 상황]에서 Bread&AI가 어떻게 도움이 되는지" 연결.
-- 기능 나열이 아닌, 이 회사 맥락에서 AI 맞춤 제안이 만들어내는 구체적 임팩트를 보여주세요.
-- 맞춤 제안 도입 시 미팅율 평균 30% 개선. 기존 2~3시간 걸리던 영업 준비가 5분으로 단축된다는 점 활용.
-
-**3단락: 부드러운 CTA (2줄)**
-- ⛔ "미팅하자", "시연을 보여드리겠다"는 말은 하지 마세요. 처음부터 미팅을 요구하면 부담스럽습니다.
-- 대신: 첨부 소개서를 읽어달라고 하고, 7일 무료 체험도 가능하니 부담 없이 사용해보시라고 안내하세요.
-- "추가로 궁금하신 점이 있으시면 편하게 말씀해주세요" 정도로 마무리.
-
-### 출력 형식 — 반드시 지킬 것
-- ⛔ "검색 결과를 바탕으로~", "~확인되었습니다", "작성해보겠습니다", "검색 결과에서 ~를 확인할 수 없습니다" 같은 메타 설명/사고 과정을 절대 출력하지 마세요. 이건 실제 고객에게 발송되는 이메일입니다.
-- ⛔ 회사 정보를 찾지 못했다는 사실 자체를 절대 언급하지 마세요. 찾지 못했으면 일반 B2B 영업 맥락으로 매끄럽게 작성하면 됩니다.
-- ⛔ 마크다운 문법(**bold**, *italic*, ## 등) 절대 금지. HTML 태그만 사용: <br> (줄바꿈), <strong> (강조).
-- ⛔ 인사말(안녕하세요 등), 서명, "~드립니다" 같은 편지 형식의 시작/끝 금지 — 별도로 추가됩니다.
-- 첫 글자부터 바로 본문 내용이 시작되어야 합니다. 어떤 전제 설명도 없이 곧바로 본문으로 시작하세요.
-- 과장 금지. 자연스럽고 단정한 비즈니스 톤. 상대방의 사업을 이해하고 있는 영업 담당자의 말투로 쓰세요.
-- 검색 결과로 확인되지 않은 회사 정보는 절대 언급하지 마세요.
-- 순수 본문 텍스트(HTML)만 출력. JSON이나 코드블록으로 감싸지 마세요.`;
+${STYLE}`;
 
   } else {
-    prompt = `당신은 Bread&AI의 영업 담당자입니다. 소개서를 요청한 잠재 고객에게 보낼 이메일의 핵심 본문을 작성하세요.
+    prompt = `당신은 Bread&AI 대표 이승욱입니다. 홈페이지에서 상품 소개서를 요청한 잠재 고객에게 보낼 메일의 핵심 본문 두 단락을 쓰세요.
+요청자의 회사 정보는 알 수 없으니, B2B 신규 영업을 하는 일반적인 기업 담당자를 떠올리며 쓰세요.
 
-## Bread&AI 제품 정보
-- AI 세일즈 인텔리전스: B2B 영업의 Pre-sales 전체를 AI로 맞춤화하여 미팅 수를 늘리는 솔루션
-- 핵심 문제: B2B 맞춤 제안이 효과적이라는 건 누구나 알지만, 1건 준비에 2~3시간이 걸려 실행이 불가능했음
-- Bread&AI 해결: 5분 만에 타겟 기업 리서치 → 맞춤 제안 논리 → 맞춤 이메일 + 제안서까지 자동 완성
-- 성과: 맞춤 제안 도입 시 미팅율 +30% 개선, 복붙 콜드메일 대비 응답률 6배 이상
+${PRODUCT}
 
-## 상황
-소개서를 요청한 분의 구체적인 회사 정보를 알 수 없습니다.
-B2B 영업을 하는 일반적인 기업 담당자를 대상으로 작성하세요.
+## 본문 구성 (딱 두 단락, 단락 사이는 <br><br>)
+1단락 (2~3문장): 맞춤 제안이 효과적인 줄 알면서도 준비 시간 때문에 결국 같은 소개서를 돌리게 되는 현실, 어느 회사부터 영업해야 할지 막막한 상황에 공감하세요.
+2단락 (2~3문장): Bread&AI가 세일즈 시그널로 지금 영업하기 좋은 기업을 찾고, 그 회사 상황에 맞춘 제안까지 만들어 주는 흐름을 구체적으로 설명하세요.
 
-### 작성 구조 (3단락, 각 단락 2-3줄)
-⚠️ 가독성이 매우 중요합니다. 반드시 단락 사이에 <br><br>로 빈 줄을 넣어 단락을 구분하세요.
-
-**1단락: B2B 영업 pain point 공감 (2-3줄)**
-- "맞춤 제안을 하고 싶지만 시간이 없어서 결국 같은 메일을 100곳에 보내는" 현실의 공감.
-
-**2단락: Bread&AI가 해결하는 방식 (2-3줄)**
-- AI가 상대를 이해하고 맞춤 제안을 만들어내는 과정을 설명.
-- 구체적 시나리오: "타겟 기업명만 입력하면 AI가 최신 현황을 리서치하고, 왜 만나야 하는지 설득하는 제안을 자동 완성"
-
-**3단락: 부드러운 CTA (2줄)**
-- ⛔ "미팅하자", "시연을 보여드리겠다"는 말은 하지 마세요. 부담스럽습니다.
-- 대신: 첨부 소개서를 읽어달라고 하고, 7일 무료 체험도 가능하니 부담 없이 사용해보시라고 안내하세요.
-- "추가로 궁금하신 점이 있으시면 편하게 말씀해주세요" 정도로 마무리.
-
-### 작성 규칙
-- 과장 금지. 자연스럽고 단정한 비즈니스 톤.
-- HTML 태그: <br> (줄바꿈), <strong> (강조) 정도만 사용. 마크다운(**bold** 등) 절대 금지.
-- 절대 인사말(안녕하세요 등)이나 서명을 쓰지 마세요 — 별도로 추가됩니다.
-- 첫 글자부터 바로 본문 내용이 시작되어야 합니다.
-- 순수 본문 텍스트만 출력. JSON이나 코드블록으로 감싸지 마세요.`;
+${STYLE}`;
   }
 
   const requestBody = {
-    model: 'claude-sonnet-4-20250514',
-    max_tokens: 1024,
+    model: 'claude-opus-5-5',
+    max_tokens: 900,
     system: '당신은 이메일 본문 작성기입니다. 출력은 실제 고객에게 발송되는 이메일입니다. 절대로 사고 과정, 메타 설명, 검색 과정, "~로 확인되었으나", "~작성하겠습니다" 같은 문장을 출력하지 마세요. 첫 글자부터 곧바로 이메일 본문만 출력하세요.',
     messages: [{ role: 'user', content: prompt }],
   };
@@ -295,12 +248,18 @@ B2B 영업을 하는 일반적인 기업 담당자를 대상으로 작성하세�
     requestBody.tools = [{
       type: 'web_search_20250305',
       name: 'web_search',
-      max_uses: 3,
+      max_uses: 2,
     }];
   }
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
+  // 함수 실행 한도(120초) 안에 메일 발송까지 끝나도록, AI 생성은 90초를 넘기면 기본 문구로 대체한다.
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 90000);
+  let response;
+  try {
+    response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
+    signal: controller.signal,
     headers: {
       'x-api-key': apiKey,
       'anthropic-version': '2023-06-01',
@@ -308,6 +267,12 @@ B2B 영업을 하는 일반적인 기업 담당자를 대상으로 작성하세�
     },
     body: JSON.stringify(requestBody),
   });
+  } catch (e) {
+    console.error('Anthropic API timeout or network error:', e?.name || e);
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
 
   if (!response.ok) {
     const err = await response.text();
@@ -417,7 +382,7 @@ function buildVisitorEmail({ company, deptText, name, positionText, personalized
         </div>
         <div style="font:400 15px/1.85 ${F};color:#3F3A33;margin-bottom:22px">
           Bread&amp;AI 대표 이승욱입니다.<br>
-          제품 소개서를 신청해주셔서 감사합니다.
+          상품 소개서를 요청해 주셔서 감사합니다.
         </div>
         <div style="font:400 15px/1.9 ${F};color:#3F3A33">
           ${personalizedSection}
@@ -446,12 +411,12 @@ function buildVisitorEmail({ company, deptText, name, positionText, personalized
           <tr>
             <td style="padding:20px 16px 10px">
               <div style="font:800 14.5px/1.5 ${F};color:#1A1714;letter-spacing:-0.02em;padding:0 0 14px 4px">
-                Bread&amp;AI는 이렇게 맞춤 제안을 돕습니다
+                Bread&amp;AI로 영업 준비가 이렇게 바뀝니다
               </div>
               <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:separate">
-${step('1', '타겟 발굴', '지금 제안하기 좋은 최적의 기업을 AI가 자동으로 찾아줍니다')}
-${step('2', '리서치 &amp; 제안 논리', '상대 기업의 현황과 Pain Point를 분석, 맞춤 이메일 생성')}
-${step('3', '맞춤 제안서', '5분 만에 기업별 맞춤 제안서까지 완성')}
+${step('1', '세일즈 시그널로 영업 대상 찾기', '사업 확장, 신규 조직, 채용처럼 최근 영업 기회가 생긴 기업을 찾아 우선순위대로 보여드립니다')}
+${step('2', '심층 리서치와 제안 논리', '기업 현황, 재무, 채용, 뉴스를 출처와 함께 정리하고 왜 지금 우리 상품이 필요한지 논리를 세웁니다')}
+${step('3', '맞춤 이메일과 제안서', '첫 연락용 이메일과 콜 스크립트, 미팅에 가져갈 15~20장 제안서를 약 5분 만에 만듭니다')}
               </table>
             </td>
           </tr>
@@ -463,18 +428,18 @@ ${step('3', '맞춤 제안서', '5분 만에 기업별 맞춤 제안서까지 �
     <tr>
       <td style="padding:28px 32px 0">
         <div style="font:400 15px/1.85 ${F};color:#3F3A33;margin-bottom:20px">
-          첨부드린 소개서에서 더 자세한 내용을 확인하실 수 있습니다.<br>
-          7일 무료 체험도 가능하니 부담 없이 먼저 사용해보시고,<br>
-          추가로 궁금하신 점이 있으시면 편하게 회신 부탁드립니다.
+          자세한 내용은 첨부한 소개서에 담았습니다.<br>
+          1주일 동안 무료로 써보실 수 있으니 부담 없이 먼저 사용해 보시고,<br>
+          궁금한 점은 이 메일로 편하게 회신해 주세요.
         </div>
         <table cellpadding="0" cellspacing="0" border="0">
           <tr>
             <td style="background:#CC7247;border-radius:11px">
-              <a href="https://app.breadai.co.kr" style="display:inline-block;padding:14px 32px;font:700 15px/1 ${F};color:#ffffff;text-decoration:none;letter-spacing:-0.02em">7일 무료 체험하기 →</a>
+              <a href="https://app.breadai.co.kr" style="display:inline-block;padding:14px 32px;font:700 15px/1 ${F};color:#ffffff;text-decoration:none;letter-spacing:-0.02em">1주일 무료 체험하기 →</a>
             </td>
           </tr>
         </table>
-        <div style="font:600 12px/1.6 ${F};color:#8B857A;margin-top:10px">결제 불필요 · 1분 만에 시작</div>
+        <div style="font:600 12px/1.6 ${F};color:#8B857A;margin-top:10px">결제 정보 없이 바로 시작할 수 있습니다</div>
       </td>
     </tr>
 
@@ -486,7 +451,7 @@ ${step('3', '맞춤 제안서', '5분 만에 기업별 맞춤 제안서까지 �
           <div style="font:400 12.5px/1.75 ${F};color:#8B857A;margin-top:3px">
             Bread&amp;AI | AI Sales Intelligence<br>
             <a href="mailto:contact@breadai.co.kr" style="color:#0E5766;text-decoration:none;font-weight:600">contact@breadai.co.kr</a>
-            &nbsp;·&nbsp;
+            &nbsp;|&nbsp;
             <a href="https://breadai.co.kr" style="color:#0E5766;text-decoration:none;font-weight:600">breadai.co.kr</a>
           </div>
         </div>
