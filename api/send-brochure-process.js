@@ -240,7 +240,7 @@ ${STYLE}`;
 
   const requestBody = {
     model: 'claude-opus-5-5',
-    max_tokens: 900,
+    max_tokens: 2000,
     system: '당신은 이메일 본문 작성기입니다. 출력은 실제 고객에게 발송되는 이메일입니다. 절대로 사고 과정, 메타 설명, 검색 과정, "~로 확인되었으나", "~작성하겠습니다" 같은 문장을 출력하지 마세요. 첫 글자부터 곧바로 이메일 본문만 출력하세요.',
     messages: [{ role: 'user', content: prompt }],
   };
@@ -254,42 +254,68 @@ ${STYLE}`;
   }
 
   // 함수 실행 한도(120초) 안에 메일 발송까지 끝나도록, AI 생성은 90초를 넘기면 기본 문구로 대체한다.
+  // 웹 검색(서버 도구)을 쓰면 응답이 stop_reason "pause_turn"으로 중간에 끊겨 올 수 있다.
+  // 그때는 받은 내용을 assistant 턴으로 붙여 다시 요청해 이어서 쓰게 한다(최대 3회).
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 90000);
-  let response;
+  const startedAt = Date.now();
+  const allContent = [];
+  let data;
   try {
-    response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    signal: controller.signal,
-    headers: {
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify(requestBody),
-  });
-  } catch (e) {
-    console.error('Anthropic API timeout or network error:', e?.name || e);
-    return null;
+    for (let turn = 0; turn < 3; turn++) {
+      let response;
+      try {
+        response = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          signal: controller.signal,
+          headers: {
+            'x-api-key': apiKey,
+            'anthropic-version': '2023-06-01',
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        });
+      } catch (e) {
+        console.error('Anthropic API timeout or network error:', e?.name || e, `${Date.now() - startedAt}ms`);
+        return null;
+      }
+
+      if (!response.ok) {
+        const err = await response.text();
+        console.error('Anthropic API error:', response.status, err.slice(0, 500));
+        return null;
+      }
+
+      data = await response.json();
+      allContent.push(...(data.content || []));
+      if (data.stop_reason !== 'pause_turn') break;
+      requestBody.messages = [
+        ...requestBody.messages.filter(m => m.role === 'user').slice(0, 1),
+        { role: 'assistant', content: allContent },
+      ];
+    }
   } finally {
     clearTimeout(timer);
   }
 
-  if (!response.ok) {
-    const err = await response.text();
-    console.error('Anthropic API error:', err);
+  const textBlocks = allContent.filter(b => b.type === 'text');
+  const rawText = textBlocks.map(b => b.text).join('').trim();
+  const text = sanitizeAIOutput(rawText);
+
+  const diag = {
+    ms: Date.now() - startedAt,
+    stop: data?.stop_reason,
+    blocks: allContent.map(b => b.type).join(','),
+    usage: data?.usage ? `${data.usage.input_tokens}/${data.usage.output_tokens}` : '',
+    rawLen: rawText.length,
+    finalLen: (text || '').length,
+  };
+  if (!text) {
+    console.error('AI personalization empty, using default:', JSON.stringify(diag), rawText.slice(0, 300));
     return null;
   }
-
-  const data = await response.json();
-
-  const textBlocks = (data.content || []).filter(b => b.type === 'text');
-  let text = textBlocks.map(b => b.text).join('').trim();
-
-  // ── 후처리: AI 메타 설명/사고 과정 제거 ──
-  text = sanitizeAIOutput(text);
-
-  return text || null;
+  console.log('AI personalization ok:', JSON.stringify(diag));
+  return text;
 }
 
 
