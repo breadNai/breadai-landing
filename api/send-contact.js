@@ -93,7 +93,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Bread & AI <contact@breadai.co.kr>',
+        from: 'Bread&AI <contact@breadai.co.kr>',
         to: 'contact@breadai.co.kr',
         reply_to: email,
         subject: plan
@@ -141,14 +141,14 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Bread & AI <contact@breadai.co.kr>',
+        from: 'Bread&AI <contact@breadai.co.kr>',
         reply_to: 'contact@breadai.co.kr',
         to: [email],
-        subject: '[Bread & AI] 도입 문의가 접수되었습니다',
+        subject: '[Bread&AI] 도입 문의가 접수되었습니다',
         html: `
           <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:600px;margin:0 auto;padding:24px">
             <div style="text-align:center;margin-bottom:28px">
-              <div style="font-size:20px;font-weight:800;color:#3D3530">Bread &amp; AI</div>
+              <div style="font-size:20px;font-weight:800;color:#3D3530">Bread&amp;AI</div>
             </div>
             <h2 style="color:#3D3530;margin-bottom:16px">문의가 접수되었습니다</h2>
             <p style="font-size:15px;color:#3D3530;line-height:1.7">
@@ -161,7 +161,7 @@ export default async function handler(req, res) {
               <a href="https://app.breadai.co.kr/" style="display:inline-block;padding:12px 28px;background:#CC7247;color:#fff;border-radius:8px;font-size:15px;font-weight:700;text-decoration:none">무료로 시작하기 →</a>
             </div>
             <div style="margin-top:30px;padding-top:16px;border-top:1px solid #E8DFD5;font-size:12px;color:#81746F;text-align:center">
-              &copy; 2026 Bread &amp; AI. All rights reserved.
+              &copy; 2026 Bread&amp;AI. All rights reserved.
             </div>
           </div>
         `,

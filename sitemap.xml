@@ -3,14 +3,14 @@
   <!-- 메인 랜딩 페이지 (배포일 기준으로 lastmod 갱신) -->
   <url>
     <loc>https://www.breadai.co.kr/</loc>
-    <lastmod>2026-09-14</lastmod>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  <!-- 소개서 PDF (2026-09-01 교체본) -->
+  <!-- 소개서 PDF (2026-10 상품소개서로 교체) -->
   <url>
     <loc>https://www.breadai.co.kr/BreadAI_%EC%86%8C%EA%B0%9C%EC%84%9C.pdf</loc>
-    <lastmod>2026-09-01</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

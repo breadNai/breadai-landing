@@ -63,7 +63,7 @@ export default async function handler(req, res) {
 
     // AI 실패 시 기본 메시지
     if (!personalizedSection) {
-      personalizedSection = `고객사를 대상으로 B2B 영업을 하다 보면, 맞춤 제안이 효과적이라는 건 누구나 알지만 한 기업당 제안을 준비하는 데 2~3시간이 걸리다 보니 결국 소수에게만 맞춤 제안을 하고 나머지는 같은 메일을 보내게 되는 현실을 겪고 계실 겁니다.<br><br>Bread & AI는 이 문제를 AI로 해결합니다. 타겟 기업명만 입력하면 AI가 그 기업의 현황과 Pain Point를 자동으로 분석하고, <strong>"왜 만나야 하는지"</strong> 설득하는 맞춤 제안 논리와 이메일, 제안서를 5분 만에 완성합니다. 맞춤 제안 도입 시 미팅율이 평균 30% 개선되고, 기존 2~3시간 걸리던 영업 준비를 5분으로 단축할 수 있습니다.<br><br>첨부드린 소개서에서 구체적인 내용을 확인하실 수 있고, 7일 무료 체험도 가능하니 부담 없이 먼저 사용해보시기 바랍니다. 추가로 궁금하신 점이 있으시면 편하게 말씀해주세요.`;
+      personalizedSection = `고객사를 대상으로 B2B 영업을 하다 보면, 맞춤 제안이 효과적이라는 건 누구나 알지만 한 기업당 제안을 준비하는 데 2~3시간이 걸리다 보니 결국 소수에게만 맞춤 제안을 하고 나머지는 같은 메일을 보내게 되는 현실을 겪고 계실 겁니다.<br><br>Bread&AI는 이 문제를 AI로 해결합니다. 타겟 기업명만 입력하면 AI가 그 기업의 현황과 Pain Point를 자동으로 분석하고, <strong>"왜 만나야 하는지"</strong> 설득하는 맞춤 제안 논리와 이메일, 제안서를 5분 만에 완성합니다. 맞춤 제안 도입 시 미팅율이 평균 30% 개선되고, 기존 2~3시간 걸리던 영업 준비를 5분으로 단축할 수 있습니다.<br><br>첨부드린 소개서에서 구체적인 내용을 확인하실 수 있고, 7일 무료 체험도 가능하니 부담 없이 먼저 사용해보시기 바랍니다. 추가로 궁금하신 점이 있으시면 편하게 말씀해주세요.`;
     }
 
     // ── 3) 방문자에게 소개서 메일 발송 ──
@@ -74,10 +74,10 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Bread & AI <contact@breadai.co.kr>',
+        from: 'Bread&AI <contact@breadai.co.kr>',
         reply_to: 'contact@breadai.co.kr',
         to: email,
-        subject: `[Bread & AI] ${name}${positionText}, 요청하신 AI 세일즈 인텔리전스 소개서입니다`,
+        subject: `[Bread&AI] ${name}${positionText}, 요청하신 AI 세일즈 인텔리전스 소개서입니다`,
         attachments,
         html: buildVisitorEmail({ company, deptText, name, positionText, personalizedSection }),
       }),
@@ -96,7 +96,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Bread & AI <contact@breadai.co.kr>',
+        from: 'Bread&AI <contact@breadai.co.kr>',
         to: 'contact@breadai.co.kr',
         subject: `[소개서 요청] ${company} ${name}`,
         html: `
@@ -185,7 +185,7 @@ async function generatePersonalizedMessage({ apiKey, company, department, positi
 
   if (canIdentify) {
     useWebSearch = true;
-    prompt = `당신은 Bread & AI의 영업 담당자입니다. 소개서를 요청한 잠재 고객에게 보낼 이메일의 핵심 본문을 작성하세요.
+    prompt = `당신은 Bread&AI의 영업 담당자입니다. 소개서를 요청한 잠재 고객에게 보낼 이메일의 핵심 본문을 작성하세요.
 
 ## ⚠️ 최우선 규칙: 반드시 웹 검색으로 확인
 - 반드시 web_search 도구를 사용하여 "${company}"가 정확히 어떤 회사인지 검색하세요.
@@ -198,11 +198,11 @@ async function generatePersonalizedMessage({ apiKey, company, department, positi
 - 회사를 찾을 수 없으면 검색 실패를 언급하지 말고, 자연스럽게 일반 B2B 영업 맥락으로 작성하세요. 고객은 AI가 검색했다는 사실 자체를 몰라야 합니다.
 - "검색", "확인", "조사", "리서치 결과" 등 검색 과정을 암시하는 단어를 본문에 절대 쓰지 마세요.
 
-## Bread & AI 제품 정보
+## Bread&AI 제품 정보
 - AI 세일즈 인텔리전스: B2B 영업의 Pre-sales 전체를 AI로 맞춤화하여 미팅 수를 늘리는 솔루션
 - 핵심 가치: B2C에서 맞춤 추천이 성과를 폭발시켰듯이, B2B 영업에서도 AI로 1:1 맞춤 제안이 가능해짐
 - 기존 문제: 한 기업에 맞춤 제안을 준비하는 데 2~3시간 소요 → 소수 고객에게만 맞춤 가능, 나머지는 복붙
-- Bread & AI 해결: 5분 만에 타겟 기업 리서치 → 맞춤 제안 논리 → 맞춤 이메일 + 제안서까지 자동 완성
+- Bread&AI 해결: 5분 만에 타겟 기업 리서치 → 맞춤 제안 논리 → 맞춤 이메일 + 제안서까지 자동 완성
 - 3단계 프로세스:
   · STEP 1 탐색: 제품 소개서 업로드 → AI가 맞춤 제안이 먹힐 최적의 타겟 기업 자동 발굴
   · STEP 2 리서치: 타겟 기업 현황, Pain Point, 차별화 포인트 자동 분석 → 맞춤 제안 논리 + 콜드 이메일 생성
@@ -228,8 +228,8 @@ async function generatePersonalizedMessage({ apiKey, company, department, positi
 ${department ? `- ${department}에서 특히 겪을 영업 관련 pain point를 짚으면 더 효과적.` : ''}
 - ⛔ 회사 소개를 3줄 이상 쓰지 마세요. 상대방이 자기 회사 설명을 장황하게 읽는 건 지루합니다.
 
-**2단락: Bread & AI가 해결하는 방식 (2-3줄)**
-- "${company}의 [구체적 상황]에서 Bread & AI가 어떻게 도움이 되는지" 연결.
+**2단락: Bread&AI가 해결하는 방식 (2-3줄)**
+- "${company}의 [구체적 상황]에서 Bread&AI가 어떻게 도움이 되는지" 연결.
 - 기능 나열이 아닌, 이 회사 맥락에서 AI 맞춤 제안이 만들어내는 구체적 임팩트를 보여주세요.
 - 맞춤 제안 도입 시 미팅율 평균 30% 개선. 기존 2~3시간 걸리던 영업 준비가 5분으로 단축된다는 점 활용.
 
@@ -249,12 +249,12 @@ ${department ? `- ${department}에서 특히 겪을 영업 관련 pain point를 
 - 순수 본문 텍스트(HTML)만 출력. JSON이나 코드블록으로 감싸지 마세요.`;
 
   } else {
-    prompt = `당신은 Bread & AI의 영업 담당자입니다. 소개서를 요청한 잠재 고객에게 보낼 이메일의 핵심 본문을 작성하세요.
+    prompt = `당신은 Bread&AI의 영업 담당자입니다. 소개서를 요청한 잠재 고객에게 보낼 이메일의 핵심 본문을 작성하세요.
 
-## Bread & AI 제품 정보
+## Bread&AI 제품 정보
 - AI 세일즈 인텔리전스: B2B 영업의 Pre-sales 전체를 AI로 맞춤화하여 미팅 수를 늘리는 솔루션
 - 핵심 문제: B2B 맞춤 제안이 효과적이라는 건 누구나 알지만, 1건 준비에 2~3시간이 걸려 실행이 불가능했음
-- Bread & AI 해결: 5분 만에 타겟 기업 리서치 → 맞춤 제안 논리 → 맞춤 이메일 + 제안서까지 자동 완성
+- Bread&AI 해결: 5분 만에 타겟 기업 리서치 → 맞춤 제안 논리 → 맞춤 이메일 + 제안서까지 자동 완성
 - 성과: 맞춤 제안 도입 시 미팅율 +30% 개선, 복붙 콜드메일 대비 응답률 6배 이상
 
 ## 상황
@@ -267,7 +267,7 @@ B2B 영업을 하는 일반적인 기업 담당자를 대상으로 작성하세�
 **1단락: B2B 영업 pain point 공감 (2-3줄)**
 - "맞춤 제안을 하고 싶지만 시간이 없어서 결국 같은 메일을 100곳에 보내는" 현실의 공감.
 
-**2단락: Bread & AI가 해결하는 방식 (2-3줄)**
+**2단락: Bread&AI가 해결하는 방식 (2-3줄)**
 - AI가 상대를 이해하고 맞춤 제안을 만들어내는 과정을 설명.
 - 구체적 시나리오: "타겟 기업명만 입력하면 AI가 최신 현황을 리서치하고, 왜 만나야 하는지 설득하는 제안을 자동 완성"
 
@@ -416,7 +416,7 @@ function buildVisitorEmail({ company, deptText, name, positionText, personalized
           안녕하세요, ${company} ${deptText}${name}${positionText}.
         </div>
         <div style="font:400 15px/1.85 ${F};color:#3F3A33;margin-bottom:22px">
-          Bread &amp; AI 대표 이승욱입니다.<br>
+          Bread&amp;AI 대표 이승욱입니다.<br>
           제품 소개서를 신청해주셔서 감사합니다.
         </div>
         <div style="font:400 15px/1.9 ${F};color:#3F3A33">
@@ -484,7 +484,7 @@ ${step('3', '맞춤 제안서', '5분 만에 기업별 맞춤 제안서까지 �
         <div style="border-top:1px solid #E7E1D4;padding-top:20px">
           <div style="font:700 13.5px/1.5 ${F};color:#1A1714">이승욱 대표</div>
           <div style="font:400 12.5px/1.75 ${F};color:#8B857A;margin-top:3px">
-            Bread &amp; AI — AI Sales Intelligence<br>
+            Bread&amp;AI | AI Sales Intelligence<br>
             <a href="mailto:contact@breadai.co.kr" style="color:#0E5766;text-decoration:none;font-weight:600">contact@breadai.co.kr</a>
             &nbsp;·&nbsp;
             <a href="https://breadai.co.kr" style="color:#0E5766;text-decoration:none;font-weight:600">breadai.co.kr</a>
