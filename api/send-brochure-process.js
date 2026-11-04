@@ -21,7 +21,7 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Server configuration error' });
   }
 
-  const BROCHURE_URL = process.env.BROCHURE_PDF_URL || 'https://breadai.co.kr/BreadAI_%EC%86%8C%EA%B0%9C%EC%84%9C.pdf';
+  const BROCHURE_URL = process.env.BROCHURE_PDF_URL || 'https://www.breadai.co.kr/AimSell_%EC%83%81%ED%92%88%EC%86%8C%EA%B0%9C%EC%84%9C.pdf';
   const now = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
   const positionText = position ? ` ${position}님` : '님';
   const deptText = department ? `${department} ` : '';
@@ -35,7 +35,7 @@ export default async function handler(req, res) {
         const pdfBuffer = await pdfRes.arrayBuffer();
         const pdfBase64 = Buffer.from(pdfBuffer).toString('base64');
         attachments = [{
-          filename: 'BreadAI_상품소개서.pdf',
+          filename: 'AimSell_상품소개서.pdf',
           content: pdfBase64,
         }];
       }
@@ -64,7 +64,7 @@ export default async function handler(req, res) {
 
     // AI 실패 시 기본 메시지
     if (!personalizedSection) {
-      personalizedSection = `B2B 영업에서 맞춤 제안이 효과가 좋다는 건 대부분 알고 계실 겁니다. 다만 한 곳을 준비하는 데 2~3시간씩 걸리다 보니, 결국 몇 곳만 맞춤으로 준비하고 나머지에는 같은 소개서를 보내게 됩니다.<br><br>Bread&AI는 이 준비 과정을 AI로 대신합니다. 상품 소개서를 올리면 사업 확장, 신규 조직, 채용처럼 최근 영업 기회가 생긴 기업을 먼저 찾아드립니다.<br><br>그리고 그 기업 상황에 맞춰 <strong>왜 지금 만나야 하는지</strong>를 담은 제안 논리와 이메일, 제안서까지 만들어 드립니다. 기업 한 곳당 몇 분이면 충분합니다.`;
+      personalizedSection = `B2B 영업에서 맞춤 제안이 효과가 좋다는 건 대부분 알고 계실 겁니다. 다만 한 곳을 준비하는 데 2~3시간씩 걸리다 보니, 결국 몇 곳만 맞춤으로 준비하고 나머지에는 같은 소개서를 보내게 됩니다.<br><br>AimSell은 이 준비 과정을 AI로 대신합니다. 상품 소개서를 올리면 사업 확장, 신규 조직, 채용처럼 최근 영업 기회가 생긴 기업을 먼저 찾아드립니다.<br><br>그리고 그 기업 상황에 맞춰 <strong>왜 지금 만나야 하는지</strong>를 담은 제안 논리와 이메일, 제안서까지 만들어 드립니다. 기업 한 곳당 몇 분이면 충분합니다.`;
     }
 
     // ── 3) 방문자에게 소개서 메일 발송 ──
@@ -78,7 +78,7 @@ export default async function handler(req, res) {
         from: 'Bread&AI <contact@breadai.co.kr>',
         reply_to: 'contact@breadai.co.kr',
         to: email,
-        subject: `[Bread&AI] ${name}${positionText}, 요청하신 상품 소개서를 보내드립니다`,
+        subject: `[Bread&AI] ${name}${positionText}, 요청하신 AimSell 소개서를 보내드립니다`,
         attachments,
         html: buildVisitorEmail({ company, deptText, name, positionText, personalizedSection }),
       }),
@@ -182,7 +182,8 @@ async function generatePersonalizedMessage({ apiKey, company, department, positi
     || dummyContains.some(d => companyLower.includes(d));
   const canIdentify = !isDummyCompany && company.trim().length >= 2;
 
-  const PRODUCT = `## Bread&AI 제품 정보 (이 안의 내용과 수치만 사용)
+  const PRODUCT = `## AimSell 제품 정보 (이 안의 내용과 수치만 사용)
+- 제품명: AimSell(에임셀). Bread&AI가 만든 영업 특화 AI입니다. 본문에서 제품을 가리킬 때는 AimSell이라고 쓰고, Bread&AI는 회사 이름으로만 쓰세요.
 - 한 줄 소개: 세일즈 시그널로 지금 영업하기 좋은 고객사를 찾고, 기업별 맞춤 제안서까지 만드는 B2B 영업 AI
 - 고객의 문제: 맞춤 제안이 효과적이라는 건 알지만 한 곳 준비에 2~3시간이 걸려, 소수에게만 맞춤 제안을 하고 나머지에는 같은 소개서를 보내게 됨. 또 어느 회사부터 영업해야 할지 정하기 어려움
 - 1단계 세일즈 시그널 탐색: 상품 소개서를 올리면 AI가 우리 상품에 맞는 시그널(사업 확장, 신규 조직, 채용, 인력 증감, 신공장, 신제품 등)을 추천하고, 최근 시그널이 포착된 기업을 20곳 이상 찾아 우선순위대로 보여줌
@@ -223,7 +224,7 @@ ${PRODUCT}
 휴대폰에서 읽는 메일입니다. 단락마다 1~2문장, 한 문장은 60자 안팎으로 짧게 끊고, 본문 전체는 공백 포함 300~400자로 쓰세요.
 1단락 (1~2문장): ${company}가 하는 일을 짧게 짚고, 신규 고객사를 찾고 제안할 때 겪을 만한 어려움 하나를 이야기하세요.${department ? ` ${department} 입장의 어려움이면 더 좋습니다.` : ''}
 2단락 (1~2문장): ${company} 입장에서 "지금 연락하기 좋은" 세일즈 시그널 예시를 한두 개 드세요. 예: 어떤 기업이 무엇을 하면 ${company}의 어떤 상품이 필요해지는지.
-3단락 (1~2문장): Bread&AI가 그런 기업을 찾아 맞춤 제안 논리, 첫 연락 메일, 제안서까지 몇 분 만에 만들어 준다는 흐름을 이야기하세요. 수치는 꼭 필요할 때만 하나만 쓰세요.
+3단락 (1~2문장): AimSell이 그런 기업을 찾아 맞춤 제안 논리, 첫 연락 메일, 제안서까지 몇 분 만에 만들어 준다는 흐름을 이야기하세요. 수치는 꼭 필요할 때만 하나만 쓰세요.
 
 ${STYLE}`;
 
@@ -378,133 +379,137 @@ function sanitizeAIOutput(text) {
 
 // ── 이메일 HTML 템플릿 ──
 function buildVisitorEmail({ company, deptText, name, positionText, personalizedSection }) {
-  // 상품 소개서와 동일한 톤: 딥 틸(#0E5766) · 테라코타(#CC7247) · 아이보리 페이퍼(#FAF8F3)
-  // 메일 클라이언트 호환을 위해 table 레이아웃 + 인라인 스타일만 사용한다.
-  const F = "-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Malgun Gothic','Apple SD Gothic Neo',sans-serif";
+  // AimSell 앱(2026-11 UX 개편)과 같은 톤:
+  // 배경 #F2F3F5, 흰 카드 + 1px 테두리(#EBECEE) + 둥글기 10px, 잉크 #1A1A1A, 본문 회색 #5D6268, 보조 회색 #868B92,
+  // 포인트 틸 #007A7A, 민트 칩 #E5F4F4, 주요 버튼은 앱처럼 검정(#191919).
+  // 글꼴은 앱과 같은 Pretendard. 웹 글꼴을 지원하는 메일 앱(Apple 메일, iOS 메일 등)에서는 Pretendard로,
+  // 지원하지 않는 메일 앱(Gmail, Windows Outlook 등)에서는 기기 기본 한글 글꼴로 보인다.
+  const F = "'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif";
+  const INK = '#1A1A1A', BODY = '#5D6268', MUTED = '#868B92', LINE = '#EBECEE', DIV = '#EEF0F2', TEAL = '#007A7A', MINT = '#E5F4F4', BG = '#F2F3F5', DARK = '#191919';
+  const LOGO = 'https://www.breadai.co.kr/email/BreadAI_email_header_logo_white_2x.png';
+  const FONT_CSS = 'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css';
 
-  // 숫자는 카드 안쪽에 크고 흐리게 깔아 장식처럼 쓰고, 옆에 제목·설명을 세운다.
-  const step = (no, title, desc) => `
-              <tr>
-                <td style="padding:0 0 10px">
-                  <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#ffffff;border-radius:14px;border-collapse:separate">
-                    <tr>
-                      <td width="64" valign="middle" align="center" style="padding:16px 0 16px 6px">
-                        <div style="font:800 40px/1 ${F};color:#EDE0D5;letter-spacing:-0.05em">${no}</div>
-                      </td>
-                      <td valign="middle" style="padding:16px 18px 16px 4px">
-                        <div style="font:800 15px/1.45 ${F};color:#0E5766;letter-spacing:-0.025em">${title}</div>
-                        <div style="font:400 13.5px/1.65 ${F};color:#5A554B;margin-top:4px">${desc}</div>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>`;
+  // 앱 기업 대시보드의 "영업 포인트" 목록과 같은 모양: 틸 번호 + 굵은 제목 + 회색 설명, 항목 사이 얇은 구분선
+  const step = (no, title, desc, last) => `
+                <tr>
+                  <td width="22" valign="top" style="padding:16px 0 ${last ? '18px' : '16px'} 20px;${last ? '' : `border-bottom:1px solid ${DIV};`}font:700 14px/1.5 ${F};color:${TEAL}">${no}</td>
+                  <td valign="top" style="padding:16px 20px ${last ? '18px' : '16px'} 8px;${last ? '' : `border-bottom:1px solid ${DIV};`}">
+                    <div style="font:600 15px/1.5 ${F};color:${INK};letter-spacing:-0.01em">${title}</div>
+                    <div style="font:400 13.5px/1.65 ${F};color:${BODY};margin-top:3px;letter-spacing:-0.01em">${desc}</div>
+                  </td>
+                </tr>`;
 
-  return `
-<div style="background:#F3EFE6;padding:28px 12px;font-family:${F};-webkit-text-size-adjust:100%">
-  <table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:600px;margin:0 auto;background:#FAF8F3;border-radius:18px;overflow:hidden;border-collapse:separate">
+  return `<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<link rel="stylesheet" href="${FONT_CSS}">
+<style>body{margin:0;padding:0}</style>
+</head>
+<body style="margin:0;padding:0;background:${BG}">
+<div style="background:${BG};padding:28px 12px;font-family:${F};-webkit-text-size-adjust:100%;word-break:keep-all">
+  <table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#FFFFFF" style="max-width:600px;margin:0 auto;background:#FFFFFF;border:1px solid ${LINE};border-radius:10px;overflow:hidden;border-collapse:separate">
 
-    <!-- 헤더 : 소개서 표지와 같은 다크 잉크 -->
+    <!-- 상단 바 : 앱 사이드바와 같은 검정 -->
     <tr>
-      <td style="background:#1A1714;padding:26px 32px">
-        <table cellpadding="0" cellspacing="0" border="0">
-          <tr>
-            <td style="vertical-align:middle;padding-right:9px">
-              <img src="https://breadai.co.kr/logo_email.png" alt="" width="26" style="height:26px;width:auto;display:block;border:0" />
-            </td>
-            <td style="vertical-align:middle">
-              <span style="font:800 17px/1 ${F};color:#ffffff;letter-spacing:-0.02em">Bread&amp;AI</span>
-            </td>
-          </tr>
-        </table>
-        <div style="font:700 13px/1.5 ${F};color:#7FB4BF;margin-top:16px;letter-spacing:-0.01em">AI Sales Intelligence</div>
-        <div style="font:800 21px/1.4 ${F};color:#ffffff;margin-top:5px;letter-spacing:-0.03em">요청하신 상품 소개서를 보내드립니다</div>
+      <td bgcolor="${DARK}" style="background:${DARK};padding:20px 28px">
+        <img src="${LOGO}" alt="Bread&amp;AI" width="128" height="19" style="display:block;width:128px;height:auto;border:0" />
+      </td>
+    </tr>
+
+    <!-- 제목 : 앱 페이지 머리처럼 작은 라벨 + 큰 제목 -->
+    <tr>
+      <td style="padding:28px 28px 0">
+        <div style="font:400 12px/1.5 ${F};color:${MUTED};letter-spacing:-0.01em">상품 소개서</div>
+        <div style="font:700 22px/1.45 ${F};color:${INK};margin-top:4px;letter-spacing:-0.02em">요청하신 <span style="color:${TEAL}">AimSell</span> 소개서를 보내드립니다</div>
       </td>
     </tr>
 
     <!-- 본문 -->
     <tr>
-      <td style="padding:32px 32px 8px">
-        <div style="font:700 16.5px/1.6 ${F};color:#1A1714;letter-spacing:-0.02em;margin-bottom:14px">
+      <td style="padding:24px 28px 0">
+        <div style="font:600 15px/1.6 ${F};color:${INK};letter-spacing:-0.01em;margin-bottom:12px">
           안녕하세요, ${company} ${deptText}${name}${positionText}.
         </div>
-        <div style="font:400 15px/1.85 ${F};color:#3F3A33;margin-bottom:22px">
+        <div style="font:400 15px/1.8 ${F};color:${BODY};letter-spacing:-0.01em;margin-bottom:20px">
           Bread&amp;AI 대표 이승욱입니다.<br>
           상품 소개서를 요청해 주셔서 감사합니다.
         </div>
-        <div style="font:400 15px/1.9 ${F};color:#3F3A33">
+        <div style="font:400 15px/1.85 ${F};color:#3A3D42;letter-spacing:-0.01em">
           ${personalizedSection}
         </div>
       </td>
     </tr>
 
-    <!-- 첨부 안내 -->
+    <!-- 첨부 안내 : 앱 "영업 자료" 항목 모양 -->
     <tr>
-      <td style="padding:24px 32px 0">
-        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#E4EEF0;border-radius:12px;border-collapse:separate">
+      <td style="padding:24px 28px 0">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#F7F8FA" style="background:#F7F8FA;border:1px solid ${LINE};border-radius:10px;border-collapse:separate">
           <tr>
-            <td style="padding:15px 18px">
-              <div style="font:700 13.5px/1.5 ${F};color:#0A414D;letter-spacing:-0.01em">📎 상품 소개서가 이 메일에 첨부되어 있습니다</div>
-              <div style="font:400 12.5px/1.6 ${F};color:#0E5766;margin-top:3px">BreadAI_상품소개서.pdf</div>
+            <td width="44" valign="middle" style="padding:14px 0 14px 16px">
+              <div style="width:36px;height:24px;line-height:24px;text-align:center;background:${MINT};border-radius:5px;font:700 11px/24px ${F};color:${TEAL}">PDF</div>
+            </td>
+            <td valign="middle" style="padding:14px 16px 14px 10px">
+              <div style="font:600 14px/1.45 ${F};color:${INK};letter-spacing:-0.01em">AimSell_상품소개서.pdf</div>
+              <div style="font:400 12px/1.5 ${F};color:${MUTED};margin-top:2px">이 메일에 첨부되어 있습니다</div>
             </td>
           </tr>
         </table>
       </td>
     </tr>
 
-    <!-- 3단계 -->
+    <!-- 3단계 : 앱 카드 모양 (머리 줄 + 구분선 + 번호 목록) -->
     <tr>
-      <td style="padding:26px 32px 0">
-        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#EAE4D7;border-radius:14px;border-collapse:separate">
+      <td style="padding:24px 28px 0">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#FFFFFF" style="background:#FFFFFF;border:1px solid ${LINE};border-radius:10px;border-collapse:separate">
           <tr>
-            <td style="padding:20px 16px 10px">
-              <div style="font:800 14.5px/1.5 ${F};color:#1A1714;letter-spacing:-0.02em;padding:0 0 14px 4px">
-                Bread&amp;AI로 영업 준비가 이렇게 바뀝니다
-              </div>
-              <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:separate">
+            <td colspan="2" style="padding:14px 20px;border-bottom:1px solid ${DIV}">
+              <span style="font:700 14px/1.5 ${F};color:${INK};letter-spacing:-0.01em"><span style="color:${TEAL}">AimSell</span>로 영업 준비가 이렇게 바뀝니다</span>
+            </td>
+          </tr>
 ${step('1', '세일즈 시그널로 영업 대상 찾기', '사업 확장, 신규 조직, 채용처럼 최근 영업 기회가 생긴 기업을 찾아 우선순위대로 보여드립니다')}
 ${step('2', '심층 리서치와 제안 논리', '기업 현황, 재무, 채용, 뉴스를 출처와 함께 정리하고 왜 지금 우리 상품이 필요한지 논리를 세웁니다')}
-${step('3', '맞춤 이메일과 제안서', '첫 연락용 이메일과 콜 스크립트, 미팅에 가져갈 15~20장 제안서를 약 5분 만에 만듭니다')}
-              </table>
-            </td>
-          </tr>
+${step('3', '맞춤 이메일과 제안서', '첫 연락용 이메일과 콜 스크립트, 미팅에 가져갈 15~20장 제안서를 약 5분 만에 만듭니다', true)}
         </table>
       </td>
     </tr>
 
-    <!-- CTA -->
+    <!-- CTA : 앱 주요 버튼과 같은 검정 버튼 -->
     <tr>
-      <td style="padding:28px 32px 0">
-        <div style="font:400 15px/1.85 ${F};color:#3F3A33;margin-bottom:20px">
+      <td style="padding:28px 28px 0">
+        <div style="font:400 15px/1.8 ${F};color:#3A3D42;letter-spacing:-0.01em;margin-bottom:18px">
           자세한 내용은 첨부한 소개서에 담았습니다.<br>
-          1주일 동안 무료로 써보실 수 있으니 부담 없이 먼저 사용해 보시고,<br>
-          궁금한 점은 이 메일로 편하게 회신해 주세요.
+          1주일 무료 체험도 신청하실 수 있으니 부담 없이 써 보시고, 궁금한 점은 이 메일로 편하게 회신해 주세요.
         </div>
         <table cellpadding="0" cellspacing="0" border="0">
           <tr>
-            <td style="background:#CC7247;border-radius:11px">
-              <a href="https://app.breadai.co.kr" style="display:inline-block;padding:14px 32px;font:700 15px/1 ${F};color:#ffffff;text-decoration:none;letter-spacing:-0.02em">1주일 무료 체험하기 →</a>
+            <td bgcolor="${DARK}" style="background:${DARK};border-radius:6px">
+              <a href="https://app.breadai.co.kr/register" style="display:inline-block;padding:13px 26px;font:700 14px/1 ${F};color:#FFFFFF;text-decoration:none;letter-spacing:-0.01em">1주일 무료 체험 신청하기</a>
             </td>
           </tr>
         </table>
-        <div style="font:600 12px/1.6 ${F};color:#8B857A;margin-top:10px">결제 정보 없이 바로 시작할 수 있습니다</div>
+        <div style="font:400 12px/1.6 ${F};color:${MUTED};margin-top:10px">결제 정보 없이 신청할 수 있습니다</div>
       </td>
     </tr>
 
     <!-- 서명 -->
     <tr>
-      <td style="padding:28px 32px 30px">
-        <div style="border-top:1px solid #E7E1D4;padding-top:20px">
-          <div style="font:700 13.5px/1.5 ${F};color:#1A1714">이승욱 대표</div>
-          <div style="font:400 12.5px/1.75 ${F};color:#8B857A;margin-top:3px">
-            Bread&amp;AI | AI Sales Intelligence<br>
-            <a href="mailto:contact@breadai.co.kr" style="color:#0E5766;text-decoration:none;font-weight:600">contact@breadai.co.kr</a>
+      <td style="padding:28px 28px 28px">
+        <div style="border-top:1px solid ${DIV};padding-top:18px">
+          <div style="font:700 14px/1.5 ${F};color:${INK}">이승욱 대표</div>
+          <div style="font:400 12.5px/1.75 ${F};color:${MUTED};margin-top:2px">
+            Bread&amp;AI | B2B 영업 특화 AI <span style="color:${TEAL};font-weight:700">AimSell</span><br>
+            <a href="mailto:contact@breadai.co.kr" style="color:${TEAL};text-decoration:none;font-weight:600">contact@breadai.co.kr</a>
             &nbsp;|&nbsp;
-            <a href="https://breadai.co.kr" style="color:#0E5766;text-decoration:none;font-weight:600">breadai.co.kr</a>
+            <a href="https://www.breadai.co.kr" style="color:${TEAL};text-decoration:none;font-weight:600">breadai.co.kr</a>
           </div>
         </div>
       </td>
     </tr>
   </table>
-</div>`;
+</div>
+</body>
+</html>`;
 }
