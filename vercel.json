@@ -1,0 +1,36 @@
+{
+  "rewrites": [
+    {
+      "source": "/blog",
+      "destination": "https://breadai-blog.pages.dev/blog/"
+    },
+    {
+      "source": "/blog/:path(.*)",
+      "destination": "https://breadai-blog.pages.dev/blog/:path"
+    },
+    {
+      "source": "/assets/blog/:path(.*)",
+      "destination": "https://breadai-blog.pages.dev/assets/blog/:path"
+    },
+    {
+      "source": "/assets/css/blog.css",
+      "destination": "https://breadai-blog.pages.dev/assets/css/blog.css"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "https://breadai-blog.pages.dev/sitemap.xml"
+    },
+    {
+      "source": "/rss.xml",
+      "destination": "https://breadai-blog.pages.dev/rss.xml"
+    },
+    {
+      "source": "/llms.txt",
+      "destination": "https://breadai-blog.pages.dev/llms.txt"
+    },
+    {
+      "source": "/c4f3fe412463788b1a485abbcddd8a6e.txt",
+      "destination": "https://breadai-blog.pages.dev/c4f3fe412463788b1a485abbcddd8a6e.txt"
+    }
+  ]
+}
